@@ -7,6 +7,27 @@ reserved = {
     "false":"FALSE",
     "if":"IF",
     "else":"ELSE",
+    "while":"WHILE",
+    "class":"CLASS",
+    "module":"MODULE",
+    "return":"RETURN",
+    "nil":"NIL",
+    "super":"SUPER",
+    "self":"SELF",
+    "begin":"BEGIN",
+    "rescue":"RESCUE",
+    "ensure":"ENSURE",
+    "retry":"RETRY",
+    "raise":"RAISE",
+    "and":"AND",
+    "or":"OR",
+    "not":"NOT",
+    "break":"BREAK",
+    "next":"NEXT",
+    "redo":"REDO",
+    "alias":"ALIAS",
+    "defined?":"DEFINED_QUESTION",
+    "yield":"YIELD",
     #Loor Paulina
     "elseif": "ELSEIF",
     "until":"UNTIL",
@@ -30,8 +51,8 @@ tokens=[
     'PARENTESIS_R',
     'IGUAL',
     'COMA',
-    'OR',
-    'AND',
+    'OR_SIGNO',
+    'AND_SIGNO',
     'MAYOR_QUE',
     'MENOR_QUE',
     'MAYOR_IGUAL_QUE',
@@ -77,9 +98,9 @@ t_ENTERO=r'[-]?[0-9]+'
 
 #Ruiz Dafne
 
-t_AND=r'&&'
+t_AND_SIGNO=r'&&'
 t_COMA=r','
-t_OR=r'\|\|'
+t_OR_SIGNO=r'\|\|'
 t_MAYOR_QUE=r'>'
 t_MAYOR_IGUAL_QUE=r'>='
 t_MENOR_IGUAL_QUE=r'<='
