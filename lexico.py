@@ -29,6 +29,18 @@ tokens=[
     'PARENTESIS_L',
     'PARENTESIS_R',
     'IGUAL',
+    'COMA',
+    'OR',
+    'AND',
+    'MAYOR_QUE',
+    'MENOR_QUE',
+    'MAYOR_IGUAL_QUE',
+    'MENOR_IGUAL_QUE',
+    'EXCLAMACION_LOW',
+    'EXCLAMACION_HIGH',
+    'DIFERENTE',
+    'COMENTARIO',
+    'COMENTARIO_MULTI',
     #Paulina Loor
     'SIMBOLO',
     'COMILLA_S',
@@ -64,6 +76,17 @@ t_ENTERO=r'[-]?[0-9]+'
 #operadores y delimitadores
 
 #Ruiz Dafne
+
+t_AND=r'&&'
+t_COMA=r','
+t_OR=r'\|\|'
+t_MAYOR_QUE=r'>'
+t_MAYOR_IGUAL_QUE=r'>='
+t_MENOR_IGUAL_QUE=r'<='
+t_MENOR_QUE=r'<'
+t_EXCLAMACION_LOW=r'!'
+t_EXCLAMACION_HIGH=r'¡'
+t_DIFERENTE=r'!='
 t_IGUAL=r'='
 t_MAS= r'\+'
 t_MENOS= r'-'
@@ -94,6 +117,19 @@ def t_VARIABLE(t):
     t.type = reserved.get(t.value.strip("@$"), 'VARIABLE')
     return t
 
+def t_COMENTARIO(t):
+    r'\#.*'
+    t.value = t.value[1:].strip()  
+    return t
+
+# Comentario multilínea - Detecta el inicio de un comentario multilínea
+def t_COMENTARIO_MULTI(t):
+    
+    r'=begin(?!.*(?:=begin[\s\S]*?=end))[\s\S]*?=end'
+    return t
+
+
+
 #ignorar espacios
 
 t_ignore = ' \t'
@@ -112,15 +148,20 @@ def t_error(t):
 
 lexer=lex.lex()
 
-data = ''' @false='cadena' '''
-
+data = data = """
+['hola','hola'], #Hola ssjj .
+=begin
+Este es un comentario
+multilínea en Ruby
+=end
+"""
 
 
 lexer.input(data)
 
 # Tokenize
 while True:
-    tok = lexer.token()
+    tok = lexer.token() 
     if not tok:
         break  # No more input
     else:
