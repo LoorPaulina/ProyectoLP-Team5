@@ -30,8 +30,6 @@ tokens=[
     'PARENTESIS_R',
     'IGUAL',
     #Paulina Loor
-    'ARRAY',
-    'DICCIONARIO',
     'SIMBOLO',
     'COMILLA_S',
     'COMILLA_D',
@@ -47,7 +45,7 @@ tokens=[
 ]+list(reserved.values())
 
 #expresiones regulares para los tokens 
-
+#Dafne Ruiz
 #cadenas
 
 def t_CADENA(t):
@@ -83,11 +81,6 @@ t_PIPELINE=r'\|'
 t_EXPONENCIACION=r'\*\*'
 t_CORCHETE_L=r'\['
 t_CORCHETE_R=r'\]'
-
-#colecciones
-
-t_ARRAY=r'[\[]\s*(([-]?(0|[1-9]\d*)?\.{1}\d+)[,]?|true[,]?|false[,]?|([-]?[0-9]*)[,]?|([a-zA-Z][,]?|[a-z][,]?|[A-Z][,]?)*|)*[^,]\]'
-t_DICCIONARIO=r'{\s*(([-]?(0|[1-9]\d*)?\.{1}\d+)[=][>]|true[=][>]|false[=][>]|([-]?[0-9]*)[=][>]|([a-zA-Z]+)[=][>])+\s*(([-]?(0|[1-9]\d*)?\.{1}\d+)[,]?|true[,]?|false[,]?|([-]?[0-9]*)[,]?|([a-zA-Z]+[,]?))+[^>][^,]}'
 
 #simbolos 
 
