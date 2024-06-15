@@ -52,6 +52,8 @@ reserved = {
 }
 
 tokens=[
+    #Loor Paulina
+    'VARIABLECLASE',
     #Dafne Ruiz
     'VARIABLE',
     'CADENA',
@@ -96,11 +98,6 @@ tokens=[
 #expresiones regulares para los tokens 
 #Dafne Ruiz
 #cadenas
-
-def t_CADENA(t):
-    r'\"([^\\\n]|(\\.))*?\"|\'([^\\\n]|(\\.))*?\''
-    t.type = reserved.get(t.value, 'CADENA')
-    return t
 
 #flotantes 
 
@@ -152,9 +149,19 @@ t_SIMBOLO=r'[:][a-z](\w)*'
 #variables
 
 #Ruiz Dafne y Loor Paulina
+def t_VARIABLECLASE(t):
+    r'[$@]{2}[a-zA-Z_]\w*'
+    t.type = reserved.get(t.value.strip("@"), 'VARIABLECLASE')
+    return t
+
 def t_VARIABLE(t):
     r'[$@]?[a-zA-Z_]\w*'
     t.type = reserved.get(t.value.strip("@$"), 'VARIABLE')
+    return t
+
+def t_CADENA(t):
+    r'\"([^\\\n]|(\\.))*?\"|\'([^\\\n]|(\\.))*?\''
+    t.type = reserved.get(t.value, 'CADENA')
     return t
 
 def t_COMENTARIO(t):
@@ -167,8 +174,6 @@ def t_COMENTARIO_MULTI(t):
     
     r'=begin(?!.*(?:=begin[\s\S]*?=end))[\s\S]*?=end'
     return t
-
-
 
 #ignorar espacios
 
@@ -184,136 +189,6 @@ def t_newline(t):
 def t_error(t):
     print(f"Illegal character '{t.value[0]}'")
     t.lexer.skip(1)
-
-lexer_loor=lex.lex()
-data_loor="""  
-# Variables globales 
-$global_var = "Soy una variable global" 
- 
-# Clase Persona 
-class Persona 
-  # Variable de clase 
-  @@total_personas = 0 
- 
-  # Constructor 
-  def initialize(nombre, edad) 
-    @nombre = nombre      # Variable de 
-instancia 
-    @edad = edad          # Variable de 
-instancia 
-    @@total_personas += 1 # Incrementa el 
-contador de personas 
-  end 
- 
-  # Método de instancia 
-  def presentarse 
-    puts "Hola, mi nombre es #{@nombre} y 
-tengo #{@edad} años." 
-  end 
- 
-  # Método de clase 
-  def self.total_personas 
-    @@total_personas 
-  end 
-end 
- 
-# Clase Estudiante que hereda de Persona 
-class Estudiante < Persona 
-  def initialize(nombre, edad, grado) 
-    super(nombre, edad)   # Llama al 
-constructor de la clase base 
-    @grado = grado        # Variable de 
-instancia 
-  end 
- 
-  # Sobreescribe el método presentarse 
-  def presentarse 
-    super() 
-    puts "Estoy en el grado #{@grado}." 
-  end 
-end 
- 
-# Función para pedir datos por teclado 
-def pedir_datos(mensaje) 
-  print mensaje 
-  gets.chomp 
-end 
- 
-# Programa principal 
-puts $global_var 
- 
-# Pedir nombre y edad 
-nombre = pedir_datos("Por favor, ingresa tu 
-nombre: ") 
-edad = pedir_datos("Por favor, ingresa tu 
-edad: ").to_i 
- 
-# Crear instancia de Persona 
-persona = Persona.new(nombre, edad) 
-persona.presentarse 
- 
-# Pedir grado y crear instancia de Estudiante 
-grado = pedir_datos("Por favor, ingresa tu 
-grado: ") 
-estudiante = Estudiante.new(nombre, edad, 
-grado) 
-estudiante.presentarse 
- 
-# Comparaciones lógicas 
-puts "Eres mayor de edad" if edad >= 18 
- 
-# Diccionario (Hash) con símbolos 
-informacion = { 
-  nombre: nombre, 
-  edad: edad, 
-  grado: grado 
-} 
- 
-puts "Información: #{@informacion}" 
- 
-# Array 
-numeros = [1, 2, 3, 4, 5] 
- 
-# Iterar sobre el array con `each` 
-numeros.each do |num| 
-  puts "Número: #{num}" 
-end 
- 
-# Operaciones aritméticas 
-suma = numeros.reduce(:+) 
-promedio = suma.to_f / numeros.size 
- 
-puts "Suma: #{@suma}, Promedio: #{@promedio}" 
- 
-# Caso `case` 
-valor = pedir_datos("Ingresa un número del 1 
-al 3: ").to_i 
- 
-case valor 
-when 1 
-  puts "Elegiste uno" 
-when 2 
-  puts "Elegiste dos" 
-when 3 
-  puts "Elegiste tres" 
-else 
-  puts "Valor fuera del rango" 
-end 
- 
-# Booleanos y operaciones 
-booleano1 = true 
-booleano2 = false 
- 
-if booleano1 && !booleano2 
-  puts "Booleano1 es verdadero y Booleano2 
-es falso" 
-end 
- 
-puts "Total de personas: 
-#{Persona.total_personas}"
-"""
-
-#lexer_loor.input(data_loor)
 
 #log ruiz
 def pruebas_ruiz():
@@ -346,5 +221,37 @@ def pruebas_ruiz():
 
   print(f"Resultado guardado en {ruta_archivo}")
 
-pruebas_ruiz();
+#pruebas_ruiz();
 
+#log loor
+def pruebas_loor():
+  lexer_loor=lex.lex()
+  string=""
+  archivo = ruta_algoritmos+"/algoritmo_loor.txt"
+  ahora = datetime.datetime.now()
+  fecha_hora = ahora.strftime("%Y%m%d-%H%M%S") 
+  nombre_archivo = f"lexico-LoorPaulina-{fecha_hora}.txt"
+  with open(archivo, 'r') as f:
+    contenido = f.read().strip()
+    lexer_loor.input(contenido)
+  while True:
+    tok = lexer_loor.token() 
+    if tok is not None:
+      tipo = tok.type
+      valor = tok.value
+      # Convertir el valor del token a cadena si es necesario
+      if isinstance(valor, str):
+          valor_str = valor
+      else:
+          valor_str = str(valor)
+    string=f"Token: tipo={tipo}, valor='{valor_str}'"
+    if not tok:
+        break  # No more input
+    else:  
+        ruta_archivo = ruta_carpeta+"/"+nombre_archivo
+        with open(ruta_archivo, "a+") as archivo_log:
+            archivo_log.write(string + '\n')  # Escribir el resultado en el archivo
+
+  print(f"Resultado guardado en {ruta_archivo}")
+
+pruebas_loor()
