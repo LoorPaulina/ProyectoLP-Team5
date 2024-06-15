@@ -1,5 +1,8 @@
 import ply.lex as lex
-
+#escritura_a_carpeta_log
+import datetime
+ruta_carpeta="logs"
+ruta_algoritmos="algoritmos"
 #palabras reservadas
 reserved = {
     #Dafne Ruiz
@@ -182,112 +185,7 @@ def t_error(t):
     print(f"Illegal character '{t.value[0]}'")
     t.lexer.skip(1)
 
-
-lexer_ruiz=lex.lex()
 lexer_loor=lex.lex()
-
-data_ruiz = """
-    # Definición de una clase con métodos y atributos 
-    class Vehiculo 
-    attr_accessor :marca, :modelo, :velocidad 
-    def initialize(marca, modelo, velocidad = 
-    0) 
-        @marca = marca 
-        @modelo = modelo 
-        @velocidad = velocidad 
-    end 
-    
-    def acelerar(incremento) 
-        @velocidad += incremento 
-    end 
-    
-    def frenar(decremento) 
-        @velocidad -= decremento 
-        @velocidad = 0 if @velocidad < 0 
-    end 
-    
-    def estado 
-        "El #{@marca} #{@modelo} va a #{@velocidad} km/h." 
-    end 
-    end 
-    
-    # Creación de un objeto 
-    vehiculo1 = Vehiculo.new("Toyota", 
-    "Corolla") 
-    puts vehiculo1.estado 
-    
-    # Uso de un array 
-    marcas = ["Ford", "Chevrolet", "Honda"] 
-    marcas << vehiculo1.marca 
-    
-    # Uso de un diccionario (hash) 
-    modelos = { "Ford" => "Focus", "Chevrolet" 
-    => "Malibu", "Honda" => "Civic" } 
-    modelos[vehiculo1.marca] = vehiculo1.modelo 
-    
-    # Ciclo for 
-    puts "Marcas en la lista:" 
-    for marca in marcas 
-    puts marca 
-    end 
-    
-    # Ciclo while 
-    contador = 0 
-    while contador < marcas.length 
-    puts "Marca #{contador + 1}: 
-    #{marcas[contador]}" 
-    contador += 1 
-    end 
-    
-    # Condicionales y expresiones booleanas 
-    puts "Condicionales y expresiones 
-    booleanas:" 
-    marcas.each do |marca| 
-    if modelos[marca] 
-        puts "El modelo de #{marca} es #{modelos[marca]}." 
-    else 
-        puts "Modelo no registrado para #{marca}." 
-    end 
-    end 
-    
-    # Uso de case 
-    puts "Uso de case:" 
-    marcas.each do |marca| 
-    case modelos[marca] 
-    when "Focus" 
-        puts "#{marca} tiene el modelo Focus." 
-    when "Malibu" 
-        puts "#{marca} tiene el modelo Malibu." 
-    when "Civic" 
-        puts "#{marca} tiene el modelo Civic." 
-    when vehiculo1.modelo 
-        puts "#{marca} tiene el modelo #{vehiculo1.modelo}." 
-    else 
-        puts "Modelo desconocido para #{marca}." 
-    end 
-    end 
-    
-    # Expresiones aritméticas 
-    puts "Expresiones aritméticas:" 
-    vehiculo1.acelerar(50) 
-    vehiculo1.frenar(20) 
-    puts vehiculo1.estado 
-    
-    # Expresiones booleanas y operaciones con  arrays 
-    puts "Operaciones con arrays y expresiones booleanas:" 
-    marcas_duplicadas = ["Ford", "Chevrolet", 
-    "Honda", "Toyota", "Ford"] 
-    marcas_unicas = marcas_duplicadas.uniq 
-    puts "Marcas únicas: #{marcas_unicas.join(', ')}" 
-    
-    # Uso de un método con parámetros y valores de retorno 
-    def calcular_factorial(n) 
-    return 1 if n <= 1 
-    n * calcular_factorial(n - 1) 
-    end 
-    
-    puts "Factorial de 5 es: #{calcular_factorial(5)}" """
-
 data_loor="""  
 # Variables globales 
 $global_var = "Soy una variable global" 
@@ -415,13 +313,38 @@ puts "Total de personas:
 #{Persona.total_personas}"
 """
 
-#lexer_ruiz.input(data_ruiz)
-lexer_loor.input(data_loor)
+#lexer_loor.input(data_loor)
 
-# Tokenize
-while True:
-    tok = lexer_loor.token() 
+#log ruiz
+def pruebas_ruiz():
+  lexer_ruiz=lex.lex()
+  string=""
+  archivo = ruta_algoritmos+"/algoritmo_ruiz.txt"
+  ahora = datetime.datetime.now()
+  fecha_hora = ahora.strftime("%Y%m%d-%H%M%S") 
+  nombre_archivo = f"lexico-taizruiz-{fecha_hora}.txt"
+  with open(archivo, 'r') as f:
+    contenido = f.read().strip()
+    lexer_ruiz.input(contenido)
+  while True:
+    tok = lexer_ruiz.token() 
+    if tok is not None:
+      tipo = tok.type
+      valor = tok.value
+      # Convertir el valor del token a cadena si es necesario
+      if isinstance(valor, str):
+          valor_str = valor
+      else:
+          valor_str = str(valor)
+    string=f"Token: tipo={tipo}, valor='{valor_str}'"
     if not tok:
         break  # No more input
-    else:
-        print(tok)
+    else:  
+        ruta_archivo = ruta_carpeta+"/"+nombre_archivo
+        with open(ruta_archivo, "a+") as archivo_log:
+            archivo_log.write(string + '\n')  # Escribir el resultado en el archivo
+
+  print(f"Resultado guardado en {ruta_archivo}")
+
+pruebas_ruiz();
+
