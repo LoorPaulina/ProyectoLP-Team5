@@ -415,12 +415,12 @@ puts "Total de personas:
 #{Persona.total_personas}"
 """
 
-lexer_ruiz.input(data_ruiz)
+#lexer_ruiz.input(data_ruiz)
 lexer_loor.input(data_loor)
 
 # Tokenize
 while True:
-    tok = lexer_ruiz.token() 
+    tok = lexer_loor.token() 
     if not tok:
         break  # No more input
     else:
