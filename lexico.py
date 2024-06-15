@@ -35,7 +35,17 @@ reserved = {
     "in": "IN",
     "case": "CASE",
     "def": "DEF",
-    "end": "END"
+    "end": "END",
+    "return": "RETURN",
+    "each":"EACH",
+    "sort": "SORT",
+    "puts": "PUTS",
+    "print": "PRINT",
+    "printf": "PRINTF",
+    "gets": "GETS",
+    "chomp": "CHOMP",
+    "to_f": "TO_F",
+    "concat": "CONCAT"
 }
 
 tokens=[
@@ -74,7 +84,9 @@ tokens=[
     'MULTIPLICACION',
     'EXPONENCIACION',
     'CORCHETE_L',
-    'CORCHETE_R'
+    'CORCHETE_R',
+    'TRIPLE_IGUAL',
+    'ASIGNA_HASH',
     
 ]+list(reserved.values())
 
@@ -127,6 +139,8 @@ t_PIPELINE=r'\|'
 t_EXPONENCIACION=r'\*\*'
 t_CORCHETE_L=r'\['
 t_CORCHETE_R=r'\]'
+t_TRIPLE_IGUAL=r'==='
+t_ASIGNA_HASH=r'=>'
 
 #simbolos 
 
@@ -170,6 +184,7 @@ def t_error(t):
 
 
 lexer_ruiz=lex.lex()
+lexer_loor=lex.lex()
 
 data_ruiz = """
     # Definición de una clase con métodos y atributos 
@@ -273,8 +288,135 @@ data_ruiz = """
     
     puts "Factorial de 5 es: #{calcular_factorial(5)}" """
 
+data_loor="""  
+# Variables globales 
+$global_var = "Soy una variable global" 
+ 
+# Clase Persona 
+class Persona 
+  # Variable de clase 
+  @@total_personas = 0 
+ 
+  # Constructor 
+  def initialize(nombre, edad) 
+    @nombre = nombre      # Variable de 
+instancia 
+    @edad = edad          # Variable de 
+instancia 
+    @@total_personas += 1 # Incrementa el 
+contador de personas 
+  end 
+ 
+  # Método de instancia 
+  def presentarse 
+    puts "Hola, mi nombre es #{@nombre} y 
+tengo #{@edad} años." 
+  end 
+ 
+  # Método de clase 
+  def self.total_personas 
+    @@total_personas 
+  end 
+end 
+ 
+# Clase Estudiante que hereda de Persona 
+class Estudiante < Persona 
+  def initialize(nombre, edad, grado) 
+    super(nombre, edad)   # Llama al 
+constructor de la clase base 
+    @grado = grado        # Variable de 
+instancia 
+  end 
+ 
+  # Sobreescribe el método presentarse 
+  def presentarse 
+    super() 
+    puts "Estoy en el grado #{@grado}." 
+  end 
+end 
+ 
+# Función para pedir datos por teclado 
+def pedir_datos(mensaje) 
+  print mensaje 
+  gets.chomp 
+end 
+ 
+# Programa principal 
+puts $global_var 
+ 
+# Pedir nombre y edad 
+nombre = pedir_datos("Por favor, ingresa tu 
+nombre: ") 
+edad = pedir_datos("Por favor, ingresa tu 
+edad: ").to_i 
+ 
+# Crear instancia de Persona 
+persona = Persona.new(nombre, edad) 
+persona.presentarse 
+ 
+# Pedir grado y crear instancia de Estudiante 
+grado = pedir_datos("Por favor, ingresa tu 
+grado: ") 
+estudiante = Estudiante.new(nombre, edad, 
+grado) 
+estudiante.presentarse 
+ 
+# Comparaciones lógicas 
+puts "Eres mayor de edad" if edad >= 18 
+ 
+# Diccionario (Hash) con símbolos 
+informacion = { 
+  nombre: nombre, 
+  edad: edad, 
+  grado: grado 
+} 
+ 
+puts "Información: #{@informacion}" 
+ 
+# Array 
+numeros = [1, 2, 3, 4, 5] 
+ 
+# Iterar sobre el array con `each` 
+numeros.each do |num| 
+  puts "Número: #{num}" 
+end 
+ 
+# Operaciones aritméticas 
+suma = numeros.reduce(:+) 
+promedio = suma.to_f / numeros.size 
+ 
+puts "Suma: #{@suma}, Promedio: #{@promedio}" 
+ 
+# Caso `case` 
+valor = pedir_datos("Ingresa un número del 1 
+al 3: ").to_i 
+ 
+case valor 
+when 1 
+  puts "Elegiste uno" 
+when 2 
+  puts "Elegiste dos" 
+when 3 
+  puts "Elegiste tres" 
+else 
+  puts "Valor fuera del rango" 
+end 
+ 
+# Booleanos y operaciones 
+booleano1 = true 
+booleano2 = false 
+ 
+if booleano1 && !booleano2 
+  puts "Booleano1 es verdadero y Booleano2 
+es falso" 
+end 
+ 
+puts "Total de personas: 
+#{Persona.total_personas}"
+"""
 
 lexer_ruiz.input(data_ruiz)
+lexer_loor.input(data_loor)
 
 # Tokenize
 while True:
