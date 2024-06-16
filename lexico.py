@@ -92,6 +92,8 @@ tokens=[
     'CORCHETE_R',
     'TRIPLE_IGUAL',
     'ASIGNA_HASH',
+    #Daniel Picon
+    'PREGUNTA',
     
 ]+list(reserved.values())
 
@@ -141,6 +143,7 @@ t_CORCHETE_L=r'\['
 t_CORCHETE_R=r'\]'
 t_TRIPLE_IGUAL=r'==='
 t_ASIGNA_HASH=r'=>'
+t_PREGUNTA=r'\?'
 
 #simbolos 
 
@@ -254,4 +257,38 @@ def pruebas_loor():
 
   print(f"Resultado guardado en {ruta_archivo}")
 
-pruebas_loor()
+#pruebas_loor()
+
+
+#log_picon
+def pruebas_picon():
+  lexer_picon=lex.lex()
+  string=""
+  archivo = ruta_algoritmos+"/algoritmo_picon.txt"
+  ahora = datetime.datetime.now()
+  fecha_hora = ahora.strftime("%Y%m%d-%H%M%S")
+  nombre_archivo = f"lexico-PiconDaniel-{fecha_hora}.txt"
+  with open(archivo, 'r') as f:
+    contenido = f.read().strip()
+    lexer_picon.input(contenido)
+  while True:
+    tok = lexer_picon.token()
+    if tok is not None:
+      tipo = tok.type
+      valor = tok.value
+      # Convertir el valor del token a cadena si es necesario
+      if isinstance(valor, str):
+          valor_str = valor
+      else:
+          valor_str = str(valor)
+    string=f"Token: tipo={tipo}, valor='{valor_str}'"
+    if not tok:
+        break  # No more input
+    else:
+        ruta_archivo = ruta_carpeta+"/"+nombre_archivo
+        with open(ruta_archivo, "a+") as archivo_log:
+            archivo_log.write(string + '\n')  # Escribir el resultado en el archivo
+
+  print(f"Resultado guardado en {ruta_archivo}")
+
+pruebas_picon()
