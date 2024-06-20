@@ -60,19 +60,19 @@ tokens=[
     'MAS',
     'MENOS',
     'DIVISION',
-    'PARENTESIS_L',
-    'PARENTESIS_R',
+    'PARENTESIS_IZ',
+    'PARENTESIS_DER',
     'IGUAL_DOBLEP',
     'IGUAL',
     'COMA',
-    'OR_SIGNO',
-    'AND_SIGNO',
+    'O_SIGNO',
+    'Y_SIGNO',
     'MAYOR_QUE',
     'MENOR_QUE',
     'MAYOR_IGUAL_QUE',
     'MENOR_IGUAL_QUE',
-    'EXCLAMACION_LOW',
-    'EXCLAMACION_HIGH',
+    'EXCLAMACION_BAJO',
+    'EXCLAMACION_ALTO',
     'DIFERENTE',
     'COMENTARIO',
     'COMENTARIO_MULTI',
@@ -80,14 +80,14 @@ tokens=[
     'SIMBOLO',
     'COMILLA_S',
     'COMILLA_D',
-    'LLAVE_L',
-    'LLAVE_R',
+    'LLAVE_IZ',
+    'LLAVE_DER',
     'PORCENTAJE',
-    'PIPELINE',
+    'BARRA',
     'MULTIPLICACION',
     'EXPONENCIACION',
-    'CORCHETE_L',
-    'CORCHETE_R',
+    'CORCHETE_IZ',
+    'CORCHETE_DER',
     'TRIPLE_IGUAL',
     'ASIGNA_HASH',
     
@@ -114,34 +114,34 @@ t_ENTERO=r'[-]?[0-9]+'
 
 #Ruiz Dafne
 
-t_AND_SIGNO=r'&&'
+t_Y_SIGNO=r'&&'
 t_COMA=r','
-t_OR_SIGNO=r'\|\|'
+t_O_SIGNO=r'\|\|'
 t_MAYOR_QUE=r'>'
 t_MAYOR_IGUAL_QUE=r'>='
 t_MENOR_IGUAL_QUE=r'<='
 t_MENOR_QUE=r'<'
-t_EXCLAMACION_LOW=r'!'
-t_EXCLAMACION_HIGH=r'¡'
+t_EXCLAMACION_BAJO=r'!'
+t_EXCLAMACION_ALTO=r'¡'
 t_DIFERENTE=r'!='
 t_IGUAL=r'='
 t_IGUAL_DOBLEP=r':'
 t_MAS= r'\+'
 t_MENOS= r'-'
 t_DIVISION= r'/'
-t_PARENTESIS_L= r'\('
-t_PARENTESIS_R= r'\)'
+t_PARENTESIS_IZ= r'\('
+t_PARENTESIS_DER= r'\)'
 #Loor Paulina
 t_MULTIPLICACION=r'\*'
 t_COMILLA_D=r'\"'
 t_COMILLA_S=r'\''
-t_LLAVE_R=r'}'
-t_LLAVE_L=r'{'
+t_LLAVE_DER=r'}'
+t_LLAVE_IZ=r'{'
 t_PORCENTAJE=r'%'
-t_PIPELINE=r'\|'
+t_BARRA=r'\|'
 t_EXPONENCIACION=r'\*\*'
-t_CORCHETE_L=r'\['
-t_CORCHETE_R=r'\]'
+t_CORCHETE_IZ=r'\['
+t_CORCHETE_DER=r'\]'
 t_TRIPLE_IGUAL=r'==='
 t_ASIGNA_HASH=r'=>'
 
