@@ -1,0 +1,1 @@
+Token: tipo=COMENTARIO, valor='Hash utilizado para el grafo'
