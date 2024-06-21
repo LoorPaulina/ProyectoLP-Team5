@@ -20,4 +20,8 @@ def p_estructura_if(p):
     'estructura_if : IF CONDITION VALOR ELSE VALOR' 
     
 #estructura de datos - hash
+#Dafne Ruiz
+#operaciones aritmeticas
+#def p_operacionSuma(p):
 
+#estructura de datos-Array 
