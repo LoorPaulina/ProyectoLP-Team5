@@ -2,53 +2,64 @@ import ply.yacc as yacc
 from lexico import tokens
 
 def p_cuerpo(p):
-    '''cuerpo : operacionSuma'''
-
-#Loor Paulina
-#impresion - funcion5 +
-#def p_impresion_vacia(p):
-#    'impresion : PRINT PARENTESIS_IZ PARENTESIS_DER'
-
-#def p_impresion(p):
-#    'impresion : PRINT PARENTESIS_IZ expression PARENTESIS_DER'
-
-#estructura de control - if
-#def p_estructura_if(p):
-#    'estructura_if : IF CONDITION VALOR ELSE VALOR' 
+    '''cuerpo : operacionAritmetica'''
+    p[0] = p[1]
     
-#estructura de datos - hash
+# Operaciones
 #Dafne Ruiz
-#operaciones aritmeticas
 def p_valorNumerico(p):
     """valorNumerico : FLOTANTE 
                      | ENTERO """
+    p[0] = float(p[1])
     
-
 def p_operadores(p):
     """operadores : MAS 
                   | MENOS
                   | DIVISION
                   | MULTIPLICACION
                   | EXPONENCIACION """
-    
-def p_operacionSuma(p):
-    """operacionSuma : valorNumerico operadores valorNumerico """
+    p[0] = p[1]
+def p_expresionNumerica(p):
+    """expresionNumerica : valorNumerico
+                         | operacionAritmetica
+                         | PARENTESIS_IZ operacionAritmetica PARENTESIS_DER"""
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = p[2]
 
-#estructura de datos-Array 
+def p_operacionAritmetica(p):
+    """operacionAritmetica : expresionNumerica operadores expresionNumerica"""
+    if p[2] == '+':
+        p[0] = p[1] + p[3]
+    elif p[2] == '-':
+        p[0] = p[1] - p[3]
+    elif p[2] == '*':
+        p[0] = p[1] * p[3]
+    elif p[2] == '/':
+        if p[3] != 0:
+            p[0] = p[1] / p[3]
+        else:
+            print("Error: Division by zero")
+            p[0] = None
+    elif p[2] == '**':
+        p[0] = p[1] ** p[3]
+    
+
 def p_error(p):
-  if p:
-    print("Error de sintaxis en token:", p.type)
-    #sintactico.errok()
-  else:
-    print("Syntax error at EOF")
-sintactico = yacc.yacc()
+    if p:
+        print("Error de sintaxis en token:", p.type)
+        yacc.errok()
+    else:
+        print("Syntax error at EOF")
+
+parser = yacc.yacc()
 
 while True:
-  try:
-    s = input('ruby > ')
-  except EOFError:
-    break
-  if not s: continue
-  result = sintactico.parse(s)
-  if result != None: print(result)
-
+   try:
+       s = input('ruby> ')
+   except EOFError:
+       break
+   if not s: continue
+   result = parser.parse(s)
+   print(result)

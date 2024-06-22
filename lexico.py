@@ -102,12 +102,17 @@ tokens=[
 #cadenas
 
 #flotantes 
+def t_FLOTANTE(t):
+    r'[-]?(0|[1-9]\d*)?\.{1}\d*'
+    t.value=float(t.value)
+    return t 
 
-t_FLOTANTE=r'[-]?(0|[1-9]\d*)?\.{1}\d*'
 
 #enteros
-
-t_ENTERO=r'[-]?[0-9]+'
+def t_ENTERO(t):
+    r'[-]?[0-9]+'
+    t.value=int(t.value)
+    return t 
 
 #operadores y delimitadores
 

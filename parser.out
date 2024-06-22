@@ -49,8 +49,6 @@ Unused terminals:
     NOT
     OR
     O_SIGNO
-    PARENTESIS_DER
-    PARENTESIS_IZ
     PORCENTAJE
     PREGUNTA
     PRINT
@@ -78,7 +76,7 @@ Unused terminals:
 Grammar
 
 Rule 0     S' -> cuerpo
-Rule 1     cuerpo -> operacionSuma
+Rule 1     cuerpo -> operacionAritmetica
 Rule 2     valorNumerico -> FLOTANTE
 Rule 3     valorNumerico -> ENTERO
 Rule 4     operadores -> MAS
@@ -86,7 +84,10 @@ Rule 5     operadores -> MENOS
 Rule 6     operadores -> DIVISION
 Rule 7     operadores -> MULTIPLICACION
 Rule 8     operadores -> EXPONENCIACION
-Rule 9     operacionSuma -> valorNumerico operadores valorNumerico
+Rule 9     expresionNumerica -> valorNumerico
+Rule 10    expresionNumerica -> operacionAritmetica
+Rule 11    expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+Rule 12    operacionAritmetica -> expresionNumerica operadores expresionNumerica
 
 Terminals, with rules where they appear
 
@@ -144,8 +145,8 @@ NIL                  :
 NOT                  : 
 OR                   : 
 O_SIGNO              : 
-PARENTESIS_DER       : 
-PARENTESIS_IZ        : 
+PARENTESIS_DER       : 11
+PARENTESIS_IZ        : 11
 PORCENTAJE           : 
 PREGUNTA             : 
 PRINT                : 
@@ -174,26 +175,32 @@ error                :
 Nonterminals, with rules where they appear
 
 cuerpo               : 0
-operacionSuma        : 1
-operadores           : 9
-valorNumerico        : 9 9
+expresionNumerica    : 12 12
+operacionAritmetica  : 1 10 11
+operadores           : 12
+valorNumerico        : 9
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . cuerpo
-    (1) cuerpo -> . operacionSuma
-    (9) operacionSuma -> . valorNumerico operadores valorNumerico
+    (1) cuerpo -> . operacionAritmetica
+    (12) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
+    (9) expresionNumerica -> . valorNumerico
+    (10) expresionNumerica -> . operacionAritmetica
+    (11) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
     (2) valorNumerico -> . FLOTANTE
     (3) valorNumerico -> . ENTERO
 
-    FLOTANTE        shift and go to state 4
-    ENTERO          shift and go to state 5
+    PARENTESIS_IZ   shift and go to state 5
+    FLOTANTE        shift and go to state 6
+    ENTERO          shift and go to state 7
 
     cuerpo                         shift and go to state 1
-    operacionSuma                  shift and go to state 2
-    valorNumerico                  shift and go to state 3
+    operacionAritmetica            shift and go to state 2
+    expresionNumerica              shift and go to state 3
+    valorNumerico                  shift and go to state 4
 
 state 1
 
@@ -203,29 +210,66 @@ state 1
 
 state 2
 
-    (1) cuerpo -> operacionSuma .
+    (1) cuerpo -> operacionAritmetica .
+    (10) expresionNumerica -> operacionAritmetica .
 
-    $end            reduce using rule 1 (cuerpo -> operacionSuma .)
+    $end            reduce using rule 1 (cuerpo -> operacionAritmetica .)
+    MAS             reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    MENOS           reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    DIVISION        reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    MULTIPLICACION  reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    EXPONENCIACION  reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
 
 
 state 3
 
-    (9) operacionSuma -> valorNumerico . operadores valorNumerico
+    (12) operacionAritmetica -> expresionNumerica . operadores expresionNumerica
     (4) operadores -> . MAS
     (5) operadores -> . MENOS
     (6) operadores -> . DIVISION
     (7) operadores -> . MULTIPLICACION
     (8) operadores -> . EXPONENCIACION
 
-    MAS             shift and go to state 7
-    MENOS           shift and go to state 8
-    DIVISION        shift and go to state 9
-    MULTIPLICACION  shift and go to state 10
-    EXPONENCIACION  shift and go to state 11
+    MAS             shift and go to state 9
+    MENOS           shift and go to state 10
+    DIVISION        shift and go to state 11
+    MULTIPLICACION  shift and go to state 12
+    EXPONENCIACION  shift and go to state 13
 
-    operadores                     shift and go to state 6
+    operadores                     shift and go to state 8
 
 state 4
+
+    (9) expresionNumerica -> valorNumerico .
+
+    MAS             reduce using rule 9 (expresionNumerica -> valorNumerico .)
+    MENOS           reduce using rule 9 (expresionNumerica -> valorNumerico .)
+    DIVISION        reduce using rule 9 (expresionNumerica -> valorNumerico .)
+    MULTIPLICACION  reduce using rule 9 (expresionNumerica -> valorNumerico .)
+    EXPONENCIACION  reduce using rule 9 (expresionNumerica -> valorNumerico .)
+    $end            reduce using rule 9 (expresionNumerica -> valorNumerico .)
+    PARENTESIS_DER  reduce using rule 9 (expresionNumerica -> valorNumerico .)
+
+
+state 5
+
+    (11) expresionNumerica -> PARENTESIS_IZ . operacionAritmetica PARENTESIS_DER
+    (12) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
+    (9) expresionNumerica -> . valorNumerico
+    (10) expresionNumerica -> . operacionAritmetica
+    (11) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+    (2) valorNumerico -> . FLOTANTE
+    (3) valorNumerico -> . ENTERO
+
+    PARENTESIS_IZ   shift and go to state 5
+    FLOTANTE        shift and go to state 6
+    ENTERO          shift and go to state 7
+
+    operacionAritmetica            shift and go to state 14
+    expresionNumerica              shift and go to state 3
+    valorNumerico                  shift and go to state 4
+
+state 6
 
     (2) valorNumerico -> FLOTANTE .
 
@@ -235,9 +279,10 @@ state 4
     MULTIPLICACION  reduce using rule 2 (valorNumerico -> FLOTANTE .)
     EXPONENCIACION  reduce using rule 2 (valorNumerico -> FLOTANTE .)
     $end            reduce using rule 2 (valorNumerico -> FLOTANTE .)
+    PARENTESIS_DER  reduce using rule 2 (valorNumerico -> FLOTANTE .)
 
 
-state 5
+state 7
 
     (3) valorNumerico -> ENTERO .
 
@@ -247,62 +292,146 @@ state 5
     MULTIPLICACION  reduce using rule 3 (valorNumerico -> ENTERO .)
     EXPONENCIACION  reduce using rule 3 (valorNumerico -> ENTERO .)
     $end            reduce using rule 3 (valorNumerico -> ENTERO .)
-
-
-state 6
-
-    (9) operacionSuma -> valorNumerico operadores . valorNumerico
-    (2) valorNumerico -> . FLOTANTE
-    (3) valorNumerico -> . ENTERO
-
-    FLOTANTE        shift and go to state 4
-    ENTERO          shift and go to state 5
-
-    valorNumerico                  shift and go to state 12
-
-state 7
-
-    (4) operadores -> MAS .
-
-    FLOTANTE        reduce using rule 4 (operadores -> MAS .)
-    ENTERO          reduce using rule 4 (operadores -> MAS .)
+    PARENTESIS_DER  reduce using rule 3 (valorNumerico -> ENTERO .)
 
 
 state 8
 
-    (5) operadores -> MENOS .
+    (12) operacionAritmetica -> expresionNumerica operadores . expresionNumerica
+    (9) expresionNumerica -> . valorNumerico
+    (10) expresionNumerica -> . operacionAritmetica
+    (11) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+    (2) valorNumerico -> . FLOTANTE
+    (3) valorNumerico -> . ENTERO
+    (12) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
 
-    FLOTANTE        reduce using rule 5 (operadores -> MENOS .)
-    ENTERO          reduce using rule 5 (operadores -> MENOS .)
+    PARENTESIS_IZ   shift and go to state 5
+    FLOTANTE        shift and go to state 6
+    ENTERO          shift and go to state 7
 
+    expresionNumerica              shift and go to state 15
+    valorNumerico                  shift and go to state 4
+    operacionAritmetica            shift and go to state 16
 
 state 9
 
-    (6) operadores -> DIVISION .
+    (4) operadores -> MAS .
 
-    FLOTANTE        reduce using rule 6 (operadores -> DIVISION .)
-    ENTERO          reduce using rule 6 (operadores -> DIVISION .)
+    PARENTESIS_IZ   reduce using rule 4 (operadores -> MAS .)
+    FLOTANTE        reduce using rule 4 (operadores -> MAS .)
+    ENTERO          reduce using rule 4 (operadores -> MAS .)
 
 
 state 10
 
-    (7) operadores -> MULTIPLICACION .
+    (5) operadores -> MENOS .
 
-    FLOTANTE        reduce using rule 7 (operadores -> MULTIPLICACION .)
-    ENTERO          reduce using rule 7 (operadores -> MULTIPLICACION .)
+    PARENTESIS_IZ   reduce using rule 5 (operadores -> MENOS .)
+    FLOTANTE        reduce using rule 5 (operadores -> MENOS .)
+    ENTERO          reduce using rule 5 (operadores -> MENOS .)
 
 
 state 11
 
-    (8) operadores -> EXPONENCIACION .
+    (6) operadores -> DIVISION .
 
-    FLOTANTE        reduce using rule 8 (operadores -> EXPONENCIACION .)
-    ENTERO          reduce using rule 8 (operadores -> EXPONENCIACION .)
+    PARENTESIS_IZ   reduce using rule 6 (operadores -> DIVISION .)
+    FLOTANTE        reduce using rule 6 (operadores -> DIVISION .)
+    ENTERO          reduce using rule 6 (operadores -> DIVISION .)
 
 
 state 12
 
-    (9) operacionSuma -> valorNumerico operadores valorNumerico .
+    (7) operadores -> MULTIPLICACION .
 
-    $end            reduce using rule 9 (operacionSuma -> valorNumerico operadores valorNumerico .)
+    PARENTESIS_IZ   reduce using rule 7 (operadores -> MULTIPLICACION .)
+    FLOTANTE        reduce using rule 7 (operadores -> MULTIPLICACION .)
+    ENTERO          reduce using rule 7 (operadores -> MULTIPLICACION .)
 
+
+state 13
+
+    (8) operadores -> EXPONENCIACION .
+
+    PARENTESIS_IZ   reduce using rule 8 (operadores -> EXPONENCIACION .)
+    FLOTANTE        reduce using rule 8 (operadores -> EXPONENCIACION .)
+    ENTERO          reduce using rule 8 (operadores -> EXPONENCIACION .)
+
+
+state 14
+
+    (11) expresionNumerica -> PARENTESIS_IZ operacionAritmetica . PARENTESIS_DER
+    (10) expresionNumerica -> operacionAritmetica .
+
+    PARENTESIS_DER  shift and go to state 17
+    MAS             reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    MENOS           reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    DIVISION        reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    MULTIPLICACION  reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    EXPONENCIACION  reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+
+
+state 15
+
+    (12) operacionAritmetica -> expresionNumerica operadores expresionNumerica .
+    (12) operacionAritmetica -> expresionNumerica . operadores expresionNumerica
+    (4) operadores -> . MAS
+    (5) operadores -> . MENOS
+    (6) operadores -> . DIVISION
+    (7) operadores -> . MULTIPLICACION
+    (8) operadores -> . EXPONENCIACION
+
+  ! shift/reduce conflict for MAS resolved as shift
+  ! shift/reduce conflict for MENOS resolved as shift
+  ! shift/reduce conflict for DIVISION resolved as shift
+  ! shift/reduce conflict for MULTIPLICACION resolved as shift
+  ! shift/reduce conflict for EXPONENCIACION resolved as shift
+    $end            reduce using rule 12 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .)
+    PARENTESIS_DER  reduce using rule 12 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .)
+    MAS             shift and go to state 9
+    MENOS           shift and go to state 10
+    DIVISION        shift and go to state 11
+    MULTIPLICACION  shift and go to state 12
+    EXPONENCIACION  shift and go to state 13
+
+  ! MAS             [ reduce using rule 12 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
+  ! MENOS           [ reduce using rule 12 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
+  ! DIVISION        [ reduce using rule 12 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
+  ! MULTIPLICACION  [ reduce using rule 12 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
+  ! EXPONENCIACION  [ reduce using rule 12 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
+
+    operadores                     shift and go to state 8
+
+state 16
+
+    (10) expresionNumerica -> operacionAritmetica .
+
+    MAS             reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    MENOS           reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    DIVISION        reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    MULTIPLICACION  reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    EXPONENCIACION  reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    $end            reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+    PARENTESIS_DER  reduce using rule 10 (expresionNumerica -> operacionAritmetica .)
+
+
+state 17
+
+    (11) expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .
+
+    MAS             reduce using rule 11 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    MENOS           reduce using rule 11 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    DIVISION        reduce using rule 11 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    MULTIPLICACION  reduce using rule 11 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    EXPONENCIACION  reduce using rule 11 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    $end            reduce using rule 11 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    PARENTESIS_DER  reduce using rule 11 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for MAS in state 15 resolved as shift
+WARNING: shift/reduce conflict for MENOS in state 15 resolved as shift
+WARNING: shift/reduce conflict for DIVISION in state 15 resolved as shift
+WARNING: shift/reduce conflict for MULTIPLICACION in state 15 resolved as shift
+WARNING: shift/reduce conflict for EXPONENCIACION in state 15 resolved as shift
