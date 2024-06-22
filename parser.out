@@ -1,0 +1,187 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ALIAS
+    AND
+    ASIGNA_HASH
+    BARRA
+    BEGIN
+    BREAK
+    CADENA
+    CASE
+    CHOMP
+    CLASS
+    COMA
+    COMENTARIO
+    COMENTARIO_MULTI
+    COMILLA_D
+    COMILLA_S
+    CONCAT
+    CORCHETE_DER
+    CORCHETE_IZ
+    DEF
+    DEFINED_QUESTION
+    DIFERENTE
+    EACH
+    ELSE
+    ELSEIF
+    END
+    ENSURE
+    EXCLAMACION_ALTO
+    EXCLAMACION_BAJO
+    FALSE
+    FOR
+    GETS
+    IF
+    IGUAL
+    IGUAL_DOBLEP
+    IN
+    LLAVE_DER
+    LLAVE_IZ
+    MAYOR_IGUAL_QUE
+    MAYOR_QUE
+    MENOR_IGUAL_QUE
+    MENOR_QUE
+    MODULE
+    NEXT
+    NIL
+    NOT
+    OR
+    O_SIGNO
+    PORCENTAJE
+    PREGUNTA
+    PRINTF
+    PUTS
+    RAISE
+    REDO
+    RESCUE
+    RETRY
+    RETURN
+    SELF
+    SIMBOLO
+    SORT
+    SUPER
+    TO_F
+    TRIPLE_IGUAL
+    TRUE
+    UNTIL
+    VARIABLE
+    VARIABLECLASE
+    WHILE
+    YIELD
+    Y_SIGNO
+
+Grammar
+
+Rule 0     S' -> cuerpo
+Rule 1     cuerpo -> expression
+Rule 2     cuerpo -> impresion
+Rule 3     cuerpo -> tupla
+Rule 4     cuerpo -> declaracion
+Rule 5     cuerpo -> operacionSuma
+Rule 6     impresion -> PRINT PARENTESIS_IZ PARENTESIS_DER
+Rule 7     impresion -> PRINT PARENTESIS_IZ expression PARENTESIS_DER
+Rule 8     valorNumerico -> FLOTANTE
+Rule 9     valorNumerico -> ENTERO
+Rule 10    operadores -> MAS
+Rule 11    operadores -> MENOS
+Rule 12    operadores -> DIVISION
+Rule 13    operadores -> MULTIPLICACION
+Rule 14    operadores -> EXPONENCIACION
+Rule 15    operacionSuma -> valorNumerico operadores valorNumerico
+
+Terminals, with rules where they appear
+
+ALIAS                : 
+AND                  : 
+ASIGNA_HASH          : 
+BARRA                : 
+BEGIN                : 
+BREAK                : 
+CADENA               : 
+CASE                 : 
+CHOMP                : 
+CLASS                : 
+COMA                 : 
+COMENTARIO           : 
+COMENTARIO_MULTI     : 
+COMILLA_D            : 
+COMILLA_S            : 
+CONCAT               : 
+CORCHETE_DER         : 
+CORCHETE_IZ          : 
+DEF                  : 
+DEFINED_QUESTION     : 
+DIFERENTE            : 
+DIVISION             : 12
+EACH                 : 
+ELSE                 : 
+ELSEIF               : 
+END                  : 
+ENSURE               : 
+ENTERO               : 9
+EXCLAMACION_ALTO     : 
+EXCLAMACION_BAJO     : 
+EXPONENCIACION       : 14
+FALSE                : 
+FLOTANTE             : 8
+FOR                  : 
+GETS                 : 
+IF                   : 
+IGUAL                : 
+IGUAL_DOBLEP         : 
+IN                   : 
+LLAVE_DER            : 
+LLAVE_IZ             : 
+MAS                  : 10
+MAYOR_IGUAL_QUE      : 
+MAYOR_QUE            : 
+MENOR_IGUAL_QUE      : 
+MENOR_QUE            : 
+MENOS                : 11
+MODULE               : 
+MULTIPLICACION       : 13
+NEXT                 : 
+NIL                  : 
+NOT                  : 
+OR                   : 
+O_SIGNO              : 
+PARENTESIS_DER       : 6 7
+PARENTESIS_IZ        : 6 7
+PORCENTAJE           : 
+PREGUNTA             : 
+PRINT                : 6 7
+PRINTF               : 
+PUTS                 : 
+RAISE                : 
+REDO                 : 
+RESCUE               : 
+RETRY                : 
+RETURN               : 
+SELF                 : 
+SIMBOLO              : 
+SORT                 : 
+SUPER                : 
+TO_F                 : 
+TRIPLE_IGUAL         : 
+TRUE                 : 
+UNTIL                : 
+VARIABLE             : 
+VARIABLECLASE        : 
+WHILE                : 
+YIELD                : 
+Y_SIGNO              : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+cuerpo               : 0
+declaracion          : 4
+expression           : 1 7
+impresion            : 2
+operacionSuma        : 5
+operadores           : 15
+tupla                : 3
+valorNumerico        : 15 15
+

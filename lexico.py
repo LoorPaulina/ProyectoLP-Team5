@@ -291,4 +291,3 @@ def pruebas_picon():
 
   print(f"Resultado guardado en {ruta_archivo}")
 
-pruebas_picon()
