@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ALIAS AND ASIGNA_HASH BARRA BEGIN BREAK CADENA CASE CHOMP CLASS COMA COMENTARIO COMENTARIO_MULTI COMILLA_D COMILLA_S CONCAT CORCHETE_DER CORCHETE_IZ DEF DEFINED_QUESTION DIFERENTE DIVISION EACH ELSE ELSEIF END ENSURE ENTERO EXCLAMACION_ALTO EXCLAMACION_BAJO EXPONENCIACION FALSE FLOTANTE FOR GETS IF IGUAL IGUAL_DOBLEP IN LLAVE_DER LLAVE_IZ MAS MAYOR_IGUAL_QUE MAYOR_QUE MENOR_IGUAL_QUE MENOR_QUE MENOS MODULE MULTIPLICACION NEXT NIL NOT OR O_SIGNO PARENTESIS_DER PARENTESIS_IZ PORCENTAJE PREGUNTA PRINT PRINTF PUTS RAISE REDO RESCUE RETRY RETURN SELF SIMBOLO SORT SUPER TO_F TRIPLE_IGUAL TRUE UNTIL VARIABLE VARIABLECLASE WHILE YIELD Y_SIGNOcuerpo : operacionAritmeticavalorNumerico : FLOTANTE \n                     | ENTERO operadores : MAS \n                  | MENOS\n                  | DIVISION\n                  | MULTIPLICACION\n                  | EXPONENCIACION expresionNumerica : valorNumerico\n                         | operacionAritmetica\n                         | PARENTESIS_IZ operacionAritmetica PARENTESIS_DERoperacionAritmetica : expresionNumerica operadores expresionNumerica'
+_lr_signature = 'ALIAS AND ASIGNA_HASH BARRA BEGIN BREAK CADENA CASE CHOMP CLASS COMA COMENTARIO COMENTARIO_MULTI COMILLA_D COMILLA_S CONCAT CORCHETE_DER CORCHETE_IZ DEF DEFINED_QUESTION DIFERENTE DIVISION EACH ELSE ELSEIF END ENSURE ENTERO EXCLAMACION_ALTO EXCLAMACION_BAJO EXPONENCIACION FALSE FLOTANTE FOR GETS IF IGUAL IGUAL_DOBLEP IN LLAVE_DER LLAVE_IZ MAS MAYOR_IGUAL_QUE MAYOR_QUE MENOR_IGUAL_QUE MENOR_QUE MENOS MODULE MODULO MULTIPLICACION NEXT NIL NOT OR O_SIGNO PARENTESIS_DER PARENTESIS_IZ PORCENTAJE PREGUNTA PRINT PRINTF PUTS RAISE REDO RESCUE RETRY RETURN SELF SIMBOLO SORT SUPER TO_F TRIPLE_IGUAL TRUE UNTIL VARIABLE VARIABLECLASE WHILE YIELD Y_SIGNOcuerpo : operacionAritmetica\n              | asignacion\n              | impresionvalorNumerico : FLOTANTE \n                     | ENTERO operadores : MAS \n                  | MENOS\n                  | DIVISION\n                  | MULTIPLICACION\n                  | EXPONENCIACION \n                  | MODULOexpresionNumerica : valorNumerico\n                         | operacionAritmetica\n                         | PARENTESIS_IZ operacionAritmetica PARENTESIS_DERoperacionAritmetica : expresionNumerica operadores expresionNumericaimpresion : PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER\n                 | PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER asignacion : VARIABLE IGUAL expresionNumerica\n                  | VARIABLE IGUAL CADENA'
     
-_lr_action_items = {'PARENTESIS_IZ':([0,5,8,9,10,11,12,13,],[5,5,5,-4,-5,-6,-7,-8,]),'FLOTANTE':([0,5,8,9,10,11,12,13,],[6,6,6,-4,-5,-6,-7,-8,]),'ENTERO':([0,5,8,9,10,11,12,13,],[7,7,7,-4,-5,-6,-7,-8,]),'$end':([1,2,4,6,7,15,16,17,],[0,-1,-9,-2,-3,-12,-10,-11,]),'MAS':([2,3,4,6,7,14,15,16,17,],[-10,9,-9,-2,-3,-10,9,-10,-11,]),'MENOS':([2,3,4,6,7,14,15,16,17,],[-10,10,-9,-2,-3,-10,10,-10,-11,]),'DIVISION':([2,3,4,6,7,14,15,16,17,],[-10,11,-9,-2,-3,-10,11,-10,-11,]),'MULTIPLICACION':([2,3,4,6,7,14,15,16,17,],[-10,12,-9,-2,-3,-10,12,-10,-11,]),'EXPONENCIACION':([2,3,4,6,7,14,15,16,17,],[-10,13,-9,-2,-3,-10,13,-10,-11,]),'PARENTESIS_DER':([4,6,7,14,15,16,17,],[-9,-2,-3,17,-12,-10,-11,]),}
+_lr_action_items = {'VARIABLE':([0,20,],[6,27,]),'PRINT':([0,],[7,]),'PARENTESIS_IZ':([0,7,8,12,13,14,15,16,17,18,19,20,],[8,20,8,8,-6,-7,-8,-9,-10,-11,8,8,]),'FLOTANTE':([0,8,12,13,14,15,16,17,18,19,20,],[10,10,10,-6,-7,-8,-9,-10,-11,10,10,]),'ENTERO':([0,8,12,13,14,15,16,17,18,19,20,],[11,11,11,-6,-7,-8,-9,-10,-11,11,11,]),'$end':([1,2,3,4,9,10,11,22,23,24,25,28,29,30,],[0,-1,-2,-3,-12,-4,-5,-15,-13,-18,-19,-14,-16,-17,]),'MAS':([2,5,9,10,11,21,22,23,24,26,28,],[-13,13,-12,-4,-5,-13,13,-13,13,13,-14,]),'MENOS':([2,5,9,10,11,21,22,23,24,26,28,],[-13,14,-12,-4,-5,-13,14,-13,14,14,-14,]),'DIVISION':([2,5,9,10,11,21,22,23,24,26,28,],[-13,15,-12,-4,-5,-13,15,-13,15,15,-14,]),'MULTIPLICACION':([2,5,9,10,11,21,22,23,24,26,28,],[-13,16,-12,-4,-5,-13,16,-13,16,16,-14,]),'EXPONENCIACION':([2,5,9,10,11,21,22,23,24,26,28,],[-13,17,-12,-4,-5,-13,17,-13,17,17,-14,]),'MODULO':([2,5,9,10,11,21,22,23,24,26,28,],[-13,18,-12,-4,-5,-13,18,-13,18,18,-14,]),'IGUAL':([6,],[19,]),'PARENTESIS_DER':([9,10,11,21,22,23,26,27,28,],[-12,-4,-5,28,-15,-13,29,30,-14,]),'CADENA':([19,],[25,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'cuerpo':([0,],[1,]),'operacionAritmetica':([0,5,8,],[2,14,16,]),'expresionNumerica':([0,5,8,],[3,3,15,]),'valorNumerico':([0,5,8,],[4,4,4,]),'operadores':([3,15,],[8,8,]),}
+_lr_goto_items = {'cuerpo':([0,],[1,]),'operacionAritmetica':([0,8,12,19,20,],[2,21,23,23,23,]),'asignacion':([0,],[3,]),'impresion':([0,],[4,]),'expresionNumerica':([0,8,12,19,20,],[5,5,22,24,26,]),'valorNumerico':([0,8,12,19,20,],[9,9,9,9,9,]),'operadores':([5,22,24,26,],[12,12,12,12,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -28,15 +28,22 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> cuerpo","S'",1,None,None,None),
   ('cuerpo -> operacionAritmetica','cuerpo',1,'p_cuerpo','sintactico.py',5),
-  ('valorNumerico -> FLOTANTE','valorNumerico',1,'p_valorNumerico','sintactico.py',11),
-  ('valorNumerico -> ENTERO','valorNumerico',1,'p_valorNumerico','sintactico.py',12),
-  ('operadores -> MAS','operadores',1,'p_operadores','sintactico.py',16),
-  ('operadores -> MENOS','operadores',1,'p_operadores','sintactico.py',17),
-  ('operadores -> DIVISION','operadores',1,'p_operadores','sintactico.py',18),
-  ('operadores -> MULTIPLICACION','operadores',1,'p_operadores','sintactico.py',19),
-  ('operadores -> EXPONENCIACION','operadores',1,'p_operadores','sintactico.py',20),
-  ('expresionNumerica -> valorNumerico','expresionNumerica',1,'p_expresionNumerica','sintactico.py',23),
-  ('expresionNumerica -> operacionAritmetica','expresionNumerica',1,'p_expresionNumerica','sintactico.py',24),
-  ('expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER','expresionNumerica',3,'p_expresionNumerica','sintactico.py',25),
-  ('operacionAritmetica -> expresionNumerica operadores expresionNumerica','operacionAritmetica',3,'p_operacionAritmetica','sintactico.py',28),
+  ('cuerpo -> asignacion','cuerpo',1,'p_cuerpo','sintactico.py',6),
+  ('cuerpo -> impresion','cuerpo',1,'p_cuerpo','sintactico.py',7),
+  ('valorNumerico -> FLOTANTE','valorNumerico',1,'p_valorNumerico','sintactico.py',13),
+  ('valorNumerico -> ENTERO','valorNumerico',1,'p_valorNumerico','sintactico.py',14),
+  ('operadores -> MAS','operadores',1,'p_operadores','sintactico.py',18),
+  ('operadores -> MENOS','operadores',1,'p_operadores','sintactico.py',19),
+  ('operadores -> DIVISION','operadores',1,'p_operadores','sintactico.py',20),
+  ('operadores -> MULTIPLICACION','operadores',1,'p_operadores','sintactico.py',21),
+  ('operadores -> EXPONENCIACION','operadores',1,'p_operadores','sintactico.py',22),
+  ('operadores -> MODULO','operadores',1,'p_operadores','sintactico.py',23),
+  ('expresionNumerica -> valorNumerico','expresionNumerica',1,'p_expresionNumerica','sintactico.py',26),
+  ('expresionNumerica -> operacionAritmetica','expresionNumerica',1,'p_expresionNumerica','sintactico.py',27),
+  ('expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER','expresionNumerica',3,'p_expresionNumerica','sintactico.py',28),
+  ('operacionAritmetica -> expresionNumerica operadores expresionNumerica','operacionAritmetica',3,'p_operacionAritmetica','sintactico.py',35),
+  ('impresion -> PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER','impresion',4,'p_impresion','sintactico.py',53),
+  ('impresion -> PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER','impresion',4,'p_impresion','sintactico.py',54),
+  ('asignacion -> VARIABLE IGUAL expresionNumerica','asignacion',3,'p_asignacion','sintactico.py',62),
+  ('asignacion -> VARIABLE IGUAL CADENA','asignacion',3,'p_asignacion','sintactico.py',63),
 ]

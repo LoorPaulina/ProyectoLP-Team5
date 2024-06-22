@@ -62,6 +62,7 @@ tokens=[
     'MAS',
     'MENOS',
     'DIVISION',
+    'MODULO',
     'PARENTESIS_IZ',
     'PARENTESIS_DER',
     'IGUAL_DOBLEP',
@@ -131,6 +132,7 @@ t_DIFERENTE=r'!='
 t_IGUAL=r'='
 t_IGUAL_DOBLEP=r':'
 t_MAS= r'\+'
+t_MODULO= r'%'
 t_MENOS= r'-'
 t_DIVISION= r'/'
 t_PARENTESIS_IZ= r'\('
