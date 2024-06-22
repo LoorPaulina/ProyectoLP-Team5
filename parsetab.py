@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ALIAS AND ASIGNA_HASH BARRA BEGIN BREAK CADENA CASE CHOMP CLASS COMA COMENTARIO COMENTARIO_MULTI COMILLA_D COMILLA_S CONCAT CORCHETE_DER CORCHETE_IZ DEF DEFINED_QUESTION DIFERENTE DIVISION EACH ELSE ELSEIF END ENSURE ENTERO EXCLAMACION_ALTO EXCLAMACION_BAJO EXPONENCIACION FALSE FLOTANTE FOR GETS IF IGUAL IGUAL_DOBLEP IN LLAVE_DER LLAVE_IZ MAS MAYOR_IGUAL_QUE MAYOR_QUE MENOR_IGUAL_QUE MENOR_QUE MENOS MODULE MODULO MULTIPLICACION NEXT NIL NOT OR O_SIGNO PARENTESIS_DER PARENTESIS_IZ PORCENTAJE PREGUNTA PRINT PRINTF PUTS RAISE REDO RESCUE RETRY RETURN SELF SIMBOLO SORT SUPER TO_F TRIPLE_IGUAL TRUE UNTIL VARIABLE VARIABLECLASE WHILE YIELD Y_SIGNOcuerpo : operacionAritmetica\n              | asignacion\n              | impresionvalorNumerico : FLOTANTE \n                     | ENTERO operadores : MAS \n                  | MENOS\n                  | DIVISION\n                  | MULTIPLICACION\n                  | EXPONENCIACION \n                  | MODULOexpresionNumerica : valorNumerico\n                         | operacionAritmetica\n                         | PARENTESIS_IZ operacionAritmetica PARENTESIS_DERoperacionAritmetica : expresionNumerica operadores expresionNumericaimpresion : PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER\n                 | PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER asignacion : VARIABLE IGUAL expresionNumerica\n                  | VARIABLE IGUAL CADENA'
+_lr_signature = 'ALIAS AND ASIGNA_HASH BARRA BEGIN BREAK CADENA CASE CHOMP CLASS COMA COMENTARIO COMENTARIO_MULTI COMILLA_D COMILLA_S CONCAT CORCHETE_DER CORCHETE_IZ DEF DEFINED_QUESTION DIFERENTE DIVISION EACH ELSE ELSEIF END ENSURE ENTERO EXCLAMACION_ALTO EXCLAMACION_BAJO EXPONENCIACION FALSE FLOTANTE FOR GETS IF IGUAL IGUAL_DOBLEP IN LLAVE_DER LLAVE_IZ MAS MAYOR_IGUAL_QUE MAYOR_QUE MENOR_IGUAL_QUE MENOR_QUE MENOS MODULE MODULO MULTIPLICACION NEXT NIL NOT OR O_SIGNO PARENTESIS_DER PARENTESIS_IZ PORCENTAJE PREGUNTA PRINT PRINTF PUNTO PUTS RAISE REDO RESCUE RETRY RETURN SELF SIMBOLO SORT SUPER TO_F TRES_PUNTOS TRIPLE_IGUAL TRUE UNTIL VARIABLE VARIABLECLASE WHILE YIELD Y_SIGNOcuerpo : operacionAritmetica\n              | asignacion\n              | impresion\n              | impresion_vacia\n              | expresiones_booleanas_ID\n              | expresiones_booleanas_CN\n              | solicitudDatosTeclado\n              | hashesvalorNumerico : FLOTANTE \n                     | ENTEROsoloEnteros : ENTEROoperadores : MAS \n                  | MENOS\n                  | DIVISION\n                  | MULTIPLICACION\n                  | EXPONENCIACION \n                  | MODULOexpresionNumerica : valorNumerico\n                         | operacionAritmetica\n                         | PARENTESIS_IZ operacionAritmetica PARENTESIS_DERoperacionAritmetica : expresionNumerica operadores expresionNumericaimpresion : PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER\n                 | PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER asignacion : VARIABLE IGUAL expresionNumerica\n                  | VARIABLE IGUAL CADENArangos : PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DERimpresion_vacia : PRINT PARENTESIS_IZ PARENTESIS_DER\n                        | PUTS PARENTESIS_IZ PARENTESIS_DER\n                        | PUTSexpresiones_booleanas_ID : valorNumerico IGUAL IGUAL valorNumerico\n                            | valorNumerico DIFERENTE valorNumerico \n                            | rangos TRIPLE_IGUAL ENTEROexpresiones_booleanas_CN : valorNumerico IGUAL IGUAL valorNumerico\n                            | valorNumerico MAYOR_QUE valorNumerico \n                            | valorNumerico MENOR_QUE valorNumerico \n                            | valorNumerico MENOR_IGUAL_QUE valorNumerico\n                            | valorNumerico MAYOR_IGUAL_QUE valorNumerico\n                            | rangos TRIPLE_IGUAL ENTEROsolicitudDatosTeclado : GETS hashes : LLAVE_IZ elemento_hash LLAVE_DERclaveValor : VARIABLE ASIGNA_HASH valorNumerico\n                  | VARIABLE ASIGNA_HASH CADENAelemento_hash : claveValor\n                    | claveValor COMA claveValor'
     
-_lr_action_items = {'VARIABLE':([0,20,],[6,27,]),'PRINT':([0,],[7,]),'PARENTESIS_IZ':([0,7,8,12,13,14,15,16,17,18,19,20,],[8,20,8,8,-6,-7,-8,-9,-10,-11,8,8,]),'FLOTANTE':([0,8,12,13,14,15,16,17,18,19,20,],[10,10,10,-6,-7,-8,-9,-10,-11,10,10,]),'ENTERO':([0,8,12,13,14,15,16,17,18,19,20,],[11,11,11,-6,-7,-8,-9,-10,-11,11,11,]),'$end':([1,2,3,4,9,10,11,22,23,24,25,28,29,30,],[0,-1,-2,-3,-12,-4,-5,-15,-13,-18,-19,-14,-16,-17,]),'MAS':([2,5,9,10,11,21,22,23,24,26,28,],[-13,13,-12,-4,-5,-13,13,-13,13,13,-14,]),'MENOS':([2,5,9,10,11,21,22,23,24,26,28,],[-13,14,-12,-4,-5,-13,14,-13,14,14,-14,]),'DIVISION':([2,5,9,10,11,21,22,23,24,26,28,],[-13,15,-12,-4,-5,-13,15,-13,15,15,-14,]),'MULTIPLICACION':([2,5,9,10,11,21,22,23,24,26,28,],[-13,16,-12,-4,-5,-13,16,-13,16,16,-14,]),'EXPONENCIACION':([2,5,9,10,11,21,22,23,24,26,28,],[-13,17,-12,-4,-5,-13,17,-13,17,17,-14,]),'MODULO':([2,5,9,10,11,21,22,23,24,26,28,],[-13,18,-12,-4,-5,-13,18,-13,18,18,-14,]),'IGUAL':([6,],[19,]),'PARENTESIS_DER':([9,10,11,21,22,23,26,27,28,],[-12,-4,-5,28,-15,-13,29,30,-14,]),'CADENA':([19,],[25,]),}
+_lr_action_items = {'VARIABLE':([0,19,29,64,],[11,45,52,45,]),'PRINT':([0,],[12,]),'PUTS':([0,],[14,]),'GETS':([0,],[18,]),'LLAVE_IZ':([0,],[19,]),'PARENTESIS_IZ':([0,12,13,14,21,22,23,24,25,26,27,28,29,30,],[13,29,30,35,30,-12,-13,-14,-15,-16,-17,30,30,30,]),'FLOTANTE':([0,13,21,22,23,24,25,26,27,28,29,30,37,38,39,40,41,56,65,],[20,20,20,-12,-13,-14,-15,-16,-17,20,20,20,20,20,20,20,20,20,20,]),'ENTERO':([0,13,21,22,23,24,25,26,27,28,29,30,37,38,39,40,41,42,54,56,65,],[17,33,17,-12,-13,-14,-15,-16,-17,17,17,17,17,17,17,17,17,62,69,17,17,]),'$end':([1,2,3,4,5,6,7,8,9,14,17,18,20,34,46,47,48,49,51,53,55,57,58,59,60,61,62,63,66,67,70,],[0,-1,-2,-3,-4,-5,-6,-7,-8,-29,-10,-39,-9,-18,-21,-19,-24,-25,-27,-20,-28,-31,-34,-35,-36,-37,-32,-40,-22,-23,-30,]),'MAS':([2,10,15,17,20,31,33,34,46,47,48,50,53,],[-19,22,-18,-10,-9,-19,-10,-18,22,-19,22,22,-20,]),'MENOS':([2,10,15,17,20,31,33,34,46,47,48,50,53,],[-19,23,-18,-10,-9,-19,-10,-18,23,-19,23,23,-20,]),'DIVISION':([2,10,15,17,20,31,33,34,46,47,48,50,53,],[-19,24,-18,-10,-9,-19,-10,-18,24,-19,24,24,-20,]),'MULTIPLICACION':([2,10,15,17,20,31,33,34,46,47,48,50,53,],[-19,25,-18,-10,-9,-19,-10,-18,25,-19,25,25,-20,]),'EXPONENCIACION':([2,10,15,17,20,31,33,34,46,47,48,50,53,],[-19,26,-18,-10,-9,-19,-10,-18,26,-19,26,26,-20,]),'MODULO':([2,10,15,17,20,31,33,34,46,47,48,50,53,],[-19,27,-18,-10,-9,-19,-10,-18,27,-19,27,27,-20,]),'IGUAL':([11,15,17,20,36,],[28,36,-10,-9,56,]),'DIFERENTE':([15,17,20,],[37,-10,-9,]),'MAYOR_QUE':([15,17,20,],[38,-10,-9,]),'MENOR_QUE':([15,17,20,],[39,-10,-9,]),'MENOR_IGUAL_QUE':([15,17,20,],[40,-10,-9,]),'MAYOR_IGUAL_QUE':([15,17,20,],[41,-10,-9,]),'TRIPLE_IGUAL':([16,74,],[42,-26,]),'PARENTESIS_DER':([17,20,29,31,34,35,46,47,50,52,53,68,69,],[-10,-9,51,53,-18,55,-21,-19,66,67,-20,74,-11,]),'COMA':([17,20,44,72,73,],[-10,-9,64,-41,-42,]),'LLAVE_DER':([17,20,43,44,71,72,73,],[-10,-9,63,-43,-44,-41,-42,]),'CADENA':([28,65,],[49,73,]),'TRES_PUNTOS':([32,33,],[54,-11,]),'ASIGNA_HASH':([45,],[65,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'cuerpo':([0,],[1,]),'operacionAritmetica':([0,8,12,19,20,],[2,21,23,23,23,]),'asignacion':([0,],[3,]),'impresion':([0,],[4,]),'expresionNumerica':([0,8,12,19,20,],[5,5,22,24,26,]),'valorNumerico':([0,8,12,19,20,],[9,9,9,9,9,]),'operadores':([5,22,24,26,],[12,12,12,12,]),}
+_lr_goto_items = {'cuerpo':([0,],[1,]),'operacionAritmetica':([0,13,21,28,29,30,],[2,31,47,47,47,31,]),'asignacion':([0,],[3,]),'impresion':([0,],[4,]),'impresion_vacia':([0,],[5,]),'expresiones_booleanas_ID':([0,],[6,]),'expresiones_booleanas_CN':([0,],[7,]),'solicitudDatosTeclado':([0,],[8,]),'hashes':([0,],[9,]),'expresionNumerica':([0,13,21,28,29,30,],[10,10,46,48,50,10,]),'valorNumerico':([0,13,21,28,29,30,37,38,39,40,41,56,65,],[15,34,34,34,34,34,57,58,59,60,61,70,72,]),'rangos':([0,],[16,]),'operadores':([10,46,48,50,],[21,21,21,21,]),'soloEnteros':([13,54,],[32,68,]),'elemento_hash':([19,],[43,]),'claveValor':([19,64,],[44,71,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -30,20 +30,45 @@ _lr_productions = [
   ('cuerpo -> operacionAritmetica','cuerpo',1,'p_cuerpo','sintactico.py',5),
   ('cuerpo -> asignacion','cuerpo',1,'p_cuerpo','sintactico.py',6),
   ('cuerpo -> impresion','cuerpo',1,'p_cuerpo','sintactico.py',7),
-  ('valorNumerico -> FLOTANTE','valorNumerico',1,'p_valorNumerico','sintactico.py',13),
-  ('valorNumerico -> ENTERO','valorNumerico',1,'p_valorNumerico','sintactico.py',14),
-  ('operadores -> MAS','operadores',1,'p_operadores','sintactico.py',18),
-  ('operadores -> MENOS','operadores',1,'p_operadores','sintactico.py',19),
-  ('operadores -> DIVISION','operadores',1,'p_operadores','sintactico.py',20),
-  ('operadores -> MULTIPLICACION','operadores',1,'p_operadores','sintactico.py',21),
-  ('operadores -> EXPONENCIACION','operadores',1,'p_operadores','sintactico.py',22),
-  ('operadores -> MODULO','operadores',1,'p_operadores','sintactico.py',23),
-  ('expresionNumerica -> valorNumerico','expresionNumerica',1,'p_expresionNumerica','sintactico.py',26),
-  ('expresionNumerica -> operacionAritmetica','expresionNumerica',1,'p_expresionNumerica','sintactico.py',27),
-  ('expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER','expresionNumerica',3,'p_expresionNumerica','sintactico.py',28),
-  ('operacionAritmetica -> expresionNumerica operadores expresionNumerica','operacionAritmetica',3,'p_operacionAritmetica','sintactico.py',35),
-  ('impresion -> PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER','impresion',4,'p_impresion','sintactico.py',53),
-  ('impresion -> PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER','impresion',4,'p_impresion','sintactico.py',54),
-  ('asignacion -> VARIABLE IGUAL expresionNumerica','asignacion',3,'p_asignacion','sintactico.py',62),
-  ('asignacion -> VARIABLE IGUAL CADENA','asignacion',3,'p_asignacion','sintactico.py',63),
+  ('cuerpo -> impresion_vacia','cuerpo',1,'p_cuerpo','sintactico.py',8),
+  ('cuerpo -> expresiones_booleanas_ID','cuerpo',1,'p_cuerpo','sintactico.py',9),
+  ('cuerpo -> expresiones_booleanas_CN','cuerpo',1,'p_cuerpo','sintactico.py',10),
+  ('cuerpo -> solicitudDatosTeclado','cuerpo',1,'p_cuerpo','sintactico.py',11),
+  ('cuerpo -> hashes','cuerpo',1,'p_cuerpo','sintactico.py',12),
+  ('valorNumerico -> FLOTANTE','valorNumerico',1,'p_valorNumerico','sintactico.py',18),
+  ('valorNumerico -> ENTERO','valorNumerico',1,'p_valorNumerico','sintactico.py',19),
+  ('soloEnteros -> ENTERO','soloEnteros',1,'p_soloEnteros','sintactico.py',23),
+  ('operadores -> MAS','operadores',1,'p_operadores','sintactico.py',27),
+  ('operadores -> MENOS','operadores',1,'p_operadores','sintactico.py',28),
+  ('operadores -> DIVISION','operadores',1,'p_operadores','sintactico.py',29),
+  ('operadores -> MULTIPLICACION','operadores',1,'p_operadores','sintactico.py',30),
+  ('operadores -> EXPONENCIACION','operadores',1,'p_operadores','sintactico.py',31),
+  ('operadores -> MODULO','operadores',1,'p_operadores','sintactico.py',32),
+  ('expresionNumerica -> valorNumerico','expresionNumerica',1,'p_expresionNumerica','sintactico.py',36),
+  ('expresionNumerica -> operacionAritmetica','expresionNumerica',1,'p_expresionNumerica','sintactico.py',37),
+  ('expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER','expresionNumerica',3,'p_expresionNumerica','sintactico.py',38),
+  ('operacionAritmetica -> expresionNumerica operadores expresionNumerica','operacionAritmetica',3,'p_operacionAritmetica','sintactico.py',45),
+  ('impresion -> PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER','impresion',4,'p_impresion','sintactico.py',64),
+  ('impresion -> PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER','impresion',4,'p_impresion','sintactico.py',65),
+  ('asignacion -> VARIABLE IGUAL expresionNumerica','asignacion',3,'p_asignacion','sintactico.py',73),
+  ('asignacion -> VARIABLE IGUAL CADENA','asignacion',3,'p_asignacion','sintactico.py',74),
+  ('rangos -> PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER','rangos',5,'p_rangos','sintactico.py',82),
+  ('impresion_vacia -> PRINT PARENTESIS_IZ PARENTESIS_DER','impresion_vacia',3,'p_impresion_vacia','sintactico.py',86),
+  ('impresion_vacia -> PUTS PARENTESIS_IZ PARENTESIS_DER','impresion_vacia',3,'p_impresion_vacia','sintactico.py',87),
+  ('impresion_vacia -> PUTS','impresion_vacia',1,'p_impresion_vacia','sintactico.py',88),
+  ('expresiones_booleanas_ID -> valorNumerico IGUAL IGUAL valorNumerico','expresiones_booleanas_ID',4,'p_expresiones_booleanas_ID','sintactico.py',91),
+  ('expresiones_booleanas_ID -> valorNumerico DIFERENTE valorNumerico','expresiones_booleanas_ID',3,'p_expresiones_booleanas_ID','sintactico.py',92),
+  ('expresiones_booleanas_ID -> rangos TRIPLE_IGUAL ENTERO','expresiones_booleanas_ID',3,'p_expresiones_booleanas_ID','sintactico.py',93),
+  ('expresiones_booleanas_CN -> valorNumerico IGUAL IGUAL valorNumerico','expresiones_booleanas_CN',4,'p_expresiones_booleanas_CN','sintactico.py',96),
+  ('expresiones_booleanas_CN -> valorNumerico MAYOR_QUE valorNumerico','expresiones_booleanas_CN',3,'p_expresiones_booleanas_CN','sintactico.py',97),
+  ('expresiones_booleanas_CN -> valorNumerico MENOR_QUE valorNumerico','expresiones_booleanas_CN',3,'p_expresiones_booleanas_CN','sintactico.py',98),
+  ('expresiones_booleanas_CN -> valorNumerico MENOR_IGUAL_QUE valorNumerico','expresiones_booleanas_CN',3,'p_expresiones_booleanas_CN','sintactico.py',99),
+  ('expresiones_booleanas_CN -> valorNumerico MAYOR_IGUAL_QUE valorNumerico','expresiones_booleanas_CN',3,'p_expresiones_booleanas_CN','sintactico.py',100),
+  ('expresiones_booleanas_CN -> rangos TRIPLE_IGUAL ENTERO','expresiones_booleanas_CN',3,'p_expresiones_booleanas_CN','sintactico.py',101),
+  ('solicitudDatosTeclado -> GETS','solicitudDatosTeclado',1,'p_solicitudDatosTeclado','sintactico.py',104),
+  ('hashes -> LLAVE_IZ elemento_hash LLAVE_DER','hashes',3,'p_hashes','sintactico.py',108),
+  ('claveValor -> VARIABLE ASIGNA_HASH valorNumerico','claveValor',3,'p_claveValor','sintactico.py',111),
+  ('claveValor -> VARIABLE ASIGNA_HASH CADENA','claveValor',3,'p_claveValor','sintactico.py',112),
+  ('elemento_hash -> claveValor','elemento_hash',1,'p_elemento_hash','sintactico.py',115),
+  ('elemento_hash -> claveValor COMA claveValor','elemento_hash',3,'p_elemento_hash','sintactico.py',116),
 ]

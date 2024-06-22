@@ -53,10 +53,15 @@ reserved = {
 
 tokens=[
     #Loor Paulina
+    'TRES_PUNTOS',
+    'PUNTO',
     'VARIABLECLASE',
+
     #Dafne Ruiz
     'VARIABLE',
     'CADENA',
+
+    #Dafne Ruiz
     'FLOTANTE',
     'ENTERO',
     'MAS',
@@ -102,9 +107,13 @@ tokens=[
 #Dafne Ruiz
 #cadenas
 
+#Paulina Loor
+t_TRES_PUNTOS =r'\.\.\.'
+t_PUNTO =r'\.'
+
 #flotantes 
 def t_FLOTANTE(t):
-    r'[-]?(0|[1-9]\d*)?\.{1}\d*'
+    r'[-]?(0|[1-9]\d*)+\.{1}\d*'
     t.value=float(t.value)
     return t 
 
@@ -153,7 +162,6 @@ t_ASIGNA_HASH=r'=>'
 t_PREGUNTA=r'\?'
 
 #simbolos 
-
 t_SIMBOLO=r'[:][a-z](\w)*'
 
 #variables
@@ -201,6 +209,15 @@ def t_error(t):
     t.lexer.skip(1)
 
 lexer = lex.lex()
+
+#lexer.input('''...''')
+
+# Tokenize
+'''while True:
+    tok = lexer.token()
+    if not tok:
+        break  # No more input
+    print(tok)'''
 
 def log_function(lexer_instance, algoritmo_file, log_prefix):
     string = ""
