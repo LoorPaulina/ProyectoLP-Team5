@@ -193,101 +193,48 @@ def t_error(t):
     print(f"Illegal character '{t.value[0]}'")
     t.lexer.skip(1)
 
-#log ruiz
+lexer = lex.lex()
+
+def log_function(lexer_instance, algoritmo_file, log_prefix):
+    string = ""
+    archivo = f"{ruta_algoritmos}/{algoritmo_file}"
+    ahora = datetime.datetime.now()
+    fecha_hora = ahora.strftime("%Y%m%d-%H%M%S") 
+    nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"
+    
+    with open(archivo, 'r') as f:
+        contenido = f.read().strip()
+        lexer_instance.input(contenido)
+    
+    ruta_archivo = f"{ruta_carpeta}/{nombre_archivo}"
+    
+    while True:
+        tok = lexer_instance.token()
+        if not tok:
+            break
+        tipo = tok.type
+        valor = tok.value
+        valor_str = valor if isinstance(valor, str) else str(valor)
+        string = f"Token: tipo={tipo}, valor='{valor_str}'"
+        
+        with open(ruta_archivo, "a+") as archivo_log:
+            archivo_log.write(string + '\n')
+    
+    print(f"Resultado guardado en {ruta_archivo}")
+
 def pruebas_ruiz():
-  lexer_ruiz=lex.lex()
-  string=""
-  archivo = ruta_algoritmos+"/algoritmo_ruiz.txt"
-  ahora = datetime.datetime.now()
-  fecha_hora = ahora.strftime("%Y%m%d-%H%M%S") 
-  nombre_archivo = f"lexico-taizruiz-{fecha_hora}.txt"
-  with open(archivo, 'r') as f:
-    contenido = f.read().strip()
-    lexer_ruiz.input(contenido)
-  while True:
-    tok = lexer_ruiz.token() 
-    if tok is not None:
-      tipo = tok.type
-      valor = tok.value
-      # Convertir el valor del token a cadena si es necesario
-      if isinstance(valor, str):
-          valor_str = valor
-      else:
-          valor_str = str(valor)
-    string=f"Token: tipo={tipo}, valor='{valor_str}'"
-    if not tok:
-        break  # No more input
-    else:  
-        ruta_archivo = ruta_carpeta+"/"+nombre_archivo
-        with open(ruta_archivo, "a+") as archivo_log:
-            archivo_log.write(string + '\n')  # Escribir el resultado en el archivo
+    lexer_ruiz = lex.lex()
+    log_function(lexer_ruiz, "algoritmo_ruiz.txt", "lexico-taizruiz")
 
-  print(f"Resultado guardado en {ruta_archivo}")
-
-#pruebas_ruiz();
-
-#log loor
 def pruebas_loor():
-  lexer_loor=lex.lex()
-  string=""
-  archivo = ruta_algoritmos+"/algoritmo_loor.txt"
-  ahora = datetime.datetime.now()
-  fecha_hora = ahora.strftime("%Y%m%d-%H%M%S") 
-  nombre_archivo = f"lexico-LoorPaulina-{fecha_hora}.txt"
-  with open(archivo, 'r') as f:
-    contenido = f.read().strip()
-    lexer_loor.input(contenido)
-  while True:
-    tok = lexer_loor.token() 
-    if tok is not None:
-      tipo = tok.type
-      valor = tok.value
-      # Convertir el valor del token a cadena si es necesario
-      if isinstance(valor, str):
-          valor_str = valor
-      else:
-          valor_str = str(valor)
-    string=f"Token: tipo={tipo}, valor='{valor_str}'"
-    if not tok:
-        break  # No more input
-    else:  
-        ruta_archivo = ruta_carpeta+"/"+nombre_archivo
-        with open(ruta_archivo, "a+") as archivo_log:
-            archivo_log.write(string + '\n')  # Escribir el resultado en el archivo
+    lexer_loor = lex.lex()
+    log_function(lexer_loor, "algoritmo_loor.txt", "lexico-LoorPaulina")
 
-  print(f"Resultado guardado en {ruta_archivo}")
-
-#pruebas_loor()
-
-
-#log_picon
 def pruebas_picon():
-  lexer_picon=lex.lex()
-  string=""
-  archivo = ruta_algoritmos+"/algoritmo_picon.txt"
-  ahora = datetime.datetime.now()
-  fecha_hora = ahora.strftime("%Y%m%d-%H%M%S")
-  nombre_archivo = f"lexico-PiconDaniel-{fecha_hora}.txt"
-  with open(archivo, 'r') as f:
-    contenido = f.read().strip()
-    lexer_picon.input(contenido)
-  while True:
-    tok = lexer_picon.token()
-    if tok is not None:
-      tipo = tok.type
-      valor = tok.value
-      # Convertir el valor del token a cadena si es necesario
-      if isinstance(valor, str):
-          valor_str = valor
-      else:
-          valor_str = str(valor)
-    string=f"Token: tipo={tipo}, valor='{valor_str}'"
-    if not tok:
-        break  # No more input
-    else:
-        ruta_archivo = ruta_carpeta+"/"+nombre_archivo
-        with open(ruta_archivo, "a+") as archivo_log:
-            archivo_log.write(string + '\n')  # Escribir el resultado en el archivo
+    lexer_picon = lex.lex()
+    log_function(lexer_picon, "algoritmo_picon.txt", "lexico-PiconDaniel")
 
-  print(f"Resultado guardado en {ruta_archivo}")
-
+# Uncomment to run tests
+# pruebas_ruiz()
+# pruebas_loor()
+# pruebas_picon()

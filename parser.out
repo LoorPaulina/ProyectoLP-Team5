@@ -49,8 +49,11 @@ Unused terminals:
     NOT
     OR
     O_SIGNO
+    PARENTESIS_DER
+    PARENTESIS_IZ
     PORCENTAJE
     PREGUNTA
+    PRINT
     PRINTF
     PUTS
     RAISE
@@ -75,21 +78,15 @@ Unused terminals:
 Grammar
 
 Rule 0     S' -> cuerpo
-Rule 1     cuerpo -> expression
-Rule 2     cuerpo -> impresion
-Rule 3     cuerpo -> tupla
-Rule 4     cuerpo -> declaracion
-Rule 5     cuerpo -> operacionSuma
-Rule 6     impresion -> PRINT PARENTESIS_IZ PARENTESIS_DER
-Rule 7     impresion -> PRINT PARENTESIS_IZ expression PARENTESIS_DER
-Rule 8     valorNumerico -> FLOTANTE
-Rule 9     valorNumerico -> ENTERO
-Rule 10    operadores -> MAS
-Rule 11    operadores -> MENOS
-Rule 12    operadores -> DIVISION
-Rule 13    operadores -> MULTIPLICACION
-Rule 14    operadores -> EXPONENCIACION
-Rule 15    operacionSuma -> valorNumerico operadores valorNumerico
+Rule 1     cuerpo -> operacionSuma
+Rule 2     valorNumerico -> FLOTANTE
+Rule 3     valorNumerico -> ENTERO
+Rule 4     operadores -> MAS
+Rule 5     operadores -> MENOS
+Rule 6     operadores -> DIVISION
+Rule 7     operadores -> MULTIPLICACION
+Rule 8     operadores -> EXPONENCIACION
+Rule 9     operacionSuma -> valorNumerico operadores valorNumerico
 
 Terminals, with rules where they appear
 
@@ -114,18 +111,18 @@ CORCHETE_IZ          :
 DEF                  : 
 DEFINED_QUESTION     : 
 DIFERENTE            : 
-DIVISION             : 12
+DIVISION             : 6
 EACH                 : 
 ELSE                 : 
 ELSEIF               : 
 END                  : 
 ENSURE               : 
-ENTERO               : 9
+ENTERO               : 3
 EXCLAMACION_ALTO     : 
 EXCLAMACION_BAJO     : 
-EXPONENCIACION       : 14
+EXPONENCIACION       : 8
 FALSE                : 
-FLOTANTE             : 8
+FLOTANTE             : 2
 FOR                  : 
 GETS                 : 
 IF                   : 
@@ -134,24 +131,24 @@ IGUAL_DOBLEP         :
 IN                   : 
 LLAVE_DER            : 
 LLAVE_IZ             : 
-MAS                  : 10
+MAS                  : 4
 MAYOR_IGUAL_QUE      : 
 MAYOR_QUE            : 
 MENOR_IGUAL_QUE      : 
 MENOR_QUE            : 
-MENOS                : 11
+MENOS                : 5
 MODULE               : 
-MULTIPLICACION       : 13
+MULTIPLICACION       : 7
 NEXT                 : 
 NIL                  : 
 NOT                  : 
 OR                   : 
 O_SIGNO              : 
-PARENTESIS_DER       : 6 7
-PARENTESIS_IZ        : 6 7
+PARENTESIS_DER       : 
+PARENTESIS_IZ        : 
 PORCENTAJE           : 
 PREGUNTA             : 
-PRINT                : 6 7
+PRINT                : 
 PRINTF               : 
 PUTS                 : 
 RAISE                : 
@@ -177,11 +174,135 @@ error                :
 Nonterminals, with rules where they appear
 
 cuerpo               : 0
-declaracion          : 4
-expression           : 1 7
-impresion            : 2
-operacionSuma        : 5
-operadores           : 15
-tupla                : 3
-valorNumerico        : 15 15
+operacionSuma        : 1
+operadores           : 9
+valorNumerico        : 9 9
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . cuerpo
+    (1) cuerpo -> . operacionSuma
+    (9) operacionSuma -> . valorNumerico operadores valorNumerico
+    (2) valorNumerico -> . FLOTANTE
+    (3) valorNumerico -> . ENTERO
+
+    FLOTANTE        shift and go to state 4
+    ENTERO          shift and go to state 5
+
+    cuerpo                         shift and go to state 1
+    operacionSuma                  shift and go to state 2
+    valorNumerico                  shift and go to state 3
+
+state 1
+
+    (0) S' -> cuerpo .
+
+
+
+state 2
+
+    (1) cuerpo -> operacionSuma .
+
+    $end            reduce using rule 1 (cuerpo -> operacionSuma .)
+
+
+state 3
+
+    (9) operacionSuma -> valorNumerico . operadores valorNumerico
+    (4) operadores -> . MAS
+    (5) operadores -> . MENOS
+    (6) operadores -> . DIVISION
+    (7) operadores -> . MULTIPLICACION
+    (8) operadores -> . EXPONENCIACION
+
+    MAS             shift and go to state 7
+    MENOS           shift and go to state 8
+    DIVISION        shift and go to state 9
+    MULTIPLICACION  shift and go to state 10
+    EXPONENCIACION  shift and go to state 11
+
+    operadores                     shift and go to state 6
+
+state 4
+
+    (2) valorNumerico -> FLOTANTE .
+
+    MAS             reduce using rule 2 (valorNumerico -> FLOTANTE .)
+    MENOS           reduce using rule 2 (valorNumerico -> FLOTANTE .)
+    DIVISION        reduce using rule 2 (valorNumerico -> FLOTANTE .)
+    MULTIPLICACION  reduce using rule 2 (valorNumerico -> FLOTANTE .)
+    EXPONENCIACION  reduce using rule 2 (valorNumerico -> FLOTANTE .)
+    $end            reduce using rule 2 (valorNumerico -> FLOTANTE .)
+
+
+state 5
+
+    (3) valorNumerico -> ENTERO .
+
+    MAS             reduce using rule 3 (valorNumerico -> ENTERO .)
+    MENOS           reduce using rule 3 (valorNumerico -> ENTERO .)
+    DIVISION        reduce using rule 3 (valorNumerico -> ENTERO .)
+    MULTIPLICACION  reduce using rule 3 (valorNumerico -> ENTERO .)
+    EXPONENCIACION  reduce using rule 3 (valorNumerico -> ENTERO .)
+    $end            reduce using rule 3 (valorNumerico -> ENTERO .)
+
+
+state 6
+
+    (9) operacionSuma -> valorNumerico operadores . valorNumerico
+    (2) valorNumerico -> . FLOTANTE
+    (3) valorNumerico -> . ENTERO
+
+    FLOTANTE        shift and go to state 4
+    ENTERO          shift and go to state 5
+
+    valorNumerico                  shift and go to state 12
+
+state 7
+
+    (4) operadores -> MAS .
+
+    FLOTANTE        reduce using rule 4 (operadores -> MAS .)
+    ENTERO          reduce using rule 4 (operadores -> MAS .)
+
+
+state 8
+
+    (5) operadores -> MENOS .
+
+    FLOTANTE        reduce using rule 5 (operadores -> MENOS .)
+    ENTERO          reduce using rule 5 (operadores -> MENOS .)
+
+
+state 9
+
+    (6) operadores -> DIVISION .
+
+    FLOTANTE        reduce using rule 6 (operadores -> DIVISION .)
+    ENTERO          reduce using rule 6 (operadores -> DIVISION .)
+
+
+state 10
+
+    (7) operadores -> MULTIPLICACION .
+
+    FLOTANTE        reduce using rule 7 (operadores -> MULTIPLICACION .)
+    ENTERO          reduce using rule 7 (operadores -> MULTIPLICACION .)
+
+
+state 11
+
+    (8) operadores -> EXPONENCIACION .
+
+    FLOTANTE        reduce using rule 8 (operadores -> EXPONENCIACION .)
+    ENTERO          reduce using rule 8 (operadores -> EXPONENCIACION .)
+
+
+state 12
+
+    (9) operacionSuma -> valorNumerico operadores valorNumerico .
+
+    $end            reduce using rule 9 (operacionSuma -> valorNumerico operadores valorNumerico .)
 
