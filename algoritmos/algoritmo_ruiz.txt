@@ -1,4 +1,4 @@
-    # Definición de una clase con métodos y atributos 
+ # Definición de una clase con métodos y atributos 
     class Vehiculo 
     attr_accessor :marca, :modelo, :velocidad 
     def initialize(marca, modelo, velocidad = 

@@ -1,0 +1,15 @@
+COMENTARIO Definición de una clase con métodos y atributos
+PARENTESIS_DER )
+VARIABLE @modelo
+VARIABLE @velocidad
+VARIABLE @velocidad
+END end
+PUNTO .
+VARIABLE marcas
+CADENA "Ford"
+WHILE while
+PUNTO .
+VARIABLE marcas_unicas
+RETURN return
+VARIABLE n
+PARENTESIS_DER )

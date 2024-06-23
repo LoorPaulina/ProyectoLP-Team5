@@ -47,8 +47,10 @@ reserved = {
     "printf": "PRINTF",
     "gets": "GETS",
     "chomp": "CHOMP",
+    "do": "DO",
     "to_f": "TO_F",
-    "concat": "CONCAT"
+    "concat": "CONCAT",
+    "initialize" : "INITIALIZE"
 }
 
 tokens=[
@@ -60,7 +62,7 @@ tokens=[
     #Dafne Ruiz
     'VARIABLE',
     'CADENA',
-
+    'ID_CLASE',
     #Dafne Ruiz
     'FLOTANTE',
     'ENTERO',
@@ -182,6 +184,10 @@ def t_VARIABLE(t):
 def t_CADENA(t):
     r'\"([^\\\n]|(\\.))*?\"|\'([^\\\n]|(\\.))*?\''
     t.type = reserved.get(t.value, 'CADENA')
+    return t
+
+def ID_CLASE(t):
+    r'[A-Z]{1}[a-z]+'
     return t
 
 def t_COMENTARIO(t):
