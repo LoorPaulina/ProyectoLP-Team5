@@ -3,7 +3,6 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     ALIAS
-    AND
     BARRA
     BEGIN
     BREAK
@@ -17,30 +16,23 @@ Unused terminals:
     CONCAT
     CORCHETE_DER
     CORCHETE_IZ
-    DEF
     DEFINED_QUESTION
     EACH
-    ELSE
-    ELSEIF
-    END
     ENSURE
     EXCLAMACION_ALTO
     EXCLAMACION_BAJO
     FALSE
     FOR
-    IF
     IGUAL_DOBLEP
     IN
     MODULE
     NEXT
     NIL
     NOT
-    OR
     O_SIGNO
     PORCENTAJE
     PREGUNTA
     PRINTF
-    PUNTO
     RAISE
     REDO
     RESCUE
@@ -48,9 +40,7 @@ Unused terminals:
     RETURN
     SELF
     SIMBOLO
-    SORT
     SUPER
-    TO_F
     TRUE
     UNTIL
     VARIABLECLASE
@@ -65,60 +55,89 @@ Rule 1     cuerpo -> operacionAritmetica
 Rule 2     cuerpo -> asignacion
 Rule 3     cuerpo -> impresion
 Rule 4     cuerpo -> impresion_vacia
-Rule 5     cuerpo -> expresiones_booleanas_ID
-Rule 6     cuerpo -> expresiones_booleanas_CN
-Rule 7     cuerpo -> solicitudDatosTeclado
-Rule 8     cuerpo -> hashes
-Rule 9     valorNumerico -> FLOTANTE
-Rule 10    valorNumerico -> ENTERO
-Rule 11    soloEnteros -> ENTERO
-Rule 12    operadores -> MAS
-Rule 13    operadores -> MENOS
-Rule 14    operadores -> DIVISION
-Rule 15    operadores -> MULTIPLICACION
-Rule 16    operadores -> EXPONENCIACION
-Rule 17    operadores -> MODULO
-Rule 18    expresionNumerica -> valorNumerico
-Rule 19    expresionNumerica -> operacionAritmetica
-Rule 20    expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
-Rule 21    operacionAritmetica -> expresionNumerica operadores expresionNumerica
-Rule 22    impresion -> PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER
-Rule 23    impresion -> PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER
-Rule 24    asignacion -> VARIABLE IGUAL expresionNumerica
-Rule 25    asignacion -> VARIABLE IGUAL CADENA
-Rule 26    rangos -> PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
-Rule 27    impresion_vacia -> PRINT PARENTESIS_IZ PARENTESIS_DER
-Rule 28    impresion_vacia -> PUTS PARENTESIS_IZ PARENTESIS_DER
-Rule 29    impresion_vacia -> PUTS
-Rule 30    expresiones_booleanas_ID -> valorNumerico IGUAL IGUAL valorNumerico
-Rule 31    expresiones_booleanas_ID -> valorNumerico DIFERENTE valorNumerico
-Rule 32    expresiones_booleanas_ID -> rangos TRIPLE_IGUAL ENTERO
-Rule 33    expresiones_booleanas_CN -> valorNumerico IGUAL IGUAL valorNumerico
-Rule 34    expresiones_booleanas_CN -> valorNumerico MAYOR_QUE valorNumerico
-Rule 35    expresiones_booleanas_CN -> valorNumerico MENOR_QUE valorNumerico
-Rule 36    expresiones_booleanas_CN -> valorNumerico MENOR_IGUAL_QUE valorNumerico
-Rule 37    expresiones_booleanas_CN -> valorNumerico MAYOR_IGUAL_QUE valorNumerico
-Rule 38    expresiones_booleanas_CN -> rangos TRIPLE_IGUAL ENTERO
-Rule 39    solicitudDatosTeclado -> GETS
-Rule 40    hashes -> LLAVE_IZ elemento_hash LLAVE_DER
-Rule 41    claveValor -> VARIABLE ASIGNA_HASH valorNumerico
-Rule 42    claveValor -> VARIABLE ASIGNA_HASH CADENA
-Rule 43    elemento_hash -> claveValor
-Rule 44    elemento_hash -> claveValor COMA claveValor
+Rule 5     cuerpo -> expresiones_booleanas
+Rule 6     cuerpo -> solicitudDatosTeclado
+Rule 7     cuerpo -> hashes
+Rule 8     cuerpo -> estructura_if
+Rule 9     cuerpo -> funciones
+Rule 10    cuerpo -> funcionesEstructuras
+Rule 11    valorNumerico -> FLOTANTE
+Rule 12    valorNumerico -> ENTERO
+Rule 13    soloEnteros -> ENTERO
+Rule 14    operadores -> MAS
+Rule 15    operadores -> MENOS
+Rule 16    operadores -> DIVISION
+Rule 17    operadores -> MULTIPLICACION
+Rule 18    operadores -> EXPONENCIACION
+Rule 19    operadores -> MODULO
+Rule 20    expresionNumerica -> valorNumerico
+Rule 21    expresionNumerica -> operacionAritmetica
+Rule 22    expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+Rule 23    operacionAritmetica -> expresionNumerica operadores expresionNumerica
+Rule 24    impresion -> PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER
+Rule 25    impresion -> PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER
+Rule 26    asignacion -> VARIABLE IGUAL expresionNumerica
+Rule 27    asignacion -> VARIABLE IGUAL CADENA
+Rule 28    asignacion -> VARIABLE IGUAL hashes
+Rule 29    rangos -> PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
+Rule 30    impresion_vacia -> PRINT PARENTESIS_IZ PARENTESIS_DER
+Rule 31    impresion_vacia -> PUTS PARENTESIS_IZ PARENTESIS_DER
+Rule 32    impresion_vacia -> PUTS
+Rule 33    operadoresComparacion -> DOBLE_IGUAL
+Rule 34    operadoresComparacion -> DIFERENTE
+Rule 35    operadoresComparacion -> MAYOR_QUE
+Rule 36    operadoresComparacion -> MENOR_QUE
+Rule 37    operadoresComparacion -> MENOR_IGUAL_QUE
+Rule 38    operadoresComparacion -> MAYOR_IGUAL_QUE
+Rule 39    funcionesComparacion -> AND
+Rule 40    funcionesComparacion -> OR
+Rule 41    expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico
+Rule 42    expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO
+Rule 43    expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE
+Rule 44    expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico
+Rule 45    expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE
+Rule 46    solicitudDatosTeclado -> GETS
+Rule 47    funciones -> DEF VARIABLE PARENTESIS_IZ PARENTESIS_DER END
+Rule 48    funciones -> DEF VARIABLE PARENTESIS_IZ argumentos PARENTESIS_DER END
+Rule 49    funcionesArray -> SORT
+Rule 50    funcionesNumeros -> TO_F
+Rule 51    funcionesEstructuras -> VARIABLE PUNTO funcionesArray
+Rule 52    funcionesEstructuras -> VARIABLE PUNTO funcionesNumeros
+Rule 53    argumentos -> VARIABLE
+Rule 54    argumentos -> VARIABLE COMA argumentos
+Rule 55    condicionIf -> expresiones_booleanas
+Rule 56    condicionIf -> expresiones_booleanas funcionesComparacion expresiones_booleanas
+Rule 57    estructura_if -> IF condicionIf declaracion ELSE declaracion END
+Rule 58    estructura_if -> IF condicionIf declaracion estructura_secundaria_if
+Rule 59    estructura_secundaria_if -> ELSEIF condicionIf declaracion ELSE declaracion END
+Rule 60    estructura_secundaria_if -> ELSEIF condicionIf declaracion estructura_secundaria_if
+Rule 61    declaracion -> operacionAritmetica
+Rule 62    declaracion -> asignacion
+Rule 63    declaracion -> impresion
+Rule 64    declaracion -> impresion_vacia
+Rule 65    declaracion -> expresiones_booleanas
+Rule 66    declaracion -> solicitudDatosTeclado
+Rule 67    declaracion -> hashes
+Rule 68    declaracion -> estructura_if
+Rule 69    hashes -> LLAVE_IZ elemento_hash LLAVE_DER
+Rule 70    claveValor -> VARIABLE ASIGNA_HASH valorNumerico
+Rule 71    claveValor -> VARIABLE ASIGNA_HASH CADENA
+Rule 72    elemento_hash -> claveValor
+Rule 73    elemento_hash -> claveValor COMA claveValor
 
 Terminals, with rules where they appear
 
 ALIAS                : 
-AND                  : 
-ASIGNA_HASH          : 41 42
+AND                  : 39
+ASIGNA_HASH          : 70 71
 BARRA                : 
 BEGIN                : 
 BREAK                : 
-CADENA               : 25 42
+CADENA               : 27 71
 CASE                 : 
 CHOMP                : 
 CLASS                : 
-COMA                 : 44
+COMA                 : 54 73
 COMENTARIO           : 
 COMENTARIO_MULTI     : 
 COMILLA_D            : 
@@ -126,51 +145,52 @@ COMILLA_S            :
 CONCAT               : 
 CORCHETE_DER         : 
 CORCHETE_IZ          : 
-DEF                  : 
+DEF                  : 47 48
 DEFINED_QUESTION     : 
-DIFERENTE            : 31
-DIVISION             : 14
+DIFERENTE            : 34
+DIVISION             : 16
+DOBLE_IGUAL          : 33
 EACH                 : 
-ELSE                 : 
-ELSEIF               : 
-END                  : 
+ELSE                 : 57 59
+ELSEIF               : 59 60
+END                  : 47 48 57 59
 ENSURE               : 
-ENTERO               : 10 11 32 38
+ENTERO               : 12 13 42
 EXCLAMACION_ALTO     : 
 EXCLAMACION_BAJO     : 
-EXPONENCIACION       : 16
+EXPONENCIACION       : 18
 FALSE                : 
-FLOTANTE             : 9
+FLOTANTE             : 11
 FOR                  : 
-GETS                 : 39
-IF                   : 
-IGUAL                : 24 25 30 30 33 33
+GETS                 : 46
+IF                   : 57 58
+IGUAL                : 26 27 28
 IGUAL_DOBLEP         : 
 IN                   : 
-LLAVE_DER            : 40
-LLAVE_IZ             : 40
-MAS                  : 12
-MAYOR_IGUAL_QUE      : 37
-MAYOR_QUE            : 34
-MENOR_IGUAL_QUE      : 36
-MENOR_QUE            : 35
-MENOS                : 13
+LLAVE_DER            : 69
+LLAVE_IZ             : 69
+MAS                  : 14
+MAYOR_IGUAL_QUE      : 38
+MAYOR_QUE            : 35
+MENOR_IGUAL_QUE      : 37
+MENOR_QUE            : 36
+MENOS                : 15
 MODULE               : 
-MODULO               : 17
-MULTIPLICACION       : 15
+MODULO               : 19
+MULTIPLICACION       : 17
 NEXT                 : 
 NIL                  : 
 NOT                  : 
-OR                   : 
+OR                   : 40
 O_SIGNO              : 
-PARENTESIS_DER       : 20 22 23 26 27 28
-PARENTESIS_IZ        : 20 22 23 26 27 28
+PARENTESIS_DER       : 22 24 25 29 30 31 47 48
+PARENTESIS_IZ        : 22 24 25 29 30 31 47 48
 PORCENTAJE           : 
 PREGUNTA             : 
-PRINT                : 22 23 27
+PRINT                : 24 25 30
 PRINTF               : 
-PUNTO                : 
-PUTS                 : 28 29
+PUNTO                : 51 52
+PUTS                 : 31 32
 RAISE                : 
 REDO                 : 
 RESCUE               : 
@@ -178,14 +198,14 @@ RETRY                :
 RETURN               : 
 SELF                 : 
 SIMBOLO              : 
-SORT                 : 
+SORT                 : 49
 SUPER                : 
-TO_F                 : 
-TRES_PUNTOS          : 26
-TRIPLE_IGUAL         : 32 38
+TO_F                 : 50
+TRES_PUNTOS          : 29
+TRIPLE_IGUAL         : 42
 TRUE                 : 
 UNTIL                : 
-VARIABLE             : 23 24 25 41 42
+VARIABLE             : 25 26 27 28 43 43 44 45 47 48 51 52 53 54 70 71
 VARIABLECLASE        : 
 WHILE                : 
 YIELD                : 
@@ -194,22 +214,32 @@ error                :
 
 Nonterminals, with rules where they appear
 
-asignacion           : 2
-claveValor           : 43 44 44
+argumentos           : 48 54
+asignacion           : 2 62
+claveValor           : 72 73 73
+condicionIf          : 57 58 59 60
 cuerpo               : 0
-elemento_hash        : 40
-expresionNumerica    : 21 21 22 24
-expresiones_booleanas_CN : 6
-expresiones_booleanas_ID : 5
-hashes               : 8
-impresion            : 3
-impresion_vacia      : 4
-operacionAritmetica  : 1 19 20
-operadores           : 21
-rangos               : 32 38
-solicitudDatosTeclado : 7
-soloEnteros          : 26 26
-valorNumerico        : 18 30 30 31 31 33 33 34 34 35 35 36 36 37 37 41
+declaracion          : 57 57 58 59 59 60
+elemento_hash        : 69
+estructura_if        : 8 68
+estructura_secundaria_if : 58 60
+expresionNumerica    : 23 23 24 26
+expresiones_booleanas : 5 55 56 56 65
+funciones            : 9
+funcionesArray       : 51
+funcionesComparacion : 56
+funcionesEstructuras : 10
+funcionesNumeros     : 52
+hashes               : 7 28 67
+impresion            : 3 63
+impresion_vacia      : 4 64
+operacionAritmetica  : 1 21 22 61
+operadores           : 23
+operadoresComparacion : 41 43 44 45
+rangos               : 42
+solicitudDatosTeclado : 6 66
+soloEnteros          : 29 29
+valorNumerico        : 20 41 41 44 45 70
 
 Parsing method: LALR
 
@@ -220,57 +250,66 @@ state 0
     (2) cuerpo -> . asignacion
     (3) cuerpo -> . impresion
     (4) cuerpo -> . impresion_vacia
-    (5) cuerpo -> . expresiones_booleanas_ID
-    (6) cuerpo -> . expresiones_booleanas_CN
-    (7) cuerpo -> . solicitudDatosTeclado
-    (8) cuerpo -> . hashes
-    (21) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
-    (24) asignacion -> . VARIABLE IGUAL expresionNumerica
-    (25) asignacion -> . VARIABLE IGUAL CADENA
-    (22) impresion -> . PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER
-    (23) impresion -> . PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER
-    (27) impresion_vacia -> . PRINT PARENTESIS_IZ PARENTESIS_DER
-    (28) impresion_vacia -> . PUTS PARENTESIS_IZ PARENTESIS_DER
-    (29) impresion_vacia -> . PUTS
-    (30) expresiones_booleanas_ID -> . valorNumerico IGUAL IGUAL valorNumerico
-    (31) expresiones_booleanas_ID -> . valorNumerico DIFERENTE valorNumerico
-    (32) expresiones_booleanas_ID -> . rangos TRIPLE_IGUAL ENTERO
-    (33) expresiones_booleanas_CN -> . valorNumerico IGUAL IGUAL valorNumerico
-    (34) expresiones_booleanas_CN -> . valorNumerico MAYOR_QUE valorNumerico
-    (35) expresiones_booleanas_CN -> . valorNumerico MENOR_QUE valorNumerico
-    (36) expresiones_booleanas_CN -> . valorNumerico MENOR_IGUAL_QUE valorNumerico
-    (37) expresiones_booleanas_CN -> . valorNumerico MAYOR_IGUAL_QUE valorNumerico
-    (38) expresiones_booleanas_CN -> . rangos TRIPLE_IGUAL ENTERO
-    (39) solicitudDatosTeclado -> . GETS
-    (40) hashes -> . LLAVE_IZ elemento_hash LLAVE_DER
-    (18) expresionNumerica -> . valorNumerico
-    (19) expresionNumerica -> . operacionAritmetica
-    (20) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
-    (9) valorNumerico -> . FLOTANTE
-    (10) valorNumerico -> . ENTERO
-    (26) rangos -> . PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
+    (5) cuerpo -> . expresiones_booleanas
+    (6) cuerpo -> . solicitudDatosTeclado
+    (7) cuerpo -> . hashes
+    (8) cuerpo -> . estructura_if
+    (9) cuerpo -> . funciones
+    (10) cuerpo -> . funcionesEstructuras
+    (23) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
+    (26) asignacion -> . VARIABLE IGUAL expresionNumerica
+    (27) asignacion -> . VARIABLE IGUAL CADENA
+    (28) asignacion -> . VARIABLE IGUAL hashes
+    (24) impresion -> . PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER
+    (25) impresion -> . PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER
+    (30) impresion_vacia -> . PRINT PARENTESIS_IZ PARENTESIS_DER
+    (31) impresion_vacia -> . PUTS PARENTESIS_IZ PARENTESIS_DER
+    (32) impresion_vacia -> . PUTS
+    (41) expresiones_booleanas -> . valorNumerico operadoresComparacion valorNumerico
+    (42) expresiones_booleanas -> . rangos TRIPLE_IGUAL ENTERO
+    (43) expresiones_booleanas -> . VARIABLE operadoresComparacion VARIABLE
+    (44) expresiones_booleanas -> . VARIABLE operadoresComparacion valorNumerico
+    (45) expresiones_booleanas -> . valorNumerico operadoresComparacion VARIABLE
+    (46) solicitudDatosTeclado -> . GETS
+    (69) hashes -> . LLAVE_IZ elemento_hash LLAVE_DER
+    (57) estructura_if -> . IF condicionIf declaracion ELSE declaracion END
+    (58) estructura_if -> . IF condicionIf declaracion estructura_secundaria_if
+    (47) funciones -> . DEF VARIABLE PARENTESIS_IZ PARENTESIS_DER END
+    (48) funciones -> . DEF VARIABLE PARENTESIS_IZ argumentos PARENTESIS_DER END
+    (51) funcionesEstructuras -> . VARIABLE PUNTO funcionesArray
+    (52) funcionesEstructuras -> . VARIABLE PUNTO funcionesNumeros
+    (20) expresionNumerica -> . valorNumerico
+    (21) expresionNumerica -> . operacionAritmetica
+    (22) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
+    (29) rangos -> . PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
 
-    VARIABLE        shift and go to state 11
-    PRINT           shift and go to state 12
-    PUTS            shift and go to state 14
-    GETS            shift and go to state 18
-    LLAVE_IZ        shift and go to state 19
-    PARENTESIS_IZ   shift and go to state 13
-    FLOTANTE        shift and go to state 20
-    ENTERO          shift and go to state 17
+    VARIABLE        shift and go to state 13
+    PRINT           shift and go to state 14
+    PUTS            shift and go to state 16
+    GETS            shift and go to state 20
+    LLAVE_IZ        shift and go to state 21
+    IF              shift and go to state 22
+    DEF             shift and go to state 23
+    PARENTESIS_IZ   shift and go to state 15
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
 
     cuerpo                         shift and go to state 1
     operacionAritmetica            shift and go to state 2
     asignacion                     shift and go to state 3
     impresion                      shift and go to state 4
     impresion_vacia                shift and go to state 5
-    expresiones_booleanas_ID       shift and go to state 6
-    expresiones_booleanas_CN       shift and go to state 7
-    solicitudDatosTeclado          shift and go to state 8
-    hashes                         shift and go to state 9
-    expresionNumerica              shift and go to state 10
-    valorNumerico                  shift and go to state 15
-    rangos                         shift and go to state 16
+    expresiones_booleanas          shift and go to state 6
+    solicitudDatosTeclado          shift and go to state 7
+    hashes                         shift and go to state 8
+    estructura_if                  shift and go to state 9
+    funciones                      shift and go to state 10
+    funcionesEstructuras           shift and go to state 11
+    expresionNumerica              shift and go to state 12
+    valorNumerico                  shift and go to state 17
+    rangos                         shift and go to state 18
 
 state 1
 
@@ -281,15 +320,15 @@ state 1
 state 2
 
     (1) cuerpo -> operacionAritmetica .
-    (19) expresionNumerica -> operacionAritmetica .
+    (21) expresionNumerica -> operacionAritmetica .
 
     $end            reduce using rule 1 (cuerpo -> operacionAritmetica .)
-    MAS             reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    MENOS           reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    DIVISION        reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    MULTIPLICACION  reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    EXPONENCIACION  reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    MODULO          reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
+    MAS             reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    MENOS           reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    DIVISION        reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    MULTIPLICACION  reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    EXPONENCIACION  reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    MODULO          reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
 
 
 state 3
@@ -315,488 +354,763 @@ state 5
 
 state 6
 
-    (5) cuerpo -> expresiones_booleanas_ID .
+    (5) cuerpo -> expresiones_booleanas .
 
-    $end            reduce using rule 5 (cuerpo -> expresiones_booleanas_ID .)
+    $end            reduce using rule 5 (cuerpo -> expresiones_booleanas .)
 
 
 state 7
 
-    (6) cuerpo -> expresiones_booleanas_CN .
+    (6) cuerpo -> solicitudDatosTeclado .
 
-    $end            reduce using rule 6 (cuerpo -> expresiones_booleanas_CN .)
+    $end            reduce using rule 6 (cuerpo -> solicitudDatosTeclado .)
 
 
 state 8
 
-    (7) cuerpo -> solicitudDatosTeclado .
+    (7) cuerpo -> hashes .
 
-    $end            reduce using rule 7 (cuerpo -> solicitudDatosTeclado .)
+    $end            reduce using rule 7 (cuerpo -> hashes .)
 
 
 state 9
 
-    (8) cuerpo -> hashes .
+    (8) cuerpo -> estructura_if .
 
-    $end            reduce using rule 8 (cuerpo -> hashes .)
+    $end            reduce using rule 8 (cuerpo -> estructura_if .)
 
 
 state 10
 
-    (21) operacionAritmetica -> expresionNumerica . operadores expresionNumerica
-    (12) operadores -> . MAS
-    (13) operadores -> . MENOS
-    (14) operadores -> . DIVISION
-    (15) operadores -> . MULTIPLICACION
-    (16) operadores -> . EXPONENCIACION
-    (17) operadores -> . MODULO
+    (9) cuerpo -> funciones .
 
-    MAS             shift and go to state 22
-    MENOS           shift and go to state 23
-    DIVISION        shift and go to state 24
-    MULTIPLICACION  shift and go to state 25
-    EXPONENCIACION  shift and go to state 26
-    MODULO          shift and go to state 27
+    $end            reduce using rule 9 (cuerpo -> funciones .)
 
-    operadores                     shift and go to state 21
 
 state 11
 
-    (24) asignacion -> VARIABLE . IGUAL expresionNumerica
-    (25) asignacion -> VARIABLE . IGUAL CADENA
+    (10) cuerpo -> funcionesEstructuras .
 
-    IGUAL           shift and go to state 28
+    $end            reduce using rule 10 (cuerpo -> funcionesEstructuras .)
 
 
 state 12
 
-    (22) impresion -> PRINT . PARENTESIS_IZ expresionNumerica PARENTESIS_DER
-    (23) impresion -> PRINT . PARENTESIS_IZ VARIABLE PARENTESIS_DER
-    (27) impresion_vacia -> PRINT . PARENTESIS_IZ PARENTESIS_DER
+    (23) operacionAritmetica -> expresionNumerica . operadores expresionNumerica
+    (14) operadores -> . MAS
+    (15) operadores -> . MENOS
+    (16) operadores -> . DIVISION
+    (17) operadores -> . MULTIPLICACION
+    (18) operadores -> . EXPONENCIACION
+    (19) operadores -> . MODULO
 
-    PARENTESIS_IZ   shift and go to state 29
+    MAS             shift and go to state 26
+    MENOS           shift and go to state 27
+    DIVISION        shift and go to state 28
+    MULTIPLICACION  shift and go to state 29
+    EXPONENCIACION  shift and go to state 30
+    MODULO          shift and go to state 31
 
+    operadores                     shift and go to state 25
 
 state 13
 
-    (20) expresionNumerica -> PARENTESIS_IZ . operacionAritmetica PARENTESIS_DER
-    (26) rangos -> PARENTESIS_IZ . soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
-    (21) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
-    (11) soloEnteros -> . ENTERO
-    (18) expresionNumerica -> . valorNumerico
-    (19) expresionNumerica -> . operacionAritmetica
-    (20) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
-    (9) valorNumerico -> . FLOTANTE
-    (10) valorNumerico -> . ENTERO
+    (26) asignacion -> VARIABLE . IGUAL expresionNumerica
+    (27) asignacion -> VARIABLE . IGUAL CADENA
+    (28) asignacion -> VARIABLE . IGUAL hashes
+    (43) expresiones_booleanas -> VARIABLE . operadoresComparacion VARIABLE
+    (44) expresiones_booleanas -> VARIABLE . operadoresComparacion valorNumerico
+    (51) funcionesEstructuras -> VARIABLE . PUNTO funcionesArray
+    (52) funcionesEstructuras -> VARIABLE . PUNTO funcionesNumeros
+    (33) operadoresComparacion -> . DOBLE_IGUAL
+    (34) operadoresComparacion -> . DIFERENTE
+    (35) operadoresComparacion -> . MAYOR_QUE
+    (36) operadoresComparacion -> . MENOR_QUE
+    (37) operadoresComparacion -> . MENOR_IGUAL_QUE
+    (38) operadoresComparacion -> . MAYOR_IGUAL_QUE
 
-    ENTERO          shift and go to state 33
-    PARENTESIS_IZ   shift and go to state 30
-    FLOTANTE        shift and go to state 20
+    IGUAL           shift and go to state 32
+    PUNTO           shift and go to state 34
+    DOBLE_IGUAL     shift and go to state 35
+    DIFERENTE       shift and go to state 36
+    MAYOR_QUE       shift and go to state 37
+    MENOR_QUE       shift and go to state 38
+    MENOR_IGUAL_QUE shift and go to state 39
+    MAYOR_IGUAL_QUE shift and go to state 40
 
-    operacionAritmetica            shift and go to state 31
-    soloEnteros                    shift and go to state 32
-    expresionNumerica              shift and go to state 10
-    valorNumerico                  shift and go to state 34
+    operadoresComparacion          shift and go to state 33
 
 state 14
 
-    (28) impresion_vacia -> PUTS . PARENTESIS_IZ PARENTESIS_DER
-    (29) impresion_vacia -> PUTS .
+    (24) impresion -> PRINT . PARENTESIS_IZ expresionNumerica PARENTESIS_DER
+    (25) impresion -> PRINT . PARENTESIS_IZ VARIABLE PARENTESIS_DER
+    (30) impresion_vacia -> PRINT . PARENTESIS_IZ PARENTESIS_DER
 
-    PARENTESIS_IZ   shift and go to state 35
-    $end            reduce using rule 29 (impresion_vacia -> PUTS .)
+    PARENTESIS_IZ   shift and go to state 41
 
 
 state 15
 
-    (30) expresiones_booleanas_ID -> valorNumerico . IGUAL IGUAL valorNumerico
-    (31) expresiones_booleanas_ID -> valorNumerico . DIFERENTE valorNumerico
-    (33) expresiones_booleanas_CN -> valorNumerico . IGUAL IGUAL valorNumerico
-    (34) expresiones_booleanas_CN -> valorNumerico . MAYOR_QUE valorNumerico
-    (35) expresiones_booleanas_CN -> valorNumerico . MENOR_QUE valorNumerico
-    (36) expresiones_booleanas_CN -> valorNumerico . MENOR_IGUAL_QUE valorNumerico
-    (37) expresiones_booleanas_CN -> valorNumerico . MAYOR_IGUAL_QUE valorNumerico
-    (18) expresionNumerica -> valorNumerico .
+    (22) expresionNumerica -> PARENTESIS_IZ . operacionAritmetica PARENTESIS_DER
+    (29) rangos -> PARENTESIS_IZ . soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
+    (23) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
+    (13) soloEnteros -> . ENTERO
+    (20) expresionNumerica -> . valorNumerico
+    (21) expresionNumerica -> . operacionAritmetica
+    (22) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
 
-    IGUAL           shift and go to state 36
-    DIFERENTE       shift and go to state 37
-    MAYOR_QUE       shift and go to state 38
-    MENOR_QUE       shift and go to state 39
-    MENOR_IGUAL_QUE shift and go to state 40
-    MAYOR_IGUAL_QUE shift and go to state 41
-    MAS             reduce using rule 18 (expresionNumerica -> valorNumerico .)
-    MENOS           reduce using rule 18 (expresionNumerica -> valorNumerico .)
-    DIVISION        reduce using rule 18 (expresionNumerica -> valorNumerico .)
-    MULTIPLICACION  reduce using rule 18 (expresionNumerica -> valorNumerico .)
-    EXPONENCIACION  reduce using rule 18 (expresionNumerica -> valorNumerico .)
-    MODULO          reduce using rule 18 (expresionNumerica -> valorNumerico .)
+    ENTERO          shift and go to state 45
+    PARENTESIS_IZ   shift and go to state 42
+    FLOTANTE        shift and go to state 24
 
+    operacionAritmetica            shift and go to state 43
+    soloEnteros                    shift and go to state 44
+    expresionNumerica              shift and go to state 12
+    valorNumerico                  shift and go to state 46
 
 state 16
 
-    (32) expresiones_booleanas_ID -> rangos . TRIPLE_IGUAL ENTERO
-    (38) expresiones_booleanas_CN -> rangos . TRIPLE_IGUAL ENTERO
+    (31) impresion_vacia -> PUTS . PARENTESIS_IZ PARENTESIS_DER
+    (32) impresion_vacia -> PUTS .
 
-    TRIPLE_IGUAL    shift and go to state 42
+    PARENTESIS_IZ   shift and go to state 47
+    $end            reduce using rule 32 (impresion_vacia -> PUTS .)
+    ELSE            reduce using rule 32 (impresion_vacia -> PUTS .)
+    ELSEIF          reduce using rule 32 (impresion_vacia -> PUTS .)
+    END             reduce using rule 32 (impresion_vacia -> PUTS .)
 
 
 state 17
 
-    (10) valorNumerico -> ENTERO .
+    (41) expresiones_booleanas -> valorNumerico . operadoresComparacion valorNumerico
+    (45) expresiones_booleanas -> valorNumerico . operadoresComparacion VARIABLE
+    (20) expresionNumerica -> valorNumerico .
+    (33) operadoresComparacion -> . DOBLE_IGUAL
+    (34) operadoresComparacion -> . DIFERENTE
+    (35) operadoresComparacion -> . MAYOR_QUE
+    (36) operadoresComparacion -> . MENOR_QUE
+    (37) operadoresComparacion -> . MENOR_IGUAL_QUE
+    (38) operadoresComparacion -> . MAYOR_IGUAL_QUE
 
-    IGUAL           reduce using rule 10 (valorNumerico -> ENTERO .)
-    DIFERENTE       reduce using rule 10 (valorNumerico -> ENTERO .)
-    MAYOR_QUE       reduce using rule 10 (valorNumerico -> ENTERO .)
-    MENOR_QUE       reduce using rule 10 (valorNumerico -> ENTERO .)
-    MENOR_IGUAL_QUE reduce using rule 10 (valorNumerico -> ENTERO .)
-    MAYOR_IGUAL_QUE reduce using rule 10 (valorNumerico -> ENTERO .)
-    MAS             reduce using rule 10 (valorNumerico -> ENTERO .)
-    MENOS           reduce using rule 10 (valorNumerico -> ENTERO .)
-    DIVISION        reduce using rule 10 (valorNumerico -> ENTERO .)
-    MULTIPLICACION  reduce using rule 10 (valorNumerico -> ENTERO .)
-    EXPONENCIACION  reduce using rule 10 (valorNumerico -> ENTERO .)
-    MODULO          reduce using rule 10 (valorNumerico -> ENTERO .)
-    $end            reduce using rule 10 (valorNumerico -> ENTERO .)
-    PARENTESIS_DER  reduce using rule 10 (valorNumerico -> ENTERO .)
-    COMA            reduce using rule 10 (valorNumerico -> ENTERO .)
-    LLAVE_DER       reduce using rule 10 (valorNumerico -> ENTERO .)
+    MAS             reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    MENOS           reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    DIVISION        reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    MULTIPLICACION  reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    EXPONENCIACION  reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    MODULO          reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    DOBLE_IGUAL     shift and go to state 35
+    DIFERENTE       shift and go to state 36
+    MAYOR_QUE       shift and go to state 37
+    MENOR_QUE       shift and go to state 38
+    MENOR_IGUAL_QUE shift and go to state 39
+    MAYOR_IGUAL_QUE shift and go to state 40
 
+    operadoresComparacion          shift and go to state 48
 
 state 18
 
-    (39) solicitudDatosTeclado -> GETS .
+    (42) expresiones_booleanas -> rangos . TRIPLE_IGUAL ENTERO
 
-    $end            reduce using rule 39 (solicitudDatosTeclado -> GETS .)
+    TRIPLE_IGUAL    shift and go to state 49
 
 
 state 19
 
-    (40) hashes -> LLAVE_IZ . elemento_hash LLAVE_DER
-    (43) elemento_hash -> . claveValor
-    (44) elemento_hash -> . claveValor COMA claveValor
-    (41) claveValor -> . VARIABLE ASIGNA_HASH valorNumerico
-    (42) claveValor -> . VARIABLE ASIGNA_HASH CADENA
+    (12) valorNumerico -> ENTERO .
 
-    VARIABLE        shift and go to state 45
+    DOBLE_IGUAL     reduce using rule 12 (valorNumerico -> ENTERO .)
+    DIFERENTE       reduce using rule 12 (valorNumerico -> ENTERO .)
+    MAYOR_QUE       reduce using rule 12 (valorNumerico -> ENTERO .)
+    MENOR_QUE       reduce using rule 12 (valorNumerico -> ENTERO .)
+    MENOR_IGUAL_QUE reduce using rule 12 (valorNumerico -> ENTERO .)
+    MAYOR_IGUAL_QUE reduce using rule 12 (valorNumerico -> ENTERO .)
+    MAS             reduce using rule 12 (valorNumerico -> ENTERO .)
+    MENOS           reduce using rule 12 (valorNumerico -> ENTERO .)
+    DIVISION        reduce using rule 12 (valorNumerico -> ENTERO .)
+    MULTIPLICACION  reduce using rule 12 (valorNumerico -> ENTERO .)
+    EXPONENCIACION  reduce using rule 12 (valorNumerico -> ENTERO .)
+    MODULO          reduce using rule 12 (valorNumerico -> ENTERO .)
+    $end            reduce using rule 12 (valorNumerico -> ENTERO .)
+    PARENTESIS_DER  reduce using rule 12 (valorNumerico -> ENTERO .)
+    ELSE            reduce using rule 12 (valorNumerico -> ENTERO .)
+    ELSEIF          reduce using rule 12 (valorNumerico -> ENTERO .)
+    END             reduce using rule 12 (valorNumerico -> ENTERO .)
+    AND             reduce using rule 12 (valorNumerico -> ENTERO .)
+    OR              reduce using rule 12 (valorNumerico -> ENTERO .)
+    VARIABLE        reduce using rule 12 (valorNumerico -> ENTERO .)
+    PRINT           reduce using rule 12 (valorNumerico -> ENTERO .)
+    PUTS            reduce using rule 12 (valorNumerico -> ENTERO .)
+    GETS            reduce using rule 12 (valorNumerico -> ENTERO .)
+    LLAVE_IZ        reduce using rule 12 (valorNumerico -> ENTERO .)
+    IF              reduce using rule 12 (valorNumerico -> ENTERO .)
+    PARENTESIS_IZ   reduce using rule 12 (valorNumerico -> ENTERO .)
+    FLOTANTE        reduce using rule 12 (valorNumerico -> ENTERO .)
+    ENTERO          reduce using rule 12 (valorNumerico -> ENTERO .)
+    COMA            reduce using rule 12 (valorNumerico -> ENTERO .)
+    LLAVE_DER       reduce using rule 12 (valorNumerico -> ENTERO .)
 
-    elemento_hash                  shift and go to state 43
-    claveValor                     shift and go to state 44
 
 state 20
 
-    (9) valorNumerico -> FLOTANTE .
+    (46) solicitudDatosTeclado -> GETS .
 
-    IGUAL           reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    DIFERENTE       reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    MAYOR_QUE       reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    MENOR_QUE       reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    MENOR_IGUAL_QUE reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    MAYOR_IGUAL_QUE reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    MAS             reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    MENOS           reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    DIVISION        reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    MULTIPLICACION  reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    EXPONENCIACION  reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    MODULO          reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    $end            reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    PARENTESIS_DER  reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    COMA            reduce using rule 9 (valorNumerico -> FLOTANTE .)
-    LLAVE_DER       reduce using rule 9 (valorNumerico -> FLOTANTE .)
+    $end            reduce using rule 46 (solicitudDatosTeclado -> GETS .)
+    ELSE            reduce using rule 46 (solicitudDatosTeclado -> GETS .)
+    ELSEIF          reduce using rule 46 (solicitudDatosTeclado -> GETS .)
+    END             reduce using rule 46 (solicitudDatosTeclado -> GETS .)
 
 
 state 21
 
-    (21) operacionAritmetica -> expresionNumerica operadores . expresionNumerica
-    (18) expresionNumerica -> . valorNumerico
-    (19) expresionNumerica -> . operacionAritmetica
-    (20) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
-    (9) valorNumerico -> . FLOTANTE
-    (10) valorNumerico -> . ENTERO
-    (21) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
+    (69) hashes -> LLAVE_IZ . elemento_hash LLAVE_DER
+    (72) elemento_hash -> . claveValor
+    (73) elemento_hash -> . claveValor COMA claveValor
+    (70) claveValor -> . VARIABLE ASIGNA_HASH valorNumerico
+    (71) claveValor -> . VARIABLE ASIGNA_HASH CADENA
 
-    PARENTESIS_IZ   shift and go to state 30
-    FLOTANTE        shift and go to state 20
-    ENTERO          shift and go to state 17
+    VARIABLE        shift and go to state 52
 
-    expresionNumerica              shift and go to state 46
-    valorNumerico                  shift and go to state 34
-    operacionAritmetica            shift and go to state 47
+    elemento_hash                  shift and go to state 50
+    claveValor                     shift and go to state 51
 
 state 22
 
-    (12) operadores -> MAS .
+    (57) estructura_if -> IF . condicionIf declaracion ELSE declaracion END
+    (58) estructura_if -> IF . condicionIf declaracion estructura_secundaria_if
+    (55) condicionIf -> . expresiones_booleanas
+    (56) condicionIf -> . expresiones_booleanas funcionesComparacion expresiones_booleanas
+    (41) expresiones_booleanas -> . valorNumerico operadoresComparacion valorNumerico
+    (42) expresiones_booleanas -> . rangos TRIPLE_IGUAL ENTERO
+    (43) expresiones_booleanas -> . VARIABLE operadoresComparacion VARIABLE
+    (44) expresiones_booleanas -> . VARIABLE operadoresComparacion valorNumerico
+    (45) expresiones_booleanas -> . valorNumerico operadoresComparacion VARIABLE
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
+    (29) rangos -> . PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
 
-    PARENTESIS_IZ   reduce using rule 12 (operadores -> MAS .)
-    FLOTANTE        reduce using rule 12 (operadores -> MAS .)
-    ENTERO          reduce using rule 12 (operadores -> MAS .)
+    VARIABLE        shift and go to state 56
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
+    PARENTESIS_IZ   shift and go to state 57
 
+    condicionIf                    shift and go to state 53
+    expresiones_booleanas          shift and go to state 54
+    valorNumerico                  shift and go to state 55
+    rangos                         shift and go to state 18
 
 state 23
 
-    (13) operadores -> MENOS .
+    (47) funciones -> DEF . VARIABLE PARENTESIS_IZ PARENTESIS_DER END
+    (48) funciones -> DEF . VARIABLE PARENTESIS_IZ argumentos PARENTESIS_DER END
 
-    PARENTESIS_IZ   reduce using rule 13 (operadores -> MENOS .)
-    FLOTANTE        reduce using rule 13 (operadores -> MENOS .)
-    ENTERO          reduce using rule 13 (operadores -> MENOS .)
+    VARIABLE        shift and go to state 58
 
 
 state 24
 
-    (14) operadores -> DIVISION .
+    (11) valorNumerico -> FLOTANTE .
 
-    PARENTESIS_IZ   reduce using rule 14 (operadores -> DIVISION .)
-    FLOTANTE        reduce using rule 14 (operadores -> DIVISION .)
-    ENTERO          reduce using rule 14 (operadores -> DIVISION .)
+    DOBLE_IGUAL     reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    DIFERENTE       reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    MAYOR_QUE       reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    MENOR_QUE       reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    MENOR_IGUAL_QUE reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    MAYOR_IGUAL_QUE reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    MAS             reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    MENOS           reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    DIVISION        reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    MULTIPLICACION  reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    EXPONENCIACION  reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    MODULO          reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    $end            reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    PARENTESIS_DER  reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    ELSE            reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    ELSEIF          reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    END             reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    AND             reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    OR              reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    VARIABLE        reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    PRINT           reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    PUTS            reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    GETS            reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    LLAVE_IZ        reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    IF              reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    PARENTESIS_IZ   reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    FLOTANTE        reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    ENTERO          reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    COMA            reduce using rule 11 (valorNumerico -> FLOTANTE .)
+    LLAVE_DER       reduce using rule 11 (valorNumerico -> FLOTANTE .)
 
 
 state 25
 
-    (15) operadores -> MULTIPLICACION .
+    (23) operacionAritmetica -> expresionNumerica operadores . expresionNumerica
+    (20) expresionNumerica -> . valorNumerico
+    (21) expresionNumerica -> . operacionAritmetica
+    (22) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
+    (23) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
 
-    PARENTESIS_IZ   reduce using rule 15 (operadores -> MULTIPLICACION .)
-    FLOTANTE        reduce using rule 15 (operadores -> MULTIPLICACION .)
-    ENTERO          reduce using rule 15 (operadores -> MULTIPLICACION .)
+    PARENTESIS_IZ   shift and go to state 42
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
 
+    expresionNumerica              shift and go to state 59
+    valorNumerico                  shift and go to state 46
+    operacionAritmetica            shift and go to state 60
 
 state 26
 
-    (16) operadores -> EXPONENCIACION .
+    (14) operadores -> MAS .
 
-    PARENTESIS_IZ   reduce using rule 16 (operadores -> EXPONENCIACION .)
-    FLOTANTE        reduce using rule 16 (operadores -> EXPONENCIACION .)
-    ENTERO          reduce using rule 16 (operadores -> EXPONENCIACION .)
+    PARENTESIS_IZ   reduce using rule 14 (operadores -> MAS .)
+    FLOTANTE        reduce using rule 14 (operadores -> MAS .)
+    ENTERO          reduce using rule 14 (operadores -> MAS .)
 
 
 state 27
 
-    (17) operadores -> MODULO .
+    (15) operadores -> MENOS .
 
-    PARENTESIS_IZ   reduce using rule 17 (operadores -> MODULO .)
-    FLOTANTE        reduce using rule 17 (operadores -> MODULO .)
-    ENTERO          reduce using rule 17 (operadores -> MODULO .)
+    PARENTESIS_IZ   reduce using rule 15 (operadores -> MENOS .)
+    FLOTANTE        reduce using rule 15 (operadores -> MENOS .)
+    ENTERO          reduce using rule 15 (operadores -> MENOS .)
 
 
 state 28
 
-    (24) asignacion -> VARIABLE IGUAL . expresionNumerica
-    (25) asignacion -> VARIABLE IGUAL . CADENA
-    (18) expresionNumerica -> . valorNumerico
-    (19) expresionNumerica -> . operacionAritmetica
-    (20) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
-    (9) valorNumerico -> . FLOTANTE
-    (10) valorNumerico -> . ENTERO
-    (21) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
+    (16) operadores -> DIVISION .
 
-    CADENA          shift and go to state 49
-    PARENTESIS_IZ   shift and go to state 30
-    FLOTANTE        shift and go to state 20
-    ENTERO          shift and go to state 17
+    PARENTESIS_IZ   reduce using rule 16 (operadores -> DIVISION .)
+    FLOTANTE        reduce using rule 16 (operadores -> DIVISION .)
+    ENTERO          reduce using rule 16 (operadores -> DIVISION .)
 
-    expresionNumerica              shift and go to state 48
-    valorNumerico                  shift and go to state 34
-    operacionAritmetica            shift and go to state 47
 
 state 29
 
-    (22) impresion -> PRINT PARENTESIS_IZ . expresionNumerica PARENTESIS_DER
-    (23) impresion -> PRINT PARENTESIS_IZ . VARIABLE PARENTESIS_DER
-    (27) impresion_vacia -> PRINT PARENTESIS_IZ . PARENTESIS_DER
-    (18) expresionNumerica -> . valorNumerico
-    (19) expresionNumerica -> . operacionAritmetica
-    (20) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
-    (9) valorNumerico -> . FLOTANTE
-    (10) valorNumerico -> . ENTERO
-    (21) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
+    (17) operadores -> MULTIPLICACION .
 
-    VARIABLE        shift and go to state 52
-    PARENTESIS_DER  shift and go to state 51
-    PARENTESIS_IZ   shift and go to state 30
-    FLOTANTE        shift and go to state 20
-    ENTERO          shift and go to state 17
+    PARENTESIS_IZ   reduce using rule 17 (operadores -> MULTIPLICACION .)
+    FLOTANTE        reduce using rule 17 (operadores -> MULTIPLICACION .)
+    ENTERO          reduce using rule 17 (operadores -> MULTIPLICACION .)
 
-    expresionNumerica              shift and go to state 50
-    valorNumerico                  shift and go to state 34
-    operacionAritmetica            shift and go to state 47
 
 state 30
 
-    (20) expresionNumerica -> PARENTESIS_IZ . operacionAritmetica PARENTESIS_DER
-    (21) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
-    (18) expresionNumerica -> . valorNumerico
-    (19) expresionNumerica -> . operacionAritmetica
-    (20) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
-    (9) valorNumerico -> . FLOTANTE
-    (10) valorNumerico -> . ENTERO
+    (18) operadores -> EXPONENCIACION .
 
-    PARENTESIS_IZ   shift and go to state 30
-    FLOTANTE        shift and go to state 20
-    ENTERO          shift and go to state 17
+    PARENTESIS_IZ   reduce using rule 18 (operadores -> EXPONENCIACION .)
+    FLOTANTE        reduce using rule 18 (operadores -> EXPONENCIACION .)
+    ENTERO          reduce using rule 18 (operadores -> EXPONENCIACION .)
 
-    operacionAritmetica            shift and go to state 31
-    expresionNumerica              shift and go to state 10
-    valorNumerico                  shift and go to state 34
 
 state 31
 
-    (20) expresionNumerica -> PARENTESIS_IZ operacionAritmetica . PARENTESIS_DER
-    (19) expresionNumerica -> operacionAritmetica .
+    (19) operadores -> MODULO .
 
-    PARENTESIS_DER  shift and go to state 53
-    MAS             reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    MENOS           reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    DIVISION        reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    MULTIPLICACION  reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    EXPONENCIACION  reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    MODULO          reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
+    PARENTESIS_IZ   reduce using rule 19 (operadores -> MODULO .)
+    FLOTANTE        reduce using rule 19 (operadores -> MODULO .)
+    ENTERO          reduce using rule 19 (operadores -> MODULO .)
 
 
 state 32
 
-    (26) rangos -> PARENTESIS_IZ soloEnteros . TRES_PUNTOS soloEnteros PARENTESIS_DER
+    (26) asignacion -> VARIABLE IGUAL . expresionNumerica
+    (27) asignacion -> VARIABLE IGUAL . CADENA
+    (28) asignacion -> VARIABLE IGUAL . hashes
+    (20) expresionNumerica -> . valorNumerico
+    (21) expresionNumerica -> . operacionAritmetica
+    (22) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+    (69) hashes -> . LLAVE_IZ elemento_hash LLAVE_DER
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
+    (23) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
 
-    TRES_PUNTOS     shift and go to state 54
+    CADENA          shift and go to state 62
+    PARENTESIS_IZ   shift and go to state 42
+    LLAVE_IZ        shift and go to state 21
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
 
+    expresionNumerica              shift and go to state 61
+    hashes                         shift and go to state 63
+    valorNumerico                  shift and go to state 46
+    operacionAritmetica            shift and go to state 60
 
 state 33
 
-    (11) soloEnteros -> ENTERO .
-    (10) valorNumerico -> ENTERO .
+    (43) expresiones_booleanas -> VARIABLE operadoresComparacion . VARIABLE
+    (44) expresiones_booleanas -> VARIABLE operadoresComparacion . valorNumerico
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
 
-    TRES_PUNTOS     reduce using rule 11 (soloEnteros -> ENTERO .)
-    MAS             reduce using rule 10 (valorNumerico -> ENTERO .)
-    MENOS           reduce using rule 10 (valorNumerico -> ENTERO .)
-    DIVISION        reduce using rule 10 (valorNumerico -> ENTERO .)
-    MULTIPLICACION  reduce using rule 10 (valorNumerico -> ENTERO .)
-    EXPONENCIACION  reduce using rule 10 (valorNumerico -> ENTERO .)
-    MODULO          reduce using rule 10 (valorNumerico -> ENTERO .)
+    VARIABLE        shift and go to state 64
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
 
+    valorNumerico                  shift and go to state 65
 
 state 34
 
-    (18) expresionNumerica -> valorNumerico .
+    (51) funcionesEstructuras -> VARIABLE PUNTO . funcionesArray
+    (52) funcionesEstructuras -> VARIABLE PUNTO . funcionesNumeros
+    (49) funcionesArray -> . SORT
+    (50) funcionesNumeros -> . TO_F
 
-    MAS             reduce using rule 18 (expresionNumerica -> valorNumerico .)
-    MENOS           reduce using rule 18 (expresionNumerica -> valorNumerico .)
-    DIVISION        reduce using rule 18 (expresionNumerica -> valorNumerico .)
-    MULTIPLICACION  reduce using rule 18 (expresionNumerica -> valorNumerico .)
-    EXPONENCIACION  reduce using rule 18 (expresionNumerica -> valorNumerico .)
-    MODULO          reduce using rule 18 (expresionNumerica -> valorNumerico .)
-    $end            reduce using rule 18 (expresionNumerica -> valorNumerico .)
-    PARENTESIS_DER  reduce using rule 18 (expresionNumerica -> valorNumerico .)
+    SORT            shift and go to state 68
+    TO_F            shift and go to state 69
 
+    funcionesArray                 shift and go to state 66
+    funcionesNumeros               shift and go to state 67
 
 state 35
 
-    (28) impresion_vacia -> PUTS PARENTESIS_IZ . PARENTESIS_DER
+    (33) operadoresComparacion -> DOBLE_IGUAL .
 
-    PARENTESIS_DER  shift and go to state 55
+    VARIABLE        reduce using rule 33 (operadoresComparacion -> DOBLE_IGUAL .)
+    FLOTANTE        reduce using rule 33 (operadoresComparacion -> DOBLE_IGUAL .)
+    ENTERO          reduce using rule 33 (operadoresComparacion -> DOBLE_IGUAL .)
 
 
 state 36
 
-    (30) expresiones_booleanas_ID -> valorNumerico IGUAL . IGUAL valorNumerico
-    (33) expresiones_booleanas_CN -> valorNumerico IGUAL . IGUAL valorNumerico
+    (34) operadoresComparacion -> DIFERENTE .
 
-    IGUAL           shift and go to state 56
+    VARIABLE        reduce using rule 34 (operadoresComparacion -> DIFERENTE .)
+    FLOTANTE        reduce using rule 34 (operadoresComparacion -> DIFERENTE .)
+    ENTERO          reduce using rule 34 (operadoresComparacion -> DIFERENTE .)
 
 
 state 37
 
-    (31) expresiones_booleanas_ID -> valorNumerico DIFERENTE . valorNumerico
-    (9) valorNumerico -> . FLOTANTE
-    (10) valorNumerico -> . ENTERO
+    (35) operadoresComparacion -> MAYOR_QUE .
 
-    FLOTANTE        shift and go to state 20
-    ENTERO          shift and go to state 17
+    VARIABLE        reduce using rule 35 (operadoresComparacion -> MAYOR_QUE .)
+    FLOTANTE        reduce using rule 35 (operadoresComparacion -> MAYOR_QUE .)
+    ENTERO          reduce using rule 35 (operadoresComparacion -> MAYOR_QUE .)
 
-    valorNumerico                  shift and go to state 57
 
 state 38
 
-    (34) expresiones_booleanas_CN -> valorNumerico MAYOR_QUE . valorNumerico
-    (9) valorNumerico -> . FLOTANTE
-    (10) valorNumerico -> . ENTERO
+    (36) operadoresComparacion -> MENOR_QUE .
 
-    FLOTANTE        shift and go to state 20
-    ENTERO          shift and go to state 17
+    VARIABLE        reduce using rule 36 (operadoresComparacion -> MENOR_QUE .)
+    FLOTANTE        reduce using rule 36 (operadoresComparacion -> MENOR_QUE .)
+    ENTERO          reduce using rule 36 (operadoresComparacion -> MENOR_QUE .)
 
-    valorNumerico                  shift and go to state 58
 
 state 39
 
-    (35) expresiones_booleanas_CN -> valorNumerico MENOR_QUE . valorNumerico
-    (9) valorNumerico -> . FLOTANTE
-    (10) valorNumerico -> . ENTERO
+    (37) operadoresComparacion -> MENOR_IGUAL_QUE .
 
-    FLOTANTE        shift and go to state 20
-    ENTERO          shift and go to state 17
+    VARIABLE        reduce using rule 37 (operadoresComparacion -> MENOR_IGUAL_QUE .)
+    FLOTANTE        reduce using rule 37 (operadoresComparacion -> MENOR_IGUAL_QUE .)
+    ENTERO          reduce using rule 37 (operadoresComparacion -> MENOR_IGUAL_QUE .)
 
-    valorNumerico                  shift and go to state 59
 
 state 40
 
-    (36) expresiones_booleanas_CN -> valorNumerico MENOR_IGUAL_QUE . valorNumerico
-    (9) valorNumerico -> . FLOTANTE
-    (10) valorNumerico -> . ENTERO
+    (38) operadoresComparacion -> MAYOR_IGUAL_QUE .
 
-    FLOTANTE        shift and go to state 20
-    ENTERO          shift and go to state 17
+    VARIABLE        reduce using rule 38 (operadoresComparacion -> MAYOR_IGUAL_QUE .)
+    FLOTANTE        reduce using rule 38 (operadoresComparacion -> MAYOR_IGUAL_QUE .)
+    ENTERO          reduce using rule 38 (operadoresComparacion -> MAYOR_IGUAL_QUE .)
 
-    valorNumerico                  shift and go to state 60
 
 state 41
 
-    (37) expresiones_booleanas_CN -> valorNumerico MAYOR_IGUAL_QUE . valorNumerico
-    (9) valorNumerico -> . FLOTANTE
-    (10) valorNumerico -> . ENTERO
+    (24) impresion -> PRINT PARENTESIS_IZ . expresionNumerica PARENTESIS_DER
+    (25) impresion -> PRINT PARENTESIS_IZ . VARIABLE PARENTESIS_DER
+    (30) impresion_vacia -> PRINT PARENTESIS_IZ . PARENTESIS_DER
+    (20) expresionNumerica -> . valorNumerico
+    (21) expresionNumerica -> . operacionAritmetica
+    (22) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
+    (23) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
 
-    FLOTANTE        shift and go to state 20
-    ENTERO          shift and go to state 17
+    VARIABLE        shift and go to state 72
+    PARENTESIS_DER  shift and go to state 71
+    PARENTESIS_IZ   shift and go to state 42
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
 
-    valorNumerico                  shift and go to state 61
+    expresionNumerica              shift and go to state 70
+    valorNumerico                  shift and go to state 46
+    operacionAritmetica            shift and go to state 60
 
 state 42
 
-    (32) expresiones_booleanas_ID -> rangos TRIPLE_IGUAL . ENTERO
-    (38) expresiones_booleanas_CN -> rangos TRIPLE_IGUAL . ENTERO
+    (22) expresionNumerica -> PARENTESIS_IZ . operacionAritmetica PARENTESIS_DER
+    (23) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
+    (20) expresionNumerica -> . valorNumerico
+    (21) expresionNumerica -> . operacionAritmetica
+    (22) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
 
-    ENTERO          shift and go to state 62
+    PARENTESIS_IZ   shift and go to state 42
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
 
+    operacionAritmetica            shift and go to state 43
+    expresionNumerica              shift and go to state 12
+    valorNumerico                  shift and go to state 46
 
 state 43
 
-    (40) hashes -> LLAVE_IZ elemento_hash . LLAVE_DER
+    (22) expresionNumerica -> PARENTESIS_IZ operacionAritmetica . PARENTESIS_DER
+    (21) expresionNumerica -> operacionAritmetica .
 
-    LLAVE_DER       shift and go to state 63
+    PARENTESIS_DER  shift and go to state 73
+    MAS             reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    MENOS           reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    DIVISION        reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    MULTIPLICACION  reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    EXPONENCIACION  reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    MODULO          reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
 
 
 state 44
 
-    (43) elemento_hash -> claveValor .
-    (44) elemento_hash -> claveValor . COMA claveValor
+    (29) rangos -> PARENTESIS_IZ soloEnteros . TRES_PUNTOS soloEnteros PARENTESIS_DER
 
-    LLAVE_DER       reduce using rule 43 (elemento_hash -> claveValor .)
-    COMA            shift and go to state 64
+    TRES_PUNTOS     shift and go to state 74
 
 
 state 45
 
-    (41) claveValor -> VARIABLE . ASIGNA_HASH valorNumerico
-    (42) claveValor -> VARIABLE . ASIGNA_HASH CADENA
+    (13) soloEnteros -> ENTERO .
+    (12) valorNumerico -> ENTERO .
 
-    ASIGNA_HASH     shift and go to state 65
+    TRES_PUNTOS     reduce using rule 13 (soloEnteros -> ENTERO .)
+    MAS             reduce using rule 12 (valorNumerico -> ENTERO .)
+    MENOS           reduce using rule 12 (valorNumerico -> ENTERO .)
+    DIVISION        reduce using rule 12 (valorNumerico -> ENTERO .)
+    MULTIPLICACION  reduce using rule 12 (valorNumerico -> ENTERO .)
+    EXPONENCIACION  reduce using rule 12 (valorNumerico -> ENTERO .)
+    MODULO          reduce using rule 12 (valorNumerico -> ENTERO .)
 
 
 state 46
 
-    (21) operacionAritmetica -> expresionNumerica operadores expresionNumerica .
-    (21) operacionAritmetica -> expresionNumerica . operadores expresionNumerica
-    (12) operadores -> . MAS
-    (13) operadores -> . MENOS
-    (14) operadores -> . DIVISION
-    (15) operadores -> . MULTIPLICACION
-    (16) operadores -> . EXPONENCIACION
-    (17) operadores -> . MODULO
+    (20) expresionNumerica -> valorNumerico .
+
+    MAS             reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    MENOS           reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    DIVISION        reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    MULTIPLICACION  reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    EXPONENCIACION  reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    MODULO          reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    $end            reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    PARENTESIS_DER  reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    ELSE            reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    ELSEIF          reduce using rule 20 (expresionNumerica -> valorNumerico .)
+    END             reduce using rule 20 (expresionNumerica -> valorNumerico .)
+
+
+state 47
+
+    (31) impresion_vacia -> PUTS PARENTESIS_IZ . PARENTESIS_DER
+
+    PARENTESIS_DER  shift and go to state 75
+
+
+state 48
+
+    (41) expresiones_booleanas -> valorNumerico operadoresComparacion . valorNumerico
+    (45) expresiones_booleanas -> valorNumerico operadoresComparacion . VARIABLE
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
+
+    VARIABLE        shift and go to state 77
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
+
+    valorNumerico                  shift and go to state 76
+
+state 49
+
+    (42) expresiones_booleanas -> rangos TRIPLE_IGUAL . ENTERO
+
+    ENTERO          shift and go to state 78
+
+
+state 50
+
+    (69) hashes -> LLAVE_IZ elemento_hash . LLAVE_DER
+
+    LLAVE_DER       shift and go to state 79
+
+
+state 51
+
+    (72) elemento_hash -> claveValor .
+    (73) elemento_hash -> claveValor . COMA claveValor
+
+    LLAVE_DER       reduce using rule 72 (elemento_hash -> claveValor .)
+    COMA            shift and go to state 80
+
+
+state 52
+
+    (70) claveValor -> VARIABLE . ASIGNA_HASH valorNumerico
+    (71) claveValor -> VARIABLE . ASIGNA_HASH CADENA
+
+    ASIGNA_HASH     shift and go to state 81
+
+
+state 53
+
+    (57) estructura_if -> IF condicionIf . declaracion ELSE declaracion END
+    (58) estructura_if -> IF condicionIf . declaracion estructura_secundaria_if
+    (61) declaracion -> . operacionAritmetica
+    (62) declaracion -> . asignacion
+    (63) declaracion -> . impresion
+    (64) declaracion -> . impresion_vacia
+    (65) declaracion -> . expresiones_booleanas
+    (66) declaracion -> . solicitudDatosTeclado
+    (67) declaracion -> . hashes
+    (68) declaracion -> . estructura_if
+    (23) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
+    (26) asignacion -> . VARIABLE IGUAL expresionNumerica
+    (27) asignacion -> . VARIABLE IGUAL CADENA
+    (28) asignacion -> . VARIABLE IGUAL hashes
+    (24) impresion -> . PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER
+    (25) impresion -> . PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER
+    (30) impresion_vacia -> . PRINT PARENTESIS_IZ PARENTESIS_DER
+    (31) impresion_vacia -> . PUTS PARENTESIS_IZ PARENTESIS_DER
+    (32) impresion_vacia -> . PUTS
+    (41) expresiones_booleanas -> . valorNumerico operadoresComparacion valorNumerico
+    (42) expresiones_booleanas -> . rangos TRIPLE_IGUAL ENTERO
+    (43) expresiones_booleanas -> . VARIABLE operadoresComparacion VARIABLE
+    (44) expresiones_booleanas -> . VARIABLE operadoresComparacion valorNumerico
+    (45) expresiones_booleanas -> . valorNumerico operadoresComparacion VARIABLE
+    (46) solicitudDatosTeclado -> . GETS
+    (69) hashes -> . LLAVE_IZ elemento_hash LLAVE_DER
+    (57) estructura_if -> . IF condicionIf declaracion ELSE declaracion END
+    (58) estructura_if -> . IF condicionIf declaracion estructura_secundaria_if
+    (20) expresionNumerica -> . valorNumerico
+    (21) expresionNumerica -> . operacionAritmetica
+    (22) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
+    (29) rangos -> . PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
+
+    VARIABLE        shift and go to state 91
+    PRINT           shift and go to state 14
+    PUTS            shift and go to state 16
+    GETS            shift and go to state 20
+    LLAVE_IZ        shift and go to state 21
+    IF              shift and go to state 22
+    PARENTESIS_IZ   shift and go to state 15
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
+
+    declaracion                    shift and go to state 82
+    operacionAritmetica            shift and go to state 83
+    asignacion                     shift and go to state 84
+    impresion                      shift and go to state 85
+    impresion_vacia                shift and go to state 86
+    expresiones_booleanas          shift and go to state 87
+    solicitudDatosTeclado          shift and go to state 88
+    hashes                         shift and go to state 89
+    estructura_if                  shift and go to state 90
+    expresionNumerica              shift and go to state 12
+    valorNumerico                  shift and go to state 17
+    rangos                         shift and go to state 18
+
+state 54
+
+    (55) condicionIf -> expresiones_booleanas .
+    (56) condicionIf -> expresiones_booleanas . funcionesComparacion expresiones_booleanas
+    (39) funcionesComparacion -> . AND
+    (40) funcionesComparacion -> . OR
+
+    VARIABLE        reduce using rule 55 (condicionIf -> expresiones_booleanas .)
+    PRINT           reduce using rule 55 (condicionIf -> expresiones_booleanas .)
+    PUTS            reduce using rule 55 (condicionIf -> expresiones_booleanas .)
+    GETS            reduce using rule 55 (condicionIf -> expresiones_booleanas .)
+    LLAVE_IZ        reduce using rule 55 (condicionIf -> expresiones_booleanas .)
+    IF              reduce using rule 55 (condicionIf -> expresiones_booleanas .)
+    PARENTESIS_IZ   reduce using rule 55 (condicionIf -> expresiones_booleanas .)
+    FLOTANTE        reduce using rule 55 (condicionIf -> expresiones_booleanas .)
+    ENTERO          reduce using rule 55 (condicionIf -> expresiones_booleanas .)
+    AND             shift and go to state 93
+    OR              shift and go to state 94
+
+    funcionesComparacion           shift and go to state 92
+
+state 55
+
+    (41) expresiones_booleanas -> valorNumerico . operadoresComparacion valorNumerico
+    (45) expresiones_booleanas -> valorNumerico . operadoresComparacion VARIABLE
+    (33) operadoresComparacion -> . DOBLE_IGUAL
+    (34) operadoresComparacion -> . DIFERENTE
+    (35) operadoresComparacion -> . MAYOR_QUE
+    (36) operadoresComparacion -> . MENOR_QUE
+    (37) operadoresComparacion -> . MENOR_IGUAL_QUE
+    (38) operadoresComparacion -> . MAYOR_IGUAL_QUE
+
+    DOBLE_IGUAL     shift and go to state 35
+    DIFERENTE       shift and go to state 36
+    MAYOR_QUE       shift and go to state 37
+    MENOR_QUE       shift and go to state 38
+    MENOR_IGUAL_QUE shift and go to state 39
+    MAYOR_IGUAL_QUE shift and go to state 40
+
+    operadoresComparacion          shift and go to state 48
+
+state 56
+
+    (43) expresiones_booleanas -> VARIABLE . operadoresComparacion VARIABLE
+    (44) expresiones_booleanas -> VARIABLE . operadoresComparacion valorNumerico
+    (33) operadoresComparacion -> . DOBLE_IGUAL
+    (34) operadoresComparacion -> . DIFERENTE
+    (35) operadoresComparacion -> . MAYOR_QUE
+    (36) operadoresComparacion -> . MENOR_QUE
+    (37) operadoresComparacion -> . MENOR_IGUAL_QUE
+    (38) operadoresComparacion -> . MAYOR_IGUAL_QUE
+
+    DOBLE_IGUAL     shift and go to state 35
+    DIFERENTE       shift and go to state 36
+    MAYOR_QUE       shift and go to state 37
+    MENOR_QUE       shift and go to state 38
+    MENOR_IGUAL_QUE shift and go to state 39
+    MAYOR_IGUAL_QUE shift and go to state 40
+
+    operadoresComparacion          shift and go to state 33
+
+state 57
+
+    (29) rangos -> PARENTESIS_IZ . soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
+    (13) soloEnteros -> . ENTERO
+
+    ENTERO          shift and go to state 95
+
+    soloEnteros                    shift and go to state 44
+
+state 58
+
+    (47) funciones -> DEF VARIABLE . PARENTESIS_IZ PARENTESIS_DER END
+    (48) funciones -> DEF VARIABLE . PARENTESIS_IZ argumentos PARENTESIS_DER END
+
+    PARENTESIS_IZ   shift and go to state 96
+
+
+state 59
+
+    (23) operacionAritmetica -> expresionNumerica operadores expresionNumerica .
+    (23) operacionAritmetica -> expresionNumerica . operadores expresionNumerica
+    (14) operadores -> . MAS
+    (15) operadores -> . MENOS
+    (16) operadores -> . DIVISION
+    (17) operadores -> . MULTIPLICACION
+    (18) operadores -> . EXPONENCIACION
+    (19) operadores -> . MODULO
 
   ! shift/reduce conflict for MAS resolved as shift
   ! shift/reduce conflict for MENOS resolved as shift
@@ -804,299 +1118,911 @@ state 46
   ! shift/reduce conflict for MULTIPLICACION resolved as shift
   ! shift/reduce conflict for EXPONENCIACION resolved as shift
   ! shift/reduce conflict for MODULO resolved as shift
-    $end            reduce using rule 21 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .)
-    PARENTESIS_DER  reduce using rule 21 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .)
-    MAS             shift and go to state 22
-    MENOS           shift and go to state 23
-    DIVISION        shift and go to state 24
-    MULTIPLICACION  shift and go to state 25
-    EXPONENCIACION  shift and go to state 26
-    MODULO          shift and go to state 27
+    $end            reduce using rule 23 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .)
+    PARENTESIS_DER  reduce using rule 23 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .)
+    ELSE            reduce using rule 23 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .)
+    ELSEIF          reduce using rule 23 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .)
+    END             reduce using rule 23 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .)
+    MAS             shift and go to state 26
+    MENOS           shift and go to state 27
+    DIVISION        shift and go to state 28
+    MULTIPLICACION  shift and go to state 29
+    EXPONENCIACION  shift and go to state 30
+    MODULO          shift and go to state 31
 
-  ! MAS             [ reduce using rule 21 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
-  ! MENOS           [ reduce using rule 21 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
-  ! DIVISION        [ reduce using rule 21 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
-  ! MULTIPLICACION  [ reduce using rule 21 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
-  ! EXPONENCIACION  [ reduce using rule 21 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
-  ! MODULO          [ reduce using rule 21 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
+  ! MAS             [ reduce using rule 23 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
+  ! MENOS           [ reduce using rule 23 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
+  ! DIVISION        [ reduce using rule 23 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
+  ! MULTIPLICACION  [ reduce using rule 23 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
+  ! EXPONENCIACION  [ reduce using rule 23 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
+  ! MODULO          [ reduce using rule 23 (operacionAritmetica -> expresionNumerica operadores expresionNumerica .) ]
 
-    operadores                     shift and go to state 21
-
-state 47
-
-    (19) expresionNumerica -> operacionAritmetica .
-
-    MAS             reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    MENOS           reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    DIVISION        reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    MULTIPLICACION  reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    EXPONENCIACION  reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    MODULO          reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    $end            reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-    PARENTESIS_DER  reduce using rule 19 (expresionNumerica -> operacionAritmetica .)
-
-
-state 48
-
-    (24) asignacion -> VARIABLE IGUAL expresionNumerica .
-    (21) operacionAritmetica -> expresionNumerica . operadores expresionNumerica
-    (12) operadores -> . MAS
-    (13) operadores -> . MENOS
-    (14) operadores -> . DIVISION
-    (15) operadores -> . MULTIPLICACION
-    (16) operadores -> . EXPONENCIACION
-    (17) operadores -> . MODULO
-
-    $end            reduce using rule 24 (asignacion -> VARIABLE IGUAL expresionNumerica .)
-    MAS             shift and go to state 22
-    MENOS           shift and go to state 23
-    DIVISION        shift and go to state 24
-    MULTIPLICACION  shift and go to state 25
-    EXPONENCIACION  shift and go to state 26
-    MODULO          shift and go to state 27
-
-    operadores                     shift and go to state 21
-
-state 49
-
-    (25) asignacion -> VARIABLE IGUAL CADENA .
-
-    $end            reduce using rule 25 (asignacion -> VARIABLE IGUAL CADENA .)
-
-
-state 50
-
-    (22) impresion -> PRINT PARENTESIS_IZ expresionNumerica . PARENTESIS_DER
-    (21) operacionAritmetica -> expresionNumerica . operadores expresionNumerica
-    (12) operadores -> . MAS
-    (13) operadores -> . MENOS
-    (14) operadores -> . DIVISION
-    (15) operadores -> . MULTIPLICACION
-    (16) operadores -> . EXPONENCIACION
-    (17) operadores -> . MODULO
-
-    PARENTESIS_DER  shift and go to state 66
-    MAS             shift and go to state 22
-    MENOS           shift and go to state 23
-    DIVISION        shift and go to state 24
-    MULTIPLICACION  shift and go to state 25
-    EXPONENCIACION  shift and go to state 26
-    MODULO          shift and go to state 27
-
-    operadores                     shift and go to state 21
-
-state 51
-
-    (27) impresion_vacia -> PRINT PARENTESIS_IZ PARENTESIS_DER .
-
-    $end            reduce using rule 27 (impresion_vacia -> PRINT PARENTESIS_IZ PARENTESIS_DER .)
-
-
-state 52
-
-    (23) impresion -> PRINT PARENTESIS_IZ VARIABLE . PARENTESIS_DER
-
-    PARENTESIS_DER  shift and go to state 67
-
-
-state 53
-
-    (20) expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .
-
-    MAS             reduce using rule 20 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
-    MENOS           reduce using rule 20 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
-    DIVISION        reduce using rule 20 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
-    MULTIPLICACION  reduce using rule 20 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
-    EXPONENCIACION  reduce using rule 20 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
-    MODULO          reduce using rule 20 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
-    $end            reduce using rule 20 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
-    PARENTESIS_DER  reduce using rule 20 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
-
-
-state 54
-
-    (26) rangos -> PARENTESIS_IZ soloEnteros TRES_PUNTOS . soloEnteros PARENTESIS_DER
-    (11) soloEnteros -> . ENTERO
-
-    ENTERO          shift and go to state 69
-
-    soloEnteros                    shift and go to state 68
-
-state 55
-
-    (28) impresion_vacia -> PUTS PARENTESIS_IZ PARENTESIS_DER .
-
-    $end            reduce using rule 28 (impresion_vacia -> PUTS PARENTESIS_IZ PARENTESIS_DER .)
-
-
-state 56
-
-    (30) expresiones_booleanas_ID -> valorNumerico IGUAL IGUAL . valorNumerico
-    (33) expresiones_booleanas_CN -> valorNumerico IGUAL IGUAL . valorNumerico
-    (9) valorNumerico -> . FLOTANTE
-    (10) valorNumerico -> . ENTERO
-
-    FLOTANTE        shift and go to state 20
-    ENTERO          shift and go to state 17
-
-    valorNumerico                  shift and go to state 70
-
-state 57
-
-    (31) expresiones_booleanas_ID -> valorNumerico DIFERENTE valorNumerico .
-
-    $end            reduce using rule 31 (expresiones_booleanas_ID -> valorNumerico DIFERENTE valorNumerico .)
-
-
-state 58
-
-    (34) expresiones_booleanas_CN -> valorNumerico MAYOR_QUE valorNumerico .
-
-    $end            reduce using rule 34 (expresiones_booleanas_CN -> valorNumerico MAYOR_QUE valorNumerico .)
-
-
-state 59
-
-    (35) expresiones_booleanas_CN -> valorNumerico MENOR_QUE valorNumerico .
-
-    $end            reduce using rule 35 (expresiones_booleanas_CN -> valorNumerico MENOR_QUE valorNumerico .)
-
+    operadores                     shift and go to state 25
 
 state 60
 
-    (36) expresiones_booleanas_CN -> valorNumerico MENOR_IGUAL_QUE valorNumerico .
+    (21) expresionNumerica -> operacionAritmetica .
 
-    $end            reduce using rule 36 (expresiones_booleanas_CN -> valorNumerico MENOR_IGUAL_QUE valorNumerico .)
+    MAS             reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    MENOS           reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    DIVISION        reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    MULTIPLICACION  reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    EXPONENCIACION  reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    MODULO          reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    $end            reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    PARENTESIS_DER  reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    ELSE            reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    ELSEIF          reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    END             reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
 
 
 state 61
 
-    (37) expresiones_booleanas_CN -> valorNumerico MAYOR_IGUAL_QUE valorNumerico .
+    (26) asignacion -> VARIABLE IGUAL expresionNumerica .
+    (23) operacionAritmetica -> expresionNumerica . operadores expresionNumerica
+    (14) operadores -> . MAS
+    (15) operadores -> . MENOS
+    (16) operadores -> . DIVISION
+    (17) operadores -> . MULTIPLICACION
+    (18) operadores -> . EXPONENCIACION
+    (19) operadores -> . MODULO
 
-    $end            reduce using rule 37 (expresiones_booleanas_CN -> valorNumerico MAYOR_IGUAL_QUE valorNumerico .)
+    $end            reduce using rule 26 (asignacion -> VARIABLE IGUAL expresionNumerica .)
+    ELSE            reduce using rule 26 (asignacion -> VARIABLE IGUAL expresionNumerica .)
+    ELSEIF          reduce using rule 26 (asignacion -> VARIABLE IGUAL expresionNumerica .)
+    END             reduce using rule 26 (asignacion -> VARIABLE IGUAL expresionNumerica .)
+    MAS             shift and go to state 26
+    MENOS           shift and go to state 27
+    DIVISION        shift and go to state 28
+    MULTIPLICACION  shift and go to state 29
+    EXPONENCIACION  shift and go to state 30
+    MODULO          shift and go to state 31
 
+    operadores                     shift and go to state 25
 
 state 62
 
-    (32) expresiones_booleanas_ID -> rangos TRIPLE_IGUAL ENTERO .
-    (38) expresiones_booleanas_CN -> rangos TRIPLE_IGUAL ENTERO .
+    (27) asignacion -> VARIABLE IGUAL CADENA .
 
-  ! reduce/reduce conflict for $end resolved using rule 32 (expresiones_booleanas_ID -> rangos TRIPLE_IGUAL ENTERO .)
-    $end            reduce using rule 32 (expresiones_booleanas_ID -> rangos TRIPLE_IGUAL ENTERO .)
-
-  ! $end            [ reduce using rule 38 (expresiones_booleanas_CN -> rangos TRIPLE_IGUAL ENTERO .) ]
+    $end            reduce using rule 27 (asignacion -> VARIABLE IGUAL CADENA .)
+    ELSE            reduce using rule 27 (asignacion -> VARIABLE IGUAL CADENA .)
+    ELSEIF          reduce using rule 27 (asignacion -> VARIABLE IGUAL CADENA .)
+    END             reduce using rule 27 (asignacion -> VARIABLE IGUAL CADENA .)
 
 
 state 63
 
-    (40) hashes -> LLAVE_IZ elemento_hash LLAVE_DER .
+    (28) asignacion -> VARIABLE IGUAL hashes .
 
-    $end            reduce using rule 40 (hashes -> LLAVE_IZ elemento_hash LLAVE_DER .)
+    $end            reduce using rule 28 (asignacion -> VARIABLE IGUAL hashes .)
+    ELSE            reduce using rule 28 (asignacion -> VARIABLE IGUAL hashes .)
+    ELSEIF          reduce using rule 28 (asignacion -> VARIABLE IGUAL hashes .)
+    END             reduce using rule 28 (asignacion -> VARIABLE IGUAL hashes .)
 
 
 state 64
 
-    (44) elemento_hash -> claveValor COMA . claveValor
-    (41) claveValor -> . VARIABLE ASIGNA_HASH valorNumerico
-    (42) claveValor -> . VARIABLE ASIGNA_HASH CADENA
+    (43) expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .
 
-    VARIABLE        shift and go to state 45
+    $end            reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    AND             reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    OR              reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    VARIABLE        reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    PRINT           reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    PUTS            reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    GETS            reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    LLAVE_IZ        reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    IF              reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    PARENTESIS_IZ   reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    FLOTANTE        reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    ENTERO          reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    ELSE            reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    ELSEIF          reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
+    END             reduce using rule 43 (expresiones_booleanas -> VARIABLE operadoresComparacion VARIABLE .)
 
-    claveValor                     shift and go to state 71
 
 state 65
 
-    (41) claveValor -> VARIABLE ASIGNA_HASH . valorNumerico
-    (42) claveValor -> VARIABLE ASIGNA_HASH . CADENA
-    (9) valorNumerico -> . FLOTANTE
-    (10) valorNumerico -> . ENTERO
+    (44) expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .
 
-    CADENA          shift and go to state 73
-    FLOTANTE        shift and go to state 20
-    ENTERO          shift and go to state 17
+    $end            reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    AND             reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    OR              reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    VARIABLE        reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    PRINT           reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    PUTS            reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    GETS            reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    LLAVE_IZ        reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    IF              reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    PARENTESIS_IZ   reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    FLOTANTE        reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    ENTERO          reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    ELSE            reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    ELSEIF          reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
+    END             reduce using rule 44 (expresiones_booleanas -> VARIABLE operadoresComparacion valorNumerico .)
 
-    valorNumerico                  shift and go to state 72
 
 state 66
 
-    (22) impresion -> PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER .
+    (51) funcionesEstructuras -> VARIABLE PUNTO funcionesArray .
 
-    $end            reduce using rule 22 (impresion -> PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER .)
+    $end            reduce using rule 51 (funcionesEstructuras -> VARIABLE PUNTO funcionesArray .)
 
 
 state 67
 
-    (23) impresion -> PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER .
+    (52) funcionesEstructuras -> VARIABLE PUNTO funcionesNumeros .
 
-    $end            reduce using rule 23 (impresion -> PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER .)
+    $end            reduce using rule 52 (funcionesEstructuras -> VARIABLE PUNTO funcionesNumeros .)
 
 
 state 68
 
-    (26) rangos -> PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros . PARENTESIS_DER
+    (49) funcionesArray -> SORT .
 
-    PARENTESIS_DER  shift and go to state 74
+    $end            reduce using rule 49 (funcionesArray -> SORT .)
 
 
 state 69
 
-    (11) soloEnteros -> ENTERO .
+    (50) funcionesNumeros -> TO_F .
 
-    PARENTESIS_DER  reduce using rule 11 (soloEnteros -> ENTERO .)
+    $end            reduce using rule 50 (funcionesNumeros -> TO_F .)
 
 
 state 70
 
-    (30) expresiones_booleanas_ID -> valorNumerico IGUAL IGUAL valorNumerico .
-    (33) expresiones_booleanas_CN -> valorNumerico IGUAL IGUAL valorNumerico .
+    (24) impresion -> PRINT PARENTESIS_IZ expresionNumerica . PARENTESIS_DER
+    (23) operacionAritmetica -> expresionNumerica . operadores expresionNumerica
+    (14) operadores -> . MAS
+    (15) operadores -> . MENOS
+    (16) operadores -> . DIVISION
+    (17) operadores -> . MULTIPLICACION
+    (18) operadores -> . EXPONENCIACION
+    (19) operadores -> . MODULO
 
-  ! reduce/reduce conflict for $end resolved using rule 30 (expresiones_booleanas_ID -> valorNumerico IGUAL IGUAL valorNumerico .)
-    $end            reduce using rule 30 (expresiones_booleanas_ID -> valorNumerico IGUAL IGUAL valorNumerico .)
+    PARENTESIS_DER  shift and go to state 97
+    MAS             shift and go to state 26
+    MENOS           shift and go to state 27
+    DIVISION        shift and go to state 28
+    MULTIPLICACION  shift and go to state 29
+    EXPONENCIACION  shift and go to state 30
+    MODULO          shift and go to state 31
 
-  ! $end            [ reduce using rule 33 (expresiones_booleanas_CN -> valorNumerico IGUAL IGUAL valorNumerico .) ]
-
+    operadores                     shift and go to state 25
 
 state 71
 
-    (44) elemento_hash -> claveValor COMA claveValor .
+    (30) impresion_vacia -> PRINT PARENTESIS_IZ PARENTESIS_DER .
 
-    LLAVE_DER       reduce using rule 44 (elemento_hash -> claveValor COMA claveValor .)
+    $end            reduce using rule 30 (impresion_vacia -> PRINT PARENTESIS_IZ PARENTESIS_DER .)
+    ELSE            reduce using rule 30 (impresion_vacia -> PRINT PARENTESIS_IZ PARENTESIS_DER .)
+    ELSEIF          reduce using rule 30 (impresion_vacia -> PRINT PARENTESIS_IZ PARENTESIS_DER .)
+    END             reduce using rule 30 (impresion_vacia -> PRINT PARENTESIS_IZ PARENTESIS_DER .)
 
 
 state 72
 
-    (41) claveValor -> VARIABLE ASIGNA_HASH valorNumerico .
+    (25) impresion -> PRINT PARENTESIS_IZ VARIABLE . PARENTESIS_DER
 
-    COMA            reduce using rule 41 (claveValor -> VARIABLE ASIGNA_HASH valorNumerico .)
-    LLAVE_DER       reduce using rule 41 (claveValor -> VARIABLE ASIGNA_HASH valorNumerico .)
+    PARENTESIS_DER  shift and go to state 98
 
 
 state 73
 
-    (42) claveValor -> VARIABLE ASIGNA_HASH CADENA .
+    (22) expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .
 
-    COMA            reduce using rule 42 (claveValor -> VARIABLE ASIGNA_HASH CADENA .)
-    LLAVE_DER       reduce using rule 42 (claveValor -> VARIABLE ASIGNA_HASH CADENA .)
+    MAS             reduce using rule 22 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    MENOS           reduce using rule 22 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    DIVISION        reduce using rule 22 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    MULTIPLICACION  reduce using rule 22 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    EXPONENCIACION  reduce using rule 22 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    MODULO          reduce using rule 22 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    $end            reduce using rule 22 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    PARENTESIS_DER  reduce using rule 22 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    ELSE            reduce using rule 22 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    ELSEIF          reduce using rule 22 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
+    END             reduce using rule 22 (expresionNumerica -> PARENTESIS_IZ operacionAritmetica PARENTESIS_DER .)
 
 
 state 74
 
-    (26) rangos -> PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER .
+    (29) rangos -> PARENTESIS_IZ soloEnteros TRES_PUNTOS . soloEnteros PARENTESIS_DER
+    (13) soloEnteros -> . ENTERO
 
-    TRIPLE_IGUAL    reduce using rule 26 (rangos -> PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER .)
+    ENTERO          shift and go to state 95
+
+    soloEnteros                    shift and go to state 99
+
+state 75
+
+    (31) impresion_vacia -> PUTS PARENTESIS_IZ PARENTESIS_DER .
+
+    $end            reduce using rule 31 (impresion_vacia -> PUTS PARENTESIS_IZ PARENTESIS_DER .)
+    ELSE            reduce using rule 31 (impresion_vacia -> PUTS PARENTESIS_IZ PARENTESIS_DER .)
+    ELSEIF          reduce using rule 31 (impresion_vacia -> PUTS PARENTESIS_IZ PARENTESIS_DER .)
+    END             reduce using rule 31 (impresion_vacia -> PUTS PARENTESIS_IZ PARENTESIS_DER .)
+
+
+state 76
+
+    (41) expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .
+
+    $end            reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    AND             reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    OR              reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    VARIABLE        reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    PRINT           reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    PUTS            reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    GETS            reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    LLAVE_IZ        reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    IF              reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    PARENTESIS_IZ   reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    FLOTANTE        reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    ENTERO          reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    ELSE            reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    ELSEIF          reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+    END             reduce using rule 41 (expresiones_booleanas -> valorNumerico operadoresComparacion valorNumerico .)
+
+
+state 77
+
+    (45) expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .
+
+    $end            reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    AND             reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    OR              reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    VARIABLE        reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    PRINT           reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    PUTS            reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    GETS            reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    LLAVE_IZ        reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    IF              reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    PARENTESIS_IZ   reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    FLOTANTE        reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    ENTERO          reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    ELSE            reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    ELSEIF          reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+    END             reduce using rule 45 (expresiones_booleanas -> valorNumerico operadoresComparacion VARIABLE .)
+
+
+state 78
+
+    (42) expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .
+
+    $end            reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    AND             reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    OR              reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    VARIABLE        reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    PRINT           reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    PUTS            reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    GETS            reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    LLAVE_IZ        reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    IF              reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    PARENTESIS_IZ   reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    FLOTANTE        reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    ENTERO          reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    ELSE            reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    ELSEIF          reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+    END             reduce using rule 42 (expresiones_booleanas -> rangos TRIPLE_IGUAL ENTERO .)
+
+
+state 79
+
+    (69) hashes -> LLAVE_IZ elemento_hash LLAVE_DER .
+
+    $end            reduce using rule 69 (hashes -> LLAVE_IZ elemento_hash LLAVE_DER .)
+    ELSE            reduce using rule 69 (hashes -> LLAVE_IZ elemento_hash LLAVE_DER .)
+    ELSEIF          reduce using rule 69 (hashes -> LLAVE_IZ elemento_hash LLAVE_DER .)
+    END             reduce using rule 69 (hashes -> LLAVE_IZ elemento_hash LLAVE_DER .)
+
+
+state 80
+
+    (73) elemento_hash -> claveValor COMA . claveValor
+    (70) claveValor -> . VARIABLE ASIGNA_HASH valorNumerico
+    (71) claveValor -> . VARIABLE ASIGNA_HASH CADENA
+
+    VARIABLE        shift and go to state 52
+
+    claveValor                     shift and go to state 100
+
+state 81
+
+    (70) claveValor -> VARIABLE ASIGNA_HASH . valorNumerico
+    (71) claveValor -> VARIABLE ASIGNA_HASH . CADENA
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
+
+    CADENA          shift and go to state 102
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
+
+    valorNumerico                  shift and go to state 101
+
+state 82
+
+    (57) estructura_if -> IF condicionIf declaracion . ELSE declaracion END
+    (58) estructura_if -> IF condicionIf declaracion . estructura_secundaria_if
+    (59) estructura_secundaria_if -> . ELSEIF condicionIf declaracion ELSE declaracion END
+    (60) estructura_secundaria_if -> . ELSEIF condicionIf declaracion estructura_secundaria_if
+
+    ELSE            shift and go to state 103
+    ELSEIF          shift and go to state 105
+
+    estructura_secundaria_if       shift and go to state 104
+
+state 83
+
+    (61) declaracion -> operacionAritmetica .
+    (21) expresionNumerica -> operacionAritmetica .
+
+    ELSE            reduce using rule 61 (declaracion -> operacionAritmetica .)
+    ELSEIF          reduce using rule 61 (declaracion -> operacionAritmetica .)
+    END             reduce using rule 61 (declaracion -> operacionAritmetica .)
+    MAS             reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    MENOS           reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    DIVISION        reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    MULTIPLICACION  reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    EXPONENCIACION  reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+    MODULO          reduce using rule 21 (expresionNumerica -> operacionAritmetica .)
+
+
+state 84
+
+    (62) declaracion -> asignacion .
+
+    ELSE            reduce using rule 62 (declaracion -> asignacion .)
+    ELSEIF          reduce using rule 62 (declaracion -> asignacion .)
+    END             reduce using rule 62 (declaracion -> asignacion .)
+
+
+state 85
+
+    (63) declaracion -> impresion .
+
+    ELSE            reduce using rule 63 (declaracion -> impresion .)
+    ELSEIF          reduce using rule 63 (declaracion -> impresion .)
+    END             reduce using rule 63 (declaracion -> impresion .)
+
+
+state 86
+
+    (64) declaracion -> impresion_vacia .
+
+    ELSE            reduce using rule 64 (declaracion -> impresion_vacia .)
+    ELSEIF          reduce using rule 64 (declaracion -> impresion_vacia .)
+    END             reduce using rule 64 (declaracion -> impresion_vacia .)
+
+
+state 87
+
+    (65) declaracion -> expresiones_booleanas .
+
+    ELSE            reduce using rule 65 (declaracion -> expresiones_booleanas .)
+    ELSEIF          reduce using rule 65 (declaracion -> expresiones_booleanas .)
+    END             reduce using rule 65 (declaracion -> expresiones_booleanas .)
+
+
+state 88
+
+    (66) declaracion -> solicitudDatosTeclado .
+
+    ELSE            reduce using rule 66 (declaracion -> solicitudDatosTeclado .)
+    ELSEIF          reduce using rule 66 (declaracion -> solicitudDatosTeclado .)
+    END             reduce using rule 66 (declaracion -> solicitudDatosTeclado .)
+
+
+state 89
+
+    (67) declaracion -> hashes .
+
+    ELSE            reduce using rule 67 (declaracion -> hashes .)
+    ELSEIF          reduce using rule 67 (declaracion -> hashes .)
+    END             reduce using rule 67 (declaracion -> hashes .)
+
+
+state 90
+
+    (68) declaracion -> estructura_if .
+
+    ELSE            reduce using rule 68 (declaracion -> estructura_if .)
+    ELSEIF          reduce using rule 68 (declaracion -> estructura_if .)
+    END             reduce using rule 68 (declaracion -> estructura_if .)
+
+
+state 91
+
+    (26) asignacion -> VARIABLE . IGUAL expresionNumerica
+    (27) asignacion -> VARIABLE . IGUAL CADENA
+    (28) asignacion -> VARIABLE . IGUAL hashes
+    (43) expresiones_booleanas -> VARIABLE . operadoresComparacion VARIABLE
+    (44) expresiones_booleanas -> VARIABLE . operadoresComparacion valorNumerico
+    (33) operadoresComparacion -> . DOBLE_IGUAL
+    (34) operadoresComparacion -> . DIFERENTE
+    (35) operadoresComparacion -> . MAYOR_QUE
+    (36) operadoresComparacion -> . MENOR_QUE
+    (37) operadoresComparacion -> . MENOR_IGUAL_QUE
+    (38) operadoresComparacion -> . MAYOR_IGUAL_QUE
+
+    IGUAL           shift and go to state 32
+    DOBLE_IGUAL     shift and go to state 35
+    DIFERENTE       shift and go to state 36
+    MAYOR_QUE       shift and go to state 37
+    MENOR_QUE       shift and go to state 38
+    MENOR_IGUAL_QUE shift and go to state 39
+    MAYOR_IGUAL_QUE shift and go to state 40
+
+    operadoresComparacion          shift and go to state 33
+
+state 92
+
+    (56) condicionIf -> expresiones_booleanas funcionesComparacion . expresiones_booleanas
+    (41) expresiones_booleanas -> . valorNumerico operadoresComparacion valorNumerico
+    (42) expresiones_booleanas -> . rangos TRIPLE_IGUAL ENTERO
+    (43) expresiones_booleanas -> . VARIABLE operadoresComparacion VARIABLE
+    (44) expresiones_booleanas -> . VARIABLE operadoresComparacion valorNumerico
+    (45) expresiones_booleanas -> . valorNumerico operadoresComparacion VARIABLE
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
+    (29) rangos -> . PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
+
+    VARIABLE        shift and go to state 56
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
+    PARENTESIS_IZ   shift and go to state 57
+
+    expresiones_booleanas          shift and go to state 106
+    valorNumerico                  shift and go to state 55
+    rangos                         shift and go to state 18
+
+state 93
+
+    (39) funcionesComparacion -> AND .
+
+    VARIABLE        reduce using rule 39 (funcionesComparacion -> AND .)
+    FLOTANTE        reduce using rule 39 (funcionesComparacion -> AND .)
+    ENTERO          reduce using rule 39 (funcionesComparacion -> AND .)
+    PARENTESIS_IZ   reduce using rule 39 (funcionesComparacion -> AND .)
+
+
+state 94
+
+    (40) funcionesComparacion -> OR .
+
+    VARIABLE        reduce using rule 40 (funcionesComparacion -> OR .)
+    FLOTANTE        reduce using rule 40 (funcionesComparacion -> OR .)
+    ENTERO          reduce using rule 40 (funcionesComparacion -> OR .)
+    PARENTESIS_IZ   reduce using rule 40 (funcionesComparacion -> OR .)
+
+
+state 95
+
+    (13) soloEnteros -> ENTERO .
+
+    TRES_PUNTOS     reduce using rule 13 (soloEnteros -> ENTERO .)
+    PARENTESIS_DER  reduce using rule 13 (soloEnteros -> ENTERO .)
+
+
+state 96
+
+    (47) funciones -> DEF VARIABLE PARENTESIS_IZ . PARENTESIS_DER END
+    (48) funciones -> DEF VARIABLE PARENTESIS_IZ . argumentos PARENTESIS_DER END
+    (53) argumentos -> . VARIABLE
+    (54) argumentos -> . VARIABLE COMA argumentos
+
+    PARENTESIS_DER  shift and go to state 108
+    VARIABLE        shift and go to state 107
+
+    argumentos                     shift and go to state 109
+
+state 97
+
+    (24) impresion -> PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER .
+
+    $end            reduce using rule 24 (impresion -> PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER .)
+    ELSE            reduce using rule 24 (impresion -> PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER .)
+    ELSEIF          reduce using rule 24 (impresion -> PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER .)
+    END             reduce using rule 24 (impresion -> PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER .)
+
+
+state 98
+
+    (25) impresion -> PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER .
+
+    $end            reduce using rule 25 (impresion -> PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER .)
+    ELSE            reduce using rule 25 (impresion -> PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER .)
+    ELSEIF          reduce using rule 25 (impresion -> PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER .)
+    END             reduce using rule 25 (impresion -> PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER .)
+
+
+state 99
+
+    (29) rangos -> PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros . PARENTESIS_DER
+
+    PARENTESIS_DER  shift and go to state 110
+
+
+state 100
+
+    (73) elemento_hash -> claveValor COMA claveValor .
+
+    LLAVE_DER       reduce using rule 73 (elemento_hash -> claveValor COMA claveValor .)
+
+
+state 101
+
+    (70) claveValor -> VARIABLE ASIGNA_HASH valorNumerico .
+
+    COMA            reduce using rule 70 (claveValor -> VARIABLE ASIGNA_HASH valorNumerico .)
+    LLAVE_DER       reduce using rule 70 (claveValor -> VARIABLE ASIGNA_HASH valorNumerico .)
+
+
+state 102
+
+    (71) claveValor -> VARIABLE ASIGNA_HASH CADENA .
+
+    COMA            reduce using rule 71 (claveValor -> VARIABLE ASIGNA_HASH CADENA .)
+    LLAVE_DER       reduce using rule 71 (claveValor -> VARIABLE ASIGNA_HASH CADENA .)
+
+
+state 103
+
+    (57) estructura_if -> IF condicionIf declaracion ELSE . declaracion END
+    (61) declaracion -> . operacionAritmetica
+    (62) declaracion -> . asignacion
+    (63) declaracion -> . impresion
+    (64) declaracion -> . impresion_vacia
+    (65) declaracion -> . expresiones_booleanas
+    (66) declaracion -> . solicitudDatosTeclado
+    (67) declaracion -> . hashes
+    (68) declaracion -> . estructura_if
+    (23) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
+    (26) asignacion -> . VARIABLE IGUAL expresionNumerica
+    (27) asignacion -> . VARIABLE IGUAL CADENA
+    (28) asignacion -> . VARIABLE IGUAL hashes
+    (24) impresion -> . PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER
+    (25) impresion -> . PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER
+    (30) impresion_vacia -> . PRINT PARENTESIS_IZ PARENTESIS_DER
+    (31) impresion_vacia -> . PUTS PARENTESIS_IZ PARENTESIS_DER
+    (32) impresion_vacia -> . PUTS
+    (41) expresiones_booleanas -> . valorNumerico operadoresComparacion valorNumerico
+    (42) expresiones_booleanas -> . rangos TRIPLE_IGUAL ENTERO
+    (43) expresiones_booleanas -> . VARIABLE operadoresComparacion VARIABLE
+    (44) expresiones_booleanas -> . VARIABLE operadoresComparacion valorNumerico
+    (45) expresiones_booleanas -> . valorNumerico operadoresComparacion VARIABLE
+    (46) solicitudDatosTeclado -> . GETS
+    (69) hashes -> . LLAVE_IZ elemento_hash LLAVE_DER
+    (57) estructura_if -> . IF condicionIf declaracion ELSE declaracion END
+    (58) estructura_if -> . IF condicionIf declaracion estructura_secundaria_if
+    (20) expresionNumerica -> . valorNumerico
+    (21) expresionNumerica -> . operacionAritmetica
+    (22) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
+    (29) rangos -> . PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
+
+    VARIABLE        shift and go to state 91
+    PRINT           shift and go to state 14
+    PUTS            shift and go to state 16
+    GETS            shift and go to state 20
+    LLAVE_IZ        shift and go to state 21
+    IF              shift and go to state 22
+    PARENTESIS_IZ   shift and go to state 15
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
+
+    declaracion                    shift and go to state 111
+    operacionAritmetica            shift and go to state 83
+    asignacion                     shift and go to state 84
+    impresion                      shift and go to state 85
+    impresion_vacia                shift and go to state 86
+    expresiones_booleanas          shift and go to state 87
+    solicitudDatosTeclado          shift and go to state 88
+    hashes                         shift and go to state 89
+    estructura_if                  shift and go to state 90
+    expresionNumerica              shift and go to state 12
+    valorNumerico                  shift and go to state 17
+    rangos                         shift and go to state 18
+
+state 104
+
+    (58) estructura_if -> IF condicionIf declaracion estructura_secundaria_if .
+
+    $end            reduce using rule 58 (estructura_if -> IF condicionIf declaracion estructura_secundaria_if .)
+    ELSE            reduce using rule 58 (estructura_if -> IF condicionIf declaracion estructura_secundaria_if .)
+    ELSEIF          reduce using rule 58 (estructura_if -> IF condicionIf declaracion estructura_secundaria_if .)
+    END             reduce using rule 58 (estructura_if -> IF condicionIf declaracion estructura_secundaria_if .)
+
+
+state 105
+
+    (59) estructura_secundaria_if -> ELSEIF . condicionIf declaracion ELSE declaracion END
+    (60) estructura_secundaria_if -> ELSEIF . condicionIf declaracion estructura_secundaria_if
+    (55) condicionIf -> . expresiones_booleanas
+    (56) condicionIf -> . expresiones_booleanas funcionesComparacion expresiones_booleanas
+    (41) expresiones_booleanas -> . valorNumerico operadoresComparacion valorNumerico
+    (42) expresiones_booleanas -> . rangos TRIPLE_IGUAL ENTERO
+    (43) expresiones_booleanas -> . VARIABLE operadoresComparacion VARIABLE
+    (44) expresiones_booleanas -> . VARIABLE operadoresComparacion valorNumerico
+    (45) expresiones_booleanas -> . valorNumerico operadoresComparacion VARIABLE
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
+    (29) rangos -> . PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
+
+    VARIABLE        shift and go to state 56
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
+    PARENTESIS_IZ   shift and go to state 57
+
+    condicionIf                    shift and go to state 112
+    expresiones_booleanas          shift and go to state 54
+    valorNumerico                  shift and go to state 55
+    rangos                         shift and go to state 18
+
+state 106
+
+    (56) condicionIf -> expresiones_booleanas funcionesComparacion expresiones_booleanas .
+
+    VARIABLE        reduce using rule 56 (condicionIf -> expresiones_booleanas funcionesComparacion expresiones_booleanas .)
+    PRINT           reduce using rule 56 (condicionIf -> expresiones_booleanas funcionesComparacion expresiones_booleanas .)
+    PUTS            reduce using rule 56 (condicionIf -> expresiones_booleanas funcionesComparacion expresiones_booleanas .)
+    GETS            reduce using rule 56 (condicionIf -> expresiones_booleanas funcionesComparacion expresiones_booleanas .)
+    LLAVE_IZ        reduce using rule 56 (condicionIf -> expresiones_booleanas funcionesComparacion expresiones_booleanas .)
+    IF              reduce using rule 56 (condicionIf -> expresiones_booleanas funcionesComparacion expresiones_booleanas .)
+    PARENTESIS_IZ   reduce using rule 56 (condicionIf -> expresiones_booleanas funcionesComparacion expresiones_booleanas .)
+    FLOTANTE        reduce using rule 56 (condicionIf -> expresiones_booleanas funcionesComparacion expresiones_booleanas .)
+    ENTERO          reduce using rule 56 (condicionIf -> expresiones_booleanas funcionesComparacion expresiones_booleanas .)
+
+
+state 107
+
+    (53) argumentos -> VARIABLE .
+    (54) argumentos -> VARIABLE . COMA argumentos
+
+    PARENTESIS_DER  reduce using rule 53 (argumentos -> VARIABLE .)
+    COMA            shift and go to state 113
+
+
+state 108
+
+    (47) funciones -> DEF VARIABLE PARENTESIS_IZ PARENTESIS_DER . END
+
+    END             shift and go to state 114
+
+
+state 109
+
+    (48) funciones -> DEF VARIABLE PARENTESIS_IZ argumentos . PARENTESIS_DER END
+
+    PARENTESIS_DER  shift and go to state 115
+
+
+state 110
+
+    (29) rangos -> PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER .
+
+    TRIPLE_IGUAL    reduce using rule 29 (rangos -> PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER .)
+
+
+state 111
+
+    (57) estructura_if -> IF condicionIf declaracion ELSE declaracion . END
+
+    END             shift and go to state 116
+
+
+state 112
+
+    (59) estructura_secundaria_if -> ELSEIF condicionIf . declaracion ELSE declaracion END
+    (60) estructura_secundaria_if -> ELSEIF condicionIf . declaracion estructura_secundaria_if
+    (61) declaracion -> . operacionAritmetica
+    (62) declaracion -> . asignacion
+    (63) declaracion -> . impresion
+    (64) declaracion -> . impresion_vacia
+    (65) declaracion -> . expresiones_booleanas
+    (66) declaracion -> . solicitudDatosTeclado
+    (67) declaracion -> . hashes
+    (68) declaracion -> . estructura_if
+    (23) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
+    (26) asignacion -> . VARIABLE IGUAL expresionNumerica
+    (27) asignacion -> . VARIABLE IGUAL CADENA
+    (28) asignacion -> . VARIABLE IGUAL hashes
+    (24) impresion -> . PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER
+    (25) impresion -> . PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER
+    (30) impresion_vacia -> . PRINT PARENTESIS_IZ PARENTESIS_DER
+    (31) impresion_vacia -> . PUTS PARENTESIS_IZ PARENTESIS_DER
+    (32) impresion_vacia -> . PUTS
+    (41) expresiones_booleanas -> . valorNumerico operadoresComparacion valorNumerico
+    (42) expresiones_booleanas -> . rangos TRIPLE_IGUAL ENTERO
+    (43) expresiones_booleanas -> . VARIABLE operadoresComparacion VARIABLE
+    (44) expresiones_booleanas -> . VARIABLE operadoresComparacion valorNumerico
+    (45) expresiones_booleanas -> . valorNumerico operadoresComparacion VARIABLE
+    (46) solicitudDatosTeclado -> . GETS
+    (69) hashes -> . LLAVE_IZ elemento_hash LLAVE_DER
+    (57) estructura_if -> . IF condicionIf declaracion ELSE declaracion END
+    (58) estructura_if -> . IF condicionIf declaracion estructura_secundaria_if
+    (20) expresionNumerica -> . valorNumerico
+    (21) expresionNumerica -> . operacionAritmetica
+    (22) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
+    (29) rangos -> . PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
+
+    VARIABLE        shift and go to state 91
+    PRINT           shift and go to state 14
+    PUTS            shift and go to state 16
+    GETS            shift and go to state 20
+    LLAVE_IZ        shift and go to state 21
+    IF              shift and go to state 22
+    PARENTESIS_IZ   shift and go to state 15
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
+
+    declaracion                    shift and go to state 117
+    operacionAritmetica            shift and go to state 83
+    asignacion                     shift and go to state 84
+    impresion                      shift and go to state 85
+    impresion_vacia                shift and go to state 86
+    expresiones_booleanas          shift and go to state 87
+    solicitudDatosTeclado          shift and go to state 88
+    hashes                         shift and go to state 89
+    estructura_if                  shift and go to state 90
+    expresionNumerica              shift and go to state 12
+    valorNumerico                  shift and go to state 17
+    rangos                         shift and go to state 18
+
+state 113
+
+    (54) argumentos -> VARIABLE COMA . argumentos
+    (53) argumentos -> . VARIABLE
+    (54) argumentos -> . VARIABLE COMA argumentos
+
+    VARIABLE        shift and go to state 107
+
+    argumentos                     shift and go to state 118
+
+state 114
+
+    (47) funciones -> DEF VARIABLE PARENTESIS_IZ PARENTESIS_DER END .
+
+    $end            reduce using rule 47 (funciones -> DEF VARIABLE PARENTESIS_IZ PARENTESIS_DER END .)
+
+
+state 115
+
+    (48) funciones -> DEF VARIABLE PARENTESIS_IZ argumentos PARENTESIS_DER . END
+
+    END             shift and go to state 119
+
+
+state 116
+
+    (57) estructura_if -> IF condicionIf declaracion ELSE declaracion END .
+
+    $end            reduce using rule 57 (estructura_if -> IF condicionIf declaracion ELSE declaracion END .)
+    ELSE            reduce using rule 57 (estructura_if -> IF condicionIf declaracion ELSE declaracion END .)
+    ELSEIF          reduce using rule 57 (estructura_if -> IF condicionIf declaracion ELSE declaracion END .)
+    END             reduce using rule 57 (estructura_if -> IF condicionIf declaracion ELSE declaracion END .)
+
+
+state 117
+
+    (59) estructura_secundaria_if -> ELSEIF condicionIf declaracion . ELSE declaracion END
+    (60) estructura_secundaria_if -> ELSEIF condicionIf declaracion . estructura_secundaria_if
+    (59) estructura_secundaria_if -> . ELSEIF condicionIf declaracion ELSE declaracion END
+    (60) estructura_secundaria_if -> . ELSEIF condicionIf declaracion estructura_secundaria_if
+
+    ELSE            shift and go to state 120
+    ELSEIF          shift and go to state 105
+
+    estructura_secundaria_if       shift and go to state 121
+
+state 118
+
+    (54) argumentos -> VARIABLE COMA argumentos .
+
+    PARENTESIS_DER  reduce using rule 54 (argumentos -> VARIABLE COMA argumentos .)
+
+
+state 119
+
+    (48) funciones -> DEF VARIABLE PARENTESIS_IZ argumentos PARENTESIS_DER END .
+
+    $end            reduce using rule 48 (funciones -> DEF VARIABLE PARENTESIS_IZ argumentos PARENTESIS_DER END .)
+
+
+state 120
+
+    (59) estructura_secundaria_if -> ELSEIF condicionIf declaracion ELSE . declaracion END
+    (61) declaracion -> . operacionAritmetica
+    (62) declaracion -> . asignacion
+    (63) declaracion -> . impresion
+    (64) declaracion -> . impresion_vacia
+    (65) declaracion -> . expresiones_booleanas
+    (66) declaracion -> . solicitudDatosTeclado
+    (67) declaracion -> . hashes
+    (68) declaracion -> . estructura_if
+    (23) operacionAritmetica -> . expresionNumerica operadores expresionNumerica
+    (26) asignacion -> . VARIABLE IGUAL expresionNumerica
+    (27) asignacion -> . VARIABLE IGUAL CADENA
+    (28) asignacion -> . VARIABLE IGUAL hashes
+    (24) impresion -> . PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER
+    (25) impresion -> . PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER
+    (30) impresion_vacia -> . PRINT PARENTESIS_IZ PARENTESIS_DER
+    (31) impresion_vacia -> . PUTS PARENTESIS_IZ PARENTESIS_DER
+    (32) impresion_vacia -> . PUTS
+    (41) expresiones_booleanas -> . valorNumerico operadoresComparacion valorNumerico
+    (42) expresiones_booleanas -> . rangos TRIPLE_IGUAL ENTERO
+    (43) expresiones_booleanas -> . VARIABLE operadoresComparacion VARIABLE
+    (44) expresiones_booleanas -> . VARIABLE operadoresComparacion valorNumerico
+    (45) expresiones_booleanas -> . valorNumerico operadoresComparacion VARIABLE
+    (46) solicitudDatosTeclado -> . GETS
+    (69) hashes -> . LLAVE_IZ elemento_hash LLAVE_DER
+    (57) estructura_if -> . IF condicionIf declaracion ELSE declaracion END
+    (58) estructura_if -> . IF condicionIf declaracion estructura_secundaria_if
+    (20) expresionNumerica -> . valorNumerico
+    (21) expresionNumerica -> . operacionAritmetica
+    (22) expresionNumerica -> . PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+    (11) valorNumerico -> . FLOTANTE
+    (12) valorNumerico -> . ENTERO
+    (29) rangos -> . PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER
+
+    VARIABLE        shift and go to state 91
+    PRINT           shift and go to state 14
+    PUTS            shift and go to state 16
+    GETS            shift and go to state 20
+    LLAVE_IZ        shift and go to state 21
+    IF              shift and go to state 22
+    PARENTESIS_IZ   shift and go to state 15
+    FLOTANTE        shift and go to state 24
+    ENTERO          shift and go to state 19
+
+    declaracion                    shift and go to state 122
+    operacionAritmetica            shift and go to state 83
+    asignacion                     shift and go to state 84
+    impresion                      shift and go to state 85
+    impresion_vacia                shift and go to state 86
+    expresiones_booleanas          shift and go to state 87
+    solicitudDatosTeclado          shift and go to state 88
+    hashes                         shift and go to state 89
+    estructura_if                  shift and go to state 90
+    expresionNumerica              shift and go to state 12
+    valorNumerico                  shift and go to state 17
+    rangos                         shift and go to state 18
+
+state 121
+
+    (60) estructura_secundaria_if -> ELSEIF condicionIf declaracion estructura_secundaria_if .
+
+    $end            reduce using rule 60 (estructura_secundaria_if -> ELSEIF condicionIf declaracion estructura_secundaria_if .)
+    ELSE            reduce using rule 60 (estructura_secundaria_if -> ELSEIF condicionIf declaracion estructura_secundaria_if .)
+    ELSEIF          reduce using rule 60 (estructura_secundaria_if -> ELSEIF condicionIf declaracion estructura_secundaria_if .)
+    END             reduce using rule 60 (estructura_secundaria_if -> ELSEIF condicionIf declaracion estructura_secundaria_if .)
+
+
+state 122
+
+    (59) estructura_secundaria_if -> ELSEIF condicionIf declaracion ELSE declaracion . END
+
+    END             shift and go to state 123
+
+
+state 123
+
+    (59) estructura_secundaria_if -> ELSEIF condicionIf declaracion ELSE declaracion END .
+
+    $end            reduce using rule 59 (estructura_secundaria_if -> ELSEIF condicionIf declaracion ELSE declaracion END .)
+    ELSE            reduce using rule 59 (estructura_secundaria_if -> ELSEIF condicionIf declaracion ELSE declaracion END .)
+    ELSEIF          reduce using rule 59 (estructura_secundaria_if -> ELSEIF condicionIf declaracion ELSE declaracion END .)
+    END             reduce using rule 59 (estructura_secundaria_if -> ELSEIF condicionIf declaracion ELSE declaracion END .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for MAS in state 46 resolved as shift
-WARNING: shift/reduce conflict for MENOS in state 46 resolved as shift
-WARNING: shift/reduce conflict for DIVISION in state 46 resolved as shift
-WARNING: shift/reduce conflict for MULTIPLICACION in state 46 resolved as shift
-WARNING: shift/reduce conflict for EXPONENCIACION in state 46 resolved as shift
-WARNING: shift/reduce conflict for MODULO in state 46 resolved as shift
-WARNING: reduce/reduce conflict in state 62 resolved using rule (expresiones_booleanas_ID -> rangos TRIPLE_IGUAL ENTERO)
-WARNING: rejected rule (expresiones_booleanas_CN -> rangos TRIPLE_IGUAL ENTERO) in state 62
-WARNING: reduce/reduce conflict in state 70 resolved using rule (expresiones_booleanas_ID -> valorNumerico IGUAL IGUAL valorNumerico)
-WARNING: rejected rule (expresiones_booleanas_CN -> valorNumerico IGUAL IGUAL valorNumerico) in state 70
-WARNING: Rule (expresiones_booleanas_CN -> rangos TRIPLE_IGUAL ENTERO) is never reduced
-WARNING: Rule (expresiones_booleanas_CN -> valorNumerico IGUAL IGUAL valorNumerico) is never reduced
+WARNING: shift/reduce conflict for MAS in state 59 resolved as shift
+WARNING: shift/reduce conflict for MENOS in state 59 resolved as shift
+WARNING: shift/reduce conflict for DIVISION in state 59 resolved as shift
+WARNING: shift/reduce conflict for MULTIPLICACION in state 59 resolved as shift
+WARNING: shift/reduce conflict for EXPONENCIACION in state 59 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 59 resolved as shift

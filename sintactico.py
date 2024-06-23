@@ -1,16 +1,24 @@
 import ply.yacc as yacc
 from lexico import tokens
+import datetime
+
 tabla_variables={}
+errors = []
+ruta_carpeta="logs"
+ruta_algoritmos="algoritmos"
+
 def p_cuerpo(p):
     '''cuerpo : operacionAritmetica
               | asignacion
               | impresion
               | impresion_vacia
-              | expresiones_booleanas_ID
-              | expresiones_booleanas_CN
+              | expresiones_booleanas
               | solicitudDatosTeclado
-              | hashes'''
-    p[0] = p[1]
+              | hashes
+              | estructura_if
+              | funciones
+              | funcionesEstructuras'''
+    #p[0] = p[1]
     
 # Operaciones
 #Dafne Ruiz
@@ -60,6 +68,7 @@ def p_operacionAritmetica(p):
     elif p[2] == '**':
         p[0] = p[1] ** p[3]
 
+#AGREGAR CON PUTS Y + DE 1 ARGUMENTO
 def p_impresion(p):
     """impresion : PRINT PARENTESIS_IZ expresionNumerica PARENTESIS_DER
                  | PRINT PARENTESIS_IZ VARIABLE PARENTESIS_DER """
@@ -71,12 +80,13 @@ def p_impresion(p):
 
 def p_asignacion(p):
     """asignacion : VARIABLE IGUAL expresionNumerica
-                  | VARIABLE IGUAL CADENA"""
+                  | VARIABLE IGUAL CADENA
+                  | VARIABLE IGUAL hashes"""
     tabla_variables[p[1]]=p[3]
     p[0]= (p[1],p[3])
 
-#Paulina Loor
 
+#Paulina Loor
 #corregir espacios
 def p_rangos(p):
     '''rangos : PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER'''
@@ -86,24 +96,72 @@ def p_impresion_vacia(p):
     '''impresion_vacia : PRINT PARENTESIS_IZ PARENTESIS_DER
                         | PUTS PARENTESIS_IZ PARENTESIS_DER
                         | PUTS'''
-
-def p_expresiones_booleanas_ID(p):
-    '''expresiones_booleanas_ID : valorNumerico IGUAL IGUAL valorNumerico
-                            | valorNumerico DIFERENTE valorNumerico 
-                            | rangos TRIPLE_IGUAL ENTERO'''
     
-def p_expresiones_booleanas_CN(p):
-    '''expresiones_booleanas_CN : valorNumerico IGUAL IGUAL valorNumerico
-                            | valorNumerico MAYOR_QUE valorNumerico 
-                            | valorNumerico MENOR_QUE valorNumerico 
-                            | valorNumerico MENOR_IGUAL_QUE valorNumerico
-                            | valorNumerico MAYOR_IGUAL_QUE valorNumerico
-                            | rangos TRIPLE_IGUAL ENTERO'''
+def p_operadoresComparacion(p):
+    '''operadoresComparacion : DOBLE_IGUAL
+                            | DIFERENTE
+                            | MAYOR_QUE
+                            | MENOR_QUE
+                            | MENOR_IGUAL_QUE
+                            | MAYOR_IGUAL_QUE'''
+
+def p_funcionesComparacion(p):
+    '''funcionesComparacion : AND
+                            | OR'''
+
+def p_expresiones_booleanas(p):
+    '''expresiones_booleanas : valorNumerico operadoresComparacion valorNumerico  
+                            | rangos TRIPLE_IGUAL ENTERO
+                            | VARIABLE operadoresComparacion VARIABLE
+                            | VARIABLE operadoresComparacion valorNumerico
+                            | valorNumerico operadoresComparacion VARIABLE''' 
 
 def p_solicitudDatosTeclado(p):
     '''solicitudDatosTeclado : GETS '''
     p[0] = input()
 
+def p_funciones(p):
+    '''funciones : DEF VARIABLE PARENTESIS_IZ PARENTESIS_DER END
+                | DEF VARIABLE PARENTESIS_IZ argumentos PARENTESIS_DER END'''   
+
+def p_funcionesArray(p):
+    '''funcionesArray : SORT'''
+
+def p_funcionesNumeros(p):
+    '''funcionesNumeros : TO_F'''
+
+def p_funcionesEstructuras(p):
+    '''funcionesEstructuras : VARIABLE PUNTO funcionesArray
+                            | VARIABLE PUNTO funcionesNumeros'''
+
+def p_argumentos(p):
+    '''argumentos : VARIABLE
+                    | VARIABLE COMA argumentos'''
+
+#Estructuras de Control
+def p_condicionIf(p):
+    '''condicionIf : expresiones_booleanas
+                | expresiones_booleanas funcionesComparacion expresiones_booleanas'''
+
+def p_estructura_if(p):
+    '''estructura_if : IF condicionIf declaracion ELSE declaracion END
+                    | IF condicionIf declaracion estructura_secundaria_if'''
+
+def p_estructura_secundaria_if(p):
+    '''estructura_secundaria_if : ELSEIF condicionIf declaracion ELSE declaracion END
+                                | ELSEIF condicionIf declaracion estructura_secundaria_if'''
+
+def p_declaracion(p):
+    '''declaracion : operacionAritmetica
+                    | asignacion
+                    | impresion
+                    | impresion_vacia
+                    | expresiones_booleanas
+                    | solicitudDatosTeclado
+                    | hashes
+                    | estructura_if '''
+
+#estructura de datos -> hash
 def p_hashes(p):
     '''hashes : LLAVE_IZ elemento_hash LLAVE_DER'''
 
@@ -117,12 +175,14 @@ def p_elemento_hash(p):
     
 def p_error(p):
     if p:
-        print("Error de sintaxis en token:", p.type)
+        message="Error de sintaxis en token:", p.type
+        errors.append(message)
         #yacc.errok()
     '''else:
         print("Syntax error at EOF")'''
 
 
+'''
 #Dafne Ruiz
 parser = yacc.yacc()
 
@@ -133,4 +193,37 @@ while True:
        break
    if not s: continue
    result = parser.parse(s)
-   print(result)
+   print(result)'''
+
+
+#por terminar
+def pruebas_loor():
+    errors=[]
+    parser = yacc.yacc()
+    algoritmo_file="algoritmo_loor.txt"
+    archivo = f"{ruta_algoritmos}/{algoritmo_file}"
+    result=''
+    
+    with open(archivo, "r") as file:
+        data = file.read()
+
+    parser.errors = errors
+    parser.parse(data)
+
+    ahora = datetime.datetime.now()
+    log_prefix = "sintactico-LoorPaulina"
+    fecha_hora = ahora.strftime("%Y%m%d-%H%M%S") 
+    nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"
+
+
+    ruta_archivo = f"{ruta_carpeta}/{nombre_archivo}"
+
+    with open(ruta_archivo, "a+") as log_file:
+        for error in errors:
+            log_file.write(error + "\n")
+            print (error)
+
+    print(f"Resultado guardado en {ruta_archivo}")
+    
+
+pruebas_loor()

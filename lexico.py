@@ -71,6 +71,7 @@ tokens=[
     'PARENTESIS_IZ',
     'PARENTESIS_DER',
     'IGUAL_DOBLEP',
+    'DOBLE_IGUAL',
     'IGUAL',
     'COMA',
     'O_SIGNO',
@@ -110,6 +111,7 @@ tokens=[
 #Paulina Loor
 t_TRES_PUNTOS =r'\.\.\.'
 t_PUNTO =r'\.'
+t_DOBLE_IGUAL=r'=='
 
 #flotantes 
 def t_FLOTANTE(t):
