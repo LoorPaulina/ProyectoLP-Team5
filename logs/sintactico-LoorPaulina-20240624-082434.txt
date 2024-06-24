@@ -1,0 +1,13 @@
+VARIABLE $global_var
+COMENTARIO Variable de
+DEF def
+COMENTARIO Variable de
+PARENTESIS_IZ (
+PARENTESIS_IZ (
+PUNTO .
+PUNTO .
+COMENTARIO Diccionario (Hash) con símbolos
+IGUAL_DOBLEP :
+COMENTARIO Iterar sobre el array con `each`
+PUNTO .
+PARENTESIS_IZ (

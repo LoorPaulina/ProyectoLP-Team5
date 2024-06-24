@@ -1,4 +1,4 @@
- # Variables globales 
+# Variables globales 
 $global_var = "Soy una variable global" 
  
 # Clase Persona 

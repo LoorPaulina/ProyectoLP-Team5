@@ -20,7 +20,8 @@ def p_cuerpo(p):
               | funciones
               | funcionesEstructuras
               | array
-              | each_array'''
+              | each_array
+              | comentarios'''
     # p[0] = p[1]
     
 #Operaciones
@@ -89,11 +90,13 @@ def p_valor_print(p):
     # p[0]=p[1]
 def p_valores(p):
     """valores : valor
-               | valor COMA valores"""
+               | valor COMA valores
+               | valor estructura_ifUnaLinea"""
 def p_valor(p):
     """valor : CADENA
              | valorNumerico
-             | VARIABLE"""
+             | VARIABLE
+             | VARIABLECLASE"""
 
 def p_impresion(p):
     """impresion : valor_print valores"""
@@ -153,6 +156,10 @@ def p_rangos(p):
     '''rangos : PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER'''
     # p[0] = (p[2], p[4])
 
+def p_comentarios(p):
+    '''comentarios : COMENTARIO 
+                    | COMENTARIO_MULTI'''
+
 def p_impresion_vacia(p):
     '''impresion_vacia : PRINT PARENTESIS_IZ PARENTESIS_DER
                         | PUTS PARENTESIS_IZ PARENTESIS_DER
@@ -179,7 +186,8 @@ def p_expresiones_booleanas(p):
                             | valorNumerico operadoresComparacion VARIABLE''' 
 
 def p_solicitudDatosTeclado(p):
-    '''solicitudDatosTeclado : GETS '''
+    '''solicitudDatosTeclado : GETS 
+                            | GETS PUNTO funcionesFormatoImpresion '''
     p[0] = input()
 
 def p_funciones(p):
@@ -189,6 +197,9 @@ def p_funciones(p):
 def p_funcionesArray(p):
     '''funcionesArray : SORT
                       | FOR EACH'''
+    
+def p_funcionesFormatoImpresion(p):
+    '''funcionesFormatoImpresion : CHOMP'''
 
 def p_funcionesNumeros(p):
     '''funcionesNumeros : TO_F'''
@@ -209,6 +220,9 @@ def p_condicionIf(p):
 def p_estructura_if(p):
     '''estructura_if : IF condicionIf declaracion ELSE declaracion END
                     | IF condicionIf declaracion estructura_secundaria_if'''
+
+def p_estructura_ifUnaLinea(p):
+    '''estructura_ifUnaLinea : IF condicionIf'''
 
 def p_estructura_secundaria_if(p):
     '''estructura_secundaria_if : ELSEIF condicionIf declaracion ELSE declaracion END

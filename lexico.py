@@ -218,14 +218,15 @@ def t_error(t):
 
 lexer = lex.lex()
 
-#lexer.input('''...''')
+lexer.input('''# Iterar sobre el array con `each`  ''')
+
 
 # Tokenize
-'''while True:
+while True:
     tok = lexer.token()
     if not tok:
         break  # No more input
-    print(tok)'''
+    print(tok)
 
 def log_function(lexer_instance, algoritmo_file, log_prefix):
     string = ""
