@@ -146,6 +146,7 @@ def p_cuerpo_each(p):
                    | vacio"""
 def p_vacio(p):
     "vacio : "" "
+
 #Paulina Loor
 #corregir espacios
 def p_rangos(p):
@@ -290,5 +291,5 @@ def pruebas(algoritmo_file,log_prefix):
 
     print(f"Resultado guardado en {ruta_archivo}")
     
-pruebas("algoritmo_ruiz.txt","sintactico-taizRuiz")
-# pruebas_loor()
+#pruebas("algoritmo_ruiz.txt","sintactico-taizRuiz")
+pruebas("algoritmo_loor.txt","sintactico-LoorPaulina")

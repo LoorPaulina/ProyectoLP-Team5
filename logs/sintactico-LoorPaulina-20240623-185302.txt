@@ -1,0 +1,16 @@
+COMENTARIO Variables globales
+COMENTARIO Clase Persona
+COMENTARIO Variable de
+DEF def
+PRINT print
+PARENTESIS_IZ (
+PARENTESIS_IZ (
+PUNTO .
+PARENTESIS_IZ (
+PUNTO .
+COMENTARIO Diccionario (Hash) con símbolos
+IGUAL_DOBLEP :
+COMENTARIO Iterar sobre el array con `each`
+PUNTO .
+PUNTO .
+PARENTESIS_IZ (
