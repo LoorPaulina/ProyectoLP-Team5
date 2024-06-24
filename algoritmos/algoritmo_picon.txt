@@ -1,4 +1,4 @@
-#Hash utilizado para el grafo
+# Hash utilizado para el grafo
 grafo = {
   'A' => { 'B' => 1, 'C' => 4 },
   'B' => { 'A' => 1, 'C' => 2, 'D' => 5 },

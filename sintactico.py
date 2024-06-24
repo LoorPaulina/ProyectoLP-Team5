@@ -21,7 +21,12 @@ def p_cuerpo(p):
               | funcionesEstructuras
               | array
               | each_array
-              | comentarios'''
+              | comentarios
+              | each_hash
+              | sentencia_while
+              | sentencia_case
+              | sentencia_until
+              | definicion_clase'''
     # p[0] = p[1]
     
 #Operaciones
@@ -235,11 +240,32 @@ def p_declaracion(p):
                     | expresiones_booleanas
                     | solicitudDatosTeclado
                     | hashes
-                    | estructura_if '''
+                    | estructura_if
+                     '''
+
+
+
+def p_sentencia_while(p):
+    '''sentencia_while : WHILE declaracion DO sentencia_while END
+                      | WHILE declaracion DO declaracion END '''
+
+def p_sentencia_case(p):
+    '''sentencia_case : CASE declaracion sentencia_when END'''
+
+def p_sentencias_when(p):
+    '''sentencias_when : sentencia_when
+                    | sentencia_when sentencias_when'''
+
+def p_sentencia_when(p):
+    '''sentencia_when : WHEN declaracion IGUAL_DOBLEP declaracion'''
+
+def p_sentencia_until(p):
+    '''sentencia_until : UNTIL declaracion DO declaracion END'''
 
 #estructura de datos -> hash
 def p_hashes(p):
-    '''hashes : LLAVE_IZ elemento_hash LLAVE_DER'''
+    '''hashes : LLAVE_IZ elemento_hash LLAVE_DER
+              | LLAVE_IZ LLAVE_DER'''
 
 def p_claveValor(p):
     '''claveValor : VARIABLE ASIGNA_HASH valorNumerico
@@ -248,7 +274,18 @@ def p_claveValor(p):
 def p_elemento_hash(p):
     '''elemento_hash : claveValor
                     | claveValor COMA claveValor'''
-    
+
+
+def p_each_hash(p):
+    '''each_hash : VARIABLE PUNTO EACH DO BARRA each_args_hash declaracion END'''
+
+def p_each_args_hash(p):
+    '''each_args_hash : VARIABLE COMA VARIABLE BARRA
+                 | VARIABLE BARRA'''
+
+def p_definicion_clase(p):
+    '''definicion_clase : CLASS ID_CLASE DEF INITIALIZE PARENTESIS_IZ argumentos PARENTESIS_DER'''
+
 # def p_error(p):
 #     if p:
 #         message="Error de sintaxis en token:", p.type
@@ -306,4 +343,5 @@ def pruebas(algoritmo_file,log_prefix):
     print(f"Resultado guardado en {ruta_archivo}")
     
 #pruebas("algoritmo_ruiz.txt","sintactico-taizRuiz")
-pruebas("algoritmo_loor.txt","sintactico-LoorPaulina")
+#pruebas("algoritmo_loor.txt","sintactico-LoorPaulina")
+pruebas("algoritmo_picon.txt", "sintactico-piconDaniel")

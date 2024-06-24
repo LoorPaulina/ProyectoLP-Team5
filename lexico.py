@@ -50,7 +50,8 @@ reserved = {
     "do": "DO",
     "to_f": "TO_F",
     "concat": "CONCAT",
-    "initialize" : "INITIALIZE"
+    "initialize" : "INITIALIZE",
+    "when" : "WHEN",
 }
 
 tokens=[
@@ -103,6 +104,7 @@ tokens=[
     'ASIGNA_HASH',
     #Daniel Picon
     'PREGUNTA',
+    'WHEN'
     
 ]+list(reserved.values())
 

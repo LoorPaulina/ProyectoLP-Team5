@@ -1,0 +1,12 @@
+VARIABLE grafo
+COMENTARIO La distancia mínima conocida desde el inicio a cada nodo
+COMENTARIO El camino para llegar a cada nodo
+PUNTO .
+CORCHETE_IZ [
+IGUAL =
+PUNTO .
+CORCHETE_IZ [
+CORCHETE_IZ [
+IGUAL =
+CORCHETE_IZ [
+END end
