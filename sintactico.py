@@ -4,6 +4,7 @@ import datetime
 
 tabla_variables={}
 errors = []
+errores_semanticos=[]
 ruta_carpeta="logs"
 ruta_algoritmos="algoritmos"
 
@@ -35,21 +36,16 @@ def p_valorNumerico(p):
     """valorNumerico : FLOTANTE 
                      | ENTERO
                      | VARIABLE"""
-    # valor=p[1]
-    # if isinstance(valor,str):
-    #     if valor in tabla_variables:
-    #         valor_tabla=tabla_variables[valor]
-    #         if isinstance(valor_tabla,int) or isinstance(valor_tabla,float):
-    #             p[0]=valor_tabla
-    #         else:
-    #             print("no se puede asignar un string a un valor numerico")
-    # else:
-    #  p[0] = float(valor)
-        
+    
+    #Loor Paulina
+    if isinstance(p[1], int) and p[1] in tabla_variables:
+            p[0] = tabla_variables[p[1]]
+    else:
+            p[0] = p[1]
         
 def p_soloEnteros(p):
     """soloEnteros : ENTERO"""
-    # p[0] = int(p[1])
+    p[0] = int(p[1])
 
 def p_operadores(p):
     """operadores : MAS 
@@ -64,13 +60,27 @@ def p_expresionNumerica(p):
     """expresionNumerica : valorNumerico
                          | operacionAritmetica
                          | PARENTESIS_IZ operacionAritmetica PARENTESIS_DER"""
-    # if len(p) == 2:
-    #     p[0] = p[1]
-    # else:
-    #     p[0] = p[2]
+    
+    #Loor Paulina
+    if not isinstance(p[1],str) or p[1] in tabla_variables:
+            p[0] = p[1]
+            pass
+    else:
+            error=f"Error semántico, variable {p[1]} no ha sido inicializada"
+            errores_semanticos.append(error)
+            print(error)
 
 def p_operacionAritmetica(p):
     """operacionAritmetica : expresionNumerica operadores expresionNumerica"""
+
+    #Loor Paulina
+    if not isinstance(p[1], str) or p[1] in tabla_variables:
+        pass
+    else:
+        error=f"Error semántico, variable {p[1]} no ha sido inicializada"
+        errores_semanticos.append(error)
+        print(error)
+
     # if p[2] == '+':
     #     p[0] = p[1] + p[3]
     # elif p[2] == '-':
@@ -102,6 +112,10 @@ def p_valor(p):
              | valorNumerico
              | VARIABLE
              | VARIABLECLASE"""
+    
+    if isinstance(p[1], int):
+        p[0] = p[1]
+    
 
 def p_impresion(p):
     """impresion : valor_print valores"""
@@ -116,7 +130,11 @@ def p_asignacion(p):
                   | VARIABLE IGUAL expresionNumerica
                   | VARIABLE IGUAL hashes
                   | VARIABLE IGUAL array"""
-    # tabla_variables[p[1]]=p[3]
+    
+    #Loor Paulina
+    tabla_variables[p[1]]=p[3]
+
+
     # p[0]= (p[1],p[3])
 #DEFINICION DE ARRAY 
 def p_elementos_array(p):
@@ -189,6 +207,33 @@ def p_expresiones_booleanas(p):
                             | VARIABLE operadoresComparacion VARIABLE
                             | VARIABLE operadoresComparacion valorNumerico
                             | valorNumerico operadoresComparacion VARIABLE''' 
+    
+    #Loor Paulina
+    if isinstance(p[1], str) and (p[1] not in tabla_variables):
+        error=f"Error semántico: Variable {p[1]} no declarada"
+        errores_semanticos.append(error)
+        print(error)
+        return
+    elif isinstance(p[3], str) and (p[3] not in tabla_variables):
+        error=f"Error semántico: Variable {p[3]} no declarada"
+        errores_semanticos.append(error)
+        print(error)
+        return
+    else:
+        for i in tabla_variables:
+            if i[0] == p[1] or i[0] == p[3]:
+                if not isinstance(tabla_variables[p[1]], int) and not isinstance(tabla_variables[p[1]], float):
+                    error=f"Error semántico: Variable {p[1]} no es un valor numérico"
+                    errores_semanticos.append(error)
+                    print(error)
+                    return
+                elif not isinstance(tabla_variables[p[3]], int) and not isinstance(tabla_variables[p[3]], float):
+                    error=f"Error semántico: Variable {p[3]} no es un valor numérico"
+                    errores_semanticos.append(error)
+                    print(error)
+                    return
+                else:
+                    pass
 
 def p_solicitudDatosTeclado(p):
     '''solicitudDatosTeclado : GETS 
@@ -212,6 +257,22 @@ def p_funcionesNumeros(p):
 def p_funcionesEstructuras(p):
     '''funcionesEstructuras : VARIABLE PUNTO funcionesArray
                             | VARIABLE PUNTO funcionesNumeros'''
+    
+    #Loor Paulina
+    if p[1] not in tabla_variables:
+        error=f"Error semántico: Variable {p[1]} no declarada"
+        errores_semanticos.append(error)
+        print(error)
+    else:  
+        for i in tabla_variables:
+            if i[0] == p[1]:
+                if isinstance(tabla_variables[p[1]], int):
+                    pass
+                else:
+                    error=f"Error semántico: Variable {p[1]} no es un entero"
+                    errores_semanticos.append(error)
+                    print(error)
+
 
 def p_argumentos(p):
     '''argumentos : VARIABLE
@@ -308,15 +369,17 @@ def p_error(p):
 # Build the parser
 sintactico = yacc.yacc()
 
-# while True:
-#   try:
-#     s = input('ruby > ')
-#   except EOFError:
-#     break
-#   if not s: continue
-#   result = sintactico.parse(s)
-#   if result != None: print(result)
-
+'''
+while True:
+    try:
+        s = input('ruby > ')
+    except EOFError:
+        break
+    if not s: continue
+    result = sintactico.parse(s)
+    if result != None: print(result)
+'''
+'''
 #por terminar
 def pruebas(algoritmo_file,log_prefix):
     parser = yacc.yacc()
@@ -345,3 +408,33 @@ def pruebas(algoritmo_file,log_prefix):
 #pruebas("algoritmo_ruiz.txt","sintactico-taizRuiz")
 #pruebas("algoritmo_loor.txt","sintactico-LoorPaulina")
 pruebas("algoritmo_picon.txt", "sintactico-piconDaniel")
+'''
+
+#corregir esta funcion :)
+def pruebasSemantico(algoritmo_file,log_prefix):
+    parser = yacc.yacc()
+    archivo = f"{ruta_algoritmos}/{algoritmo_file}"
+    result=''
+
+    with open(archivo, "r") as file:
+        data = file.read()
+    
+    parser.errors = errors
+    parser.parse(data)
+    
+
+    ahora = datetime.datetime.now()
+    fecha_hora = ahora.strftime("%Y%m%d-%H%M%S") 
+    nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"
+
+    ruta_archivo = f"{ruta_carpeta}/{nombre_archivo}"
+
+    with open(ruta_archivo, "a+") as log_file:
+        for error in errores_semanticos:
+            log_file.write(error + "\n")
+            print (error)
+
+    print(f"Resultado guardado en {ruta_archivo}")
+
+
+pruebasSemantico("algoritmo_loor.txt","semantico-LoorPaulina")

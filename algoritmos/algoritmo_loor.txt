@@ -1,5 +1,8 @@
 # Variables globales 
 $global_var = "Soy una variable global" 
+
+$test = "este es un test"
+$test.to_f
  
 # Clase Persona 
 class Persona 
@@ -84,6 +87,7 @@ puts "Información: #{@informacion}"
  
 # Array 
 numeros = [1, 2, 3, 4, 5] 
+test = "este es un test"
  
 # Iterar sobre el array con `each` 
 numeros.each do |num| 
@@ -94,7 +98,8 @@ end
 suma = numeros.reduce(:+) 
 promedio = suma.to_f / numeros.size 
  
-puts "Suma: #{@suma}, Promedio: #{@promedio}" 
+puts "Suma: #{@suma}, Promedio: #{@promedio}"
+test.to_f 
  
 # Caso `case` 
 valor = pedir_datos("Ingresa un número del 1 
