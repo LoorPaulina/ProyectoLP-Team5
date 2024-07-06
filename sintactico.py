@@ -11,6 +11,7 @@ ruta_algoritmos="algoritmos"
 
 def p_cuerpo(p):
     '''cuerpo : operacionAritmetica
+              | concatenacionSimpleCadena
               | asignacion
               | impresion
               | impresion_vacia
@@ -26,11 +27,49 @@ def p_cuerpo(p):
               | each_hash
               | sentencia_while
               | sentencia_case
+              | sentencias_when
               | sentencia_until
               | definicion_clase'''
     # p[0] = p[1]
     
 #Operaciones
+#Dafne Ruiz
+def p_valorCadena(p):
+    """valorCadena : CADENA
+                   | VARIABLE """
+    
+    valor=p[1]
+     # Verificar si es una cadena directamente
+    if p.slice[1].type == 'CADENA':
+        p[0] = valor
+    # Si es una variable, verificar si está inicializada
+    elif p.slice[1].type == 'VARIABLE':
+        if valor in tabla_variables:
+            # Tiene que ser de tipo string
+            if isinstance(tabla_variables[valor], str):
+                p[0] = tabla_variables[valor]
+            else:
+                error = f"Error semántico, variable {valor} no es de tipo string"
+                errores_semanticos.append(error)
+                print(error)
+                
+        else:
+            error = f"Error semántico, variable {valor} no ha sido inicializada"
+            errores_semanticos.append(error)
+            print(error)
+            
+    else:
+        error = f"Error semántico inesperado con el valor: {valor}"
+        errores_semanticos.append(error)
+        print(error)
+        
+
+def p_concatenacionSimpleCadena(p):
+    """concatenacionSimpleCadena : valorCadena MAS valorCadena
+                                 | concatenacionSimpleCadena MAS valorCadena"""
+    operando1=p[1]
+    operando2=p[3]
+    p[0]=operando1+operando2
 #Dafne Ruiz
 def p_valorNumerico(p):
     """valorNumerico : FLOTANTE 
@@ -369,7 +408,6 @@ def p_error(p):
 # Build the parser
 sintactico = yacc.yacc()
 
-'''
 while True:
     try:
         s = input('ruby > ')
@@ -378,7 +416,7 @@ while True:
     if not s: continue
     result = sintactico.parse(s)
     if result != None: print(result)
-'''
+
 '''
 #por terminar
 def pruebas(algoritmo_file,log_prefix):
@@ -410,31 +448,31 @@ def pruebas(algoritmo_file,log_prefix):
 pruebas("algoritmo_picon.txt", "sintactico-piconDaniel")
 '''
 
-#corregir esta funcion :)
-def pruebasSemantico(algoritmo_file,log_prefix):
-    parser = yacc.yacc()
-    archivo = f"{ruta_algoritmos}/{algoritmo_file}"
-    result=''
+# #corregir esta funcion :)
+# def pruebasSemantico(algoritmo_file,log_prefix):
+#     parser = yacc.yacc()
+#     archivo = f"{ruta_algoritmos}/{algoritmo_file}"
+#     result=''
 
-    with open(archivo, "r") as file:
-        data = file.read()
+#     with open(archivo, "r") as file:
+#         data = file.read()
     
-    parser.errors = errors
-    parser.parse(data)
+#     parser.errors = errors
+#     parser.parse(data)
     
 
-    ahora = datetime.datetime.now()
-    fecha_hora = ahora.strftime("%Y%m%d-%H%M%S") 
-    nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"
+#     ahora = datetime.datetime.now()
+#     fecha_hora = ahora.strftime("%Y%m%d-%H%M%S") 
+#     nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"
 
-    ruta_archivo = f"{ruta_carpeta}/{nombre_archivo}"
+#     ruta_archivo = f"{ruta_carpeta}/{nombre_archivo}"
 
-    with open(ruta_archivo, "a+") as log_file:
-        for error in errores_semanticos:
-            log_file.write(error + "\n")
-            print (error)
+#     with open(ruta_archivo, "a+") as log_file:
+#         for error in errores_semanticos:
+#             log_file.write(error + "\n")
+#             print (error)
 
-    print(f"Resultado guardado en {ruta_archivo}")
+#     print(f"Resultado guardado en {ruta_archivo}")
 
 
-pruebasSemantico("algoritmo_loor.txt","semantico-LoorPaulina")
+# pruebasSemantico("algoritmo_loor.txt","semantico-LoorPaulina")

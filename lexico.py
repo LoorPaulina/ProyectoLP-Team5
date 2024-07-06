@@ -103,8 +103,7 @@ tokens=[
     'TRIPLE_IGUAL',
     'ASIGNA_HASH',
     #Daniel Picon
-    'PREGUNTA',
-    'WHEN'
+    'PREGUNTA'
     
 ]+list(reserved.values())
 
