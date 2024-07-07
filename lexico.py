@@ -204,7 +204,7 @@ def t_COMENTARIO_MULTI(t):
 
 #ignorar espacios
 
-t_ignore = ' \t'
+t_ignore = ' \t\r'
 
 
 # Define a rule so we can track line numbers
@@ -219,7 +219,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-lexer.input('''global_var = 0''')
+lexer.input('''$global_var = "Soy una variable global" ''')
 
 
 # Tokenize
