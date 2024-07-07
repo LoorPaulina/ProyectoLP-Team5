@@ -1,0 +1,4 @@
+Error semántico: 'a' no es un entero
+Error semántico, variable mensaje no ha sido inicializada
+Error semántico: Variable edad no declarada
+Error semántico: 'test' no es un entero

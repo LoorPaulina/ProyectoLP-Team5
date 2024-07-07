@@ -1,0 +1,2 @@
+Error semántico, variable mensaje no ha sido inicializada
+Error semántico: Variable edad no declarada
