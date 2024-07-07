@@ -11,7 +11,7 @@ ruta_algoritmos="algoritmos"
 
 def p_cuerpo(p):
     '''cuerpo : operacionAritmetica
-              | concatenacionSimpleCadena
+              | input_concatenacion
               | asignacion
               | impresion
               | impresion_vacia
@@ -30,10 +30,27 @@ def p_cuerpo(p):
               | sentencias_when
               | sentencia_until
               | definicion_clase'''
-    # p[0] = p[1]
     
 #Operaciones
 #Dafne Ruiz
+def p_input_concatenacion(p):
+    """input_concatenacion : concatenacionSimpleCadena
+                           | concatenacion_funcion"""
+
+    p[0]=p[1]
+
+def p_concatenacion_funcion(p):
+    """concatenacion_funcion : VARIABLE PUNTO CONCAT PARENTESIS_IZ valorCadena PARENTESIS_DER"""
+    valor=p[1]
+    if valor not in tabla_variables:
+            error = f"Error semántico, variable {valor} no ha sido inicializada"
+            errores_semanticos.append(error)
+            print(error)
+            p[0]=None
+    else:
+        tabla_variables[valor]=tabla_variables[valor]+" "+p[5]
+        p[0]=tabla_variables[valor]
+        
 def p_valorCadena(p):
     """valorCadena : CADENA
                    | VARIABLE """
@@ -52,24 +69,39 @@ def p_valorCadena(p):
                 error = f"Error semántico, variable {valor} no es de tipo string"
                 errores_semanticos.append(error)
                 print(error)
+                p[0]=None
                 
         else:
             error = f"Error semántico, variable {valor} no ha sido inicializada"
             errores_semanticos.append(error)
             print(error)
+            p[0]=None
             
     else:
         error = f"Error semántico inesperado con el valor: {valor}"
         errores_semanticos.append(error)
         print(error)
-        
+        p[0]=None
+    
 
 def p_concatenacionSimpleCadena(p):
     """concatenacionSimpleCadena : valorCadena MAS valorCadena
                                  | concatenacionSimpleCadena MAS valorCadena"""
     operando1=p[1]
     operando2=p[3]
-    p[0]=operando1+operando2
+    if (operando1!=None and operando2!=None):
+        if (isinstance(operando1,str) and isinstance(operando2,str)):
+            p[0]=operando1+" "+operando2
+        else:
+            error = f"Error semántico, una de las variables no es de tipo string"
+            errores_semanticos.append(error)
+            print(error)  
+    elif operando1==None:
+        p[0]=operando2
+    elif operando2==None:
+        p[0]=operando1
+    print(p[0])
+    
 #Dafne Ruiz
 def p_valorNumerico(p):
     """valorNumerico : FLOTANTE 
@@ -146,29 +178,45 @@ def p_valores(p):
     """valores : valor
                | valor COMA valores
                | valor estructura_ifUnaLinea"""
+    if len(p)==2:
+        p[0]=p[1]
+    else:
+        p[0]=p[1]+p[3]
 def p_valor(p):
     """valor : CADENA
              | valorNumerico
              | VARIABLE
-             | VARIABLECLASE"""
+             | VARIABLECLASE
+             | SIMBOLO"""
     
-    if isinstance(p[1], int):
+    if p.slice[1].type == 'VARIABLE':
+        if p[1] in tabla_variables:
+            p[0] = tabla_variables[p[1]]
+        else:
+            error = f"Error semántico, variable {p[1]} no ha sido inicializada"
+            errores_semanticos.append(error)
+            print(error)
+            p[0] = None
+    elif p.slice[1].type == 'CADENA':
+        p[0] = p[1]  
+    elif p.slice[1].type == 'valorNumerico':
         p[0] = p[1]
-    
+    else:
+        p[0] = p[1]
 
 def p_impresion(p):
     """impresion : valor_print valores"""
-    # if  p[2] in tabla_variables:
-    #     p[0]=tabla_variables[p[2]]
-    # else:
-    #     p[0]=p[2]
-    
-
+    if (p[2] in tabla_variables):
+        p[0]=tabla_variables[p[2]]
+    else:
+        p[0]=p[2]
+    print (p[0])
 def p_asignacion(p):
     """asignacion : VARIABLE IGUAL CADENA
                   | VARIABLE IGUAL expresionNumerica
                   | VARIABLE IGUAL hashes
-                  | VARIABLE IGUAL array"""
+                  | VARIABLE IGUAL array
+                  | VARIABLE IGUAL input_concatenacion"""
     
     #Loor Paulina
     tabla_variables[p[1]]=p[3]
