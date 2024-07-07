@@ -197,6 +197,13 @@ def p_valores(p):
     else:
         p[0] = p[1] + p[3]
 
+def p_booleanos(p):
+    """booleanos : TRUE
+                | FALSE"""
+    if p[1] == 'True':
+        p[0] = True
+    else:
+        p[0] = False
 
 def p_valor(p):
     """valor : CADENA
@@ -235,7 +242,8 @@ def p_asignacion_clase(p):
                   | VARIABLECLASE IGUAL expresionNumerica
                   | VARIABLECLASE IGUAL hashes
                   | VARIABLECLASE IGUAL array
-                  | VARIABLECLASE IGUAL input_concatenacion'''
+                  | VARIABLECLASE IGUAL input_concatenacion
+                  | VARIABLE IGUAL booleanos'''
     tabla_variables[p[1]] = p[3]
 
 
@@ -244,7 +252,8 @@ def p_asignacion(p):
                   | VARIABLE IGUAL expresionNumerica
                   | VARIABLE IGUAL hashes
                   | VARIABLE IGUAL array
-                  | VARIABLE IGUAL input_concatenacion"""
+                  | VARIABLE IGUAL input_concatenacion
+                  | VARIABLE IGUAL booleanos"""
 
     #Loor Paulina
     tabla_variables[p[1]] = p[3]
@@ -335,9 +344,7 @@ def p_expresiones_booleanas(p):
                             | rangos TRIPLE_IGUAL ENTERO
                             | VARIABLE operadoresComparacion VARIABLE
                             | VARIABLE operadoresComparacion valorNumerico
-                            | valorNumerico operadoresComparacion VARIABLE
-                            | TRUE
-                            | FALSE'''
+                            | valorNumerico operadoresComparacion VARIABLE'''
 
     #Loor Paulina
     if p.slice[1].type == 'VARIABLE' and p.slice[3].type == 'VARIABLE':
@@ -625,6 +632,7 @@ def pruebasSemantico(algoritmo_file, log_prefix):
 
     with open(archivo, "r") as file:
         data = file.read().strip()
+        print(data)
 
     parser.parse(data)
 
@@ -641,4 +649,4 @@ def pruebasSemantico(algoritmo_file, log_prefix):
     print(f"Resultado guardado en {ruta_archivo}")
 
 
-pruebasSemantico("algoritmo_picon.txt", "semantico-PiconDaniel")
+pruebasSemantico("algoritmo_loor.txt","semantico-LoorPaulina")
