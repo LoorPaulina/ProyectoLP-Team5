@@ -56,6 +56,7 @@ reserved = {
 
 tokens=[
     #Loor Paulina
+    'ID_CLASE',
     'TRES_PUNTOS',
     'PUNTO',
     'VARIABLECLASE',
@@ -63,7 +64,7 @@ tokens=[
     #Dafne Ruiz
     'VARIABLE',
     'CADENA',
-    'ID_CLASE',
+    'NEWLINE',
     #Dafne Ruiz
     'FLOTANTE',
     'ENTERO',
@@ -171,6 +172,9 @@ def t_SIMBOLO(t):
     return t
 
 #variables
+def t_ID_CLASE(t):
+    r'[A-Z]{1}[a-z]+'
+    return t
 
 #Ruiz Dafne y Loor Paulina
 def t_VARIABLECLASE(t):
@@ -186,10 +190,6 @@ def t_VARIABLE(t):
 def t_CADENA(t):
     r'\"([^\\\n]|(\\.))*?\"|\'([^\\\n]|(\\.))*?\''
     t.type = reserved.get(t.value, 'CADENA')
-    return t
-
-def ID_CLASE(t):
-    r'[A-Z]{1}[a-z]+'
     return t
 
 def t_COMENTARIO(t):
@@ -220,7 +220,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-lexer.input('''# Iterar sobre el array con `each`  ''')
+lexer.input('''global_var = 0''')
 
 
 # Tokenize

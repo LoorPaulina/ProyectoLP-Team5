@@ -1,0 +1,3 @@
+Error semántico: Variable @velocidad no declarada
+Error semántico, variable contador no ha sido inicializada
+Error semántico: Variable n no declarada
