@@ -105,14 +105,17 @@ def p_concatenacionSimpleCadena(p):
 #Dafne Ruiz
 def p_valorNumerico(p):
     """valorNumerico : FLOTANTE 
-                     | ENTERO
-                     | VARIABLE"""
+                     | ENTERO"""
     
     #Loor Paulina
-    if isinstance(p[1], int) and p[1] in tabla_variables:
-            p[0] = tabla_variables[p[1]]
+    if p.slice[1].type == 'FLOTANTE':
+        p[0] = float(p[1])
+    elif p.slice[1].type == 'ENTERO':
+        p[0] = int(p[1])
     else:
-            p[0] = p[1]
+        p[0] = p[1]
+
+    
         
 def p_soloEnteros(p):
     """soloEnteros : ENTERO"""
@@ -131,26 +134,13 @@ def p_expresionNumerica(p):
     """expresionNumerica : valorNumerico
                          | operacionAritmetica
                          | PARENTESIS_IZ operacionAritmetica PARENTESIS_DER"""
-    
-    #Loor Paulina
-    if not isinstance(p[1],str) or p[1] in tabla_variables:
-            p[0] = p[1]
-            pass
-    else:
-            error=f"Error semántico, variable {p[1]} no ha sido inicializada"
-            errores_semanticos.append(error)
-            print(error)
+
+
+    if p.slice[1].type == 'valorNumerico':
+        p[0]=p[1]
 
 def p_operacionAritmetica(p):
     """operacionAritmetica : expresionNumerica operadores expresionNumerica"""
-
-    #Loor Paulina
-    if not isinstance(p[1], str) or p[1] in tabla_variables:
-        pass
-    else:
-        error=f"Error semántico, variable {p[1]} no ha sido inicializada"
-        errores_semanticos.append(error)
-        print(error)
 
     # if p[2] == '+':
     #     p[0] = p[1] + p[3]
@@ -296,31 +286,66 @@ def p_expresiones_booleanas(p):
                             | valorNumerico operadoresComparacion VARIABLE''' 
     
     #Loor Paulina
-    if isinstance(p[1], str) and (p[1] not in tabla_variables):
-        error=f"Error semántico: Variable {p[1]} no declarada"
-        errores_semanticos.append(error)
-        print(error)
-        return
-    elif isinstance(p[3], str) and (p[3] not in tabla_variables):
-        error=f"Error semántico: Variable {p[3]} no declarada"
-        errores_semanticos.append(error)
-        print(error)
-        return
-    else:
-        for i in tabla_variables:
-            if i[0] == p[1] or i[0] == p[3]:
-                if not isinstance(tabla_variables[p[1]], int) and not isinstance(tabla_variables[p[1]], float):
-                    error=f"Error semántico: Variable {p[1]} no es un valor numérico"
-                    errores_semanticos.append(error)
-                    print(error)
-                    return
-                elif not isinstance(tabla_variables[p[3]], int) and not isinstance(tabla_variables[p[3]], float):
-                    error=f"Error semántico: Variable {p[3]} no es un valor numérico"
-                    errores_semanticos.append(error)
-                    print(error)
-                    return
-                else:
-                    pass
+    if p.slice[1].type == 'VARIABLE' and p.slice[3].type == 'VARIABLE':
+        if ((isinstance(p[1], str) and (p[1] not in tabla_variables)) and (isinstance(p[3], str) and (p[3] not in tabla_variables))):
+            error=f"Error semántico: Variable {p[1]} no declarada.\nError semántico: Variable {p[3]} no declarada" 
+            errores_semanticos.append(error)
+            print(error)
+            return
+        elif isinstance(p[3], str) and (p[3] not in tabla_variables):
+            error=f"Error semántico: Variable {p[3]} no declarada"
+            errores_semanticos.append(error)
+            print(error)
+            return
+        elif isinstance(p[1], str) and (p[1] not in tabla_variables):
+            error=f"Error semántico: Variable {p[1]} no declarada"
+            errores_semanticos.append(error)
+            print(error)
+        else:
+            for i in tabla_variables:
+                if i[0] == p[1] or i[0] == p[3]:
+                    if not isinstance(tabla_variables[p[1]], int) and not isinstance(tabla_variables[p[1]], float):
+                        error=f"Error semántico: Variable {p[1]} no es un valor numérico"
+                        errores_semanticos.append(error)
+                        print(error)
+                        return
+                    elif not isinstance(tabla_variables[p[3]], int) and not isinstance(tabla_variables[p[3]], float):
+                        error=f"Error semántico: Variable {p[3]} no es un valor numérico"
+                        errores_semanticos.append(error)
+                        print(error)
+                        return
+                    else:
+                        pass
+    elif p.slice[1].type == 'VARIABLE':
+        if isinstance(p[1], str) and (p[1] not in tabla_variables):
+            error=f"Error semántico: Variable {p[1]} no declarada"
+            errores_semanticos.append(error)
+            print(error)
+        else:
+            for i in tabla_variables:
+                if i[0] == p[1]:
+                    if not isinstance(tabla_variables[p[1]], int) and not isinstance(tabla_variables[p[1]], float):
+                        error=f"Error semántico: Variable {p[1]} no es un valor numérico"
+                        errores_semanticos.append(error)
+                        print(error)
+                        return
+                    else:
+                        pass
+    elif p.slice[3].type == 'VARIABLE':
+        if isinstance(p[3], str) and (p[3] not in tabla_variables):
+            error=f"Error semántico: Variable {p[1]} no declarada"
+            errores_semanticos.append(error)
+            print(error)
+        else:
+            for i in tabla_variables:
+                if i[0] == p[3]:
+                    if not isinstance(tabla_variables[p[3]], int) and not isinstance(tabla_variables[p[3]], float):
+                        error=f"Error semántico: Variable {p[1]} no es un valor numérico"
+                        errores_semanticos.append(error)
+                        print(error)
+                        return
+                    else:
+                        pass
 
 def p_solicitudDatosTeclado(p):
     '''solicitudDatosTeclado : GETS 
