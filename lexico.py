@@ -114,7 +114,6 @@ tokens=[
 #Paulina Loor
 t_TRES_PUNTOS =r'\.\.\.'
 t_PUNTO =r'\.'
-t_DOBLE_IGUAL=r'=='
 
 #flotantes 
 def t_FLOTANTE(t):
@@ -144,7 +143,7 @@ t_EXCLAMACION_BAJO=r'!'
 t_EXCLAMACION_ALTO=r'¡'
 t_DIFERENTE=r'!='
 t_IGUAL=r'='
-t_IGUAL_DOBLEP=r':'
+t_IGUAL_DOBLEP=r'=='
 t_MAS= r'\+'
 t_MODULO= r'%'
 t_MENOS= r'-'
@@ -167,7 +166,9 @@ t_ASIGNA_HASH=r'=>'
 t_PREGUNTA=r'\?'
 
 #simbolos 
-t_SIMBOLO=r'[:][a-z](\w)*'
+def t_SIMBOLO(t):
+    r':[a-zA-Z_][a-zA-Z0-9_]*'
+    return t
 
 #variables
 

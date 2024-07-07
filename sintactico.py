@@ -11,6 +11,7 @@ ruta_algoritmos="algoritmos"
 
 def p_cuerpo(p):
     '''cuerpo : operacionAritmetica
+              | comparacion_simbolo
               | input_concatenacion
               | asignacion
               | impresion
@@ -32,15 +33,55 @@ def p_cuerpo(p):
               | definicion_clase'''
     
 #Operaciones
-#Dafne Ruiz
+#Dafne Ruiz----comparacion de simbolos 
+def p_valorSimbolo(p):
+    """valorSimbolo : SIMBOLO 
+                    | VARIABLE"""
+    valor = p[1]
+    
+    # Verificar el tipo de token usando p.slice
+    if p.slice[1].type == 'SIMBOLO':
+        p[0] = valor
+    elif p.slice[1].type == 'VARIABLE':
+        if valor not in tabla_variables:
+            error = f"Error semántico: variable '{valor}' no inicializada"
+            errores_semanticos.append(error)
+            print(error)
+        else:
+            valor_variable = tabla_variables[valor]
+            if not valor_variable.startswith(":"):
+                error = f"Error semántico: variable '{valor}' no es un símbolo"
+                errores_semanticos.append(error)
+                print(error)
+            else:
+                p[0] = valor_variable
+    else:
+        error = f"Error semántico: variable '{valor}' no es de tipo símbolo"
+        errores_semanticos.append(error)
+        print(error)
+        p[0]=None
+
+def p_comparacion_simbolo(p):
+    """ comparacion_simbolo : valorSimbolo IGUAL_DOBLEP valorSimbolo 
+                            | valorSimbolo DIFERENTE valorSimbolo """
+    if not p[1].startswith(":") or not p[3].startswith(":"):
+        error = f"Una de las variables no es de tipo símbolo"
+        errores_semanticos.append(error)
+        print(error)
+    
+
+
+
+#Dafne Ruiz----concatenacion de cadenas
+
 def p_input_concatenacion(p):
-    """input_concatenacion : concatenacionSimpleCadena
-                           | concatenacion_funcion"""
+    """ input_concatenacion : concatenacionSimpleCadena
+                            | concatenacion_funcion """
 
     p[0]=p[1]
 
 def p_concatenacion_funcion(p):
-    """concatenacion_funcion : VARIABLE PUNTO CONCAT PARENTESIS_IZ valorCadena PARENTESIS_DER"""
+    """ concatenacion_funcion : VARIABLE PUNTO CONCAT PARENTESIS_IZ valorCadena PARENTESIS_DER """
     valor=p[1]
     if valor not in tabla_variables:
             error = f"Error semántico, variable {valor} no ha sido inicializada"
@@ -52,8 +93,8 @@ def p_concatenacion_funcion(p):
         p[0]=tabla_variables[valor]
         
 def p_valorCadena(p):
-    """valorCadena : CADENA
-                   | VARIABLE """
+    """ valorCadena : CADENA
+                    | VARIABLE """
     
     valor=p[1]
      # Verificar si es una cadena directamente
@@ -215,6 +256,7 @@ def p_asignacion(p):
     """asignacion : VARIABLE IGUAL CADENA
                   | VARIABLE IGUAL expresionNumerica
                   | VARIABLE IGUAL hashes
+                  | VARIABLE IGUAL SIMBOLO
                   | VARIABLE IGUAL array
                   | VARIABLE IGUAL input_concatenacion"""
     
@@ -277,23 +319,23 @@ def p_impresion_vacia(p):
     print("")
     
 def p_operadoresComparacion(p):
-    '''operadoresComparacion : DOBLE_IGUAL
-                            | DIFERENTE
-                            | MAYOR_QUE
-                            | MENOR_QUE
-                            | MENOR_IGUAL_QUE
-                            | MAYOR_IGUAL_QUE'''
+    '''operadoresComparacion : IGUAL_DOBLEP
+                             | DIFERENTE
+                             | MAYOR_QUE
+                             | MENOR_QUE
+                             | MENOR_IGUAL_QUE
+                             | MAYOR_IGUAL_QUE'''
 
 def p_funcionesComparacion(p):
     '''funcionesComparacion : AND
                             | OR'''
 
 def p_expresiones_booleanas(p):
-    '''expresiones_booleanas : valorNumerico operadoresComparacion valorNumerico  
-                            | rangos TRIPLE_IGUAL ENTERO
-                            | VARIABLE operadoresComparacion VARIABLE
-                            | VARIABLE operadoresComparacion valorNumerico
-                            | valorNumerico operadoresComparacion VARIABLE''' 
+    '''expresiones_booleanas : valorNumerico operadoresComparacion valorNumerico
+                             | rangos TRIPLE_IGUAL ENTERO
+                             | VARIABLE operadoresComparacion VARIABLE
+                             | VARIABLE operadoresComparacion valorNumerico
+                             | valorNumerico operadoresComparacion VARIABLE''' 
     
     #Loor Paulina
     if isinstance(p[1], str) and (p[1] not in tabla_variables):
@@ -421,7 +463,7 @@ def p_claveValor(p):
     
 def p_elemento_hash(p):
     '''elemento_hash : claveValor
-                    | claveValor COMA claveValor'''
+                     | claveValor COMA claveValor'''
 
 
 def p_each_hash(p):
@@ -429,7 +471,7 @@ def p_each_hash(p):
 
 def p_each_args_hash(p):
     '''each_args_hash : VARIABLE COMA VARIABLE BARRA
-                 | VARIABLE BARRA'''
+                      | VARIABLE BARRA'''
 
 def p_definicion_clase(p):
     '''definicion_clase : CLASS ID_CLASE DEF INITIALIZE PARENTESIS_IZ argumentos PARENTESIS_DER'''
