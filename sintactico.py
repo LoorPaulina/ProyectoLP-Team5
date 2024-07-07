@@ -201,6 +201,15 @@ def p_impresion(p):
     else:
         p[0]=p[2]
     print (p[0])
+
+def p_asignacion_clase(p):
+    '''asignacion_clase : VARIABLECLASE IGUAL CADENA
+                  | VARIABLECLASE IGUAL expresionNumerica
+                  | VARIABLECLASE IGUAL hashes
+                  | VARIABLECLASE IGUAL array
+                  | VARIABLECLASE IGUAL input_concatenacion'''
+    tabla_variables[p[1]]=p[3]
+
 def p_asignacion(p):
     """asignacion : VARIABLE IGUAL CADENA
                   | VARIABLE IGUAL expresionNumerica
@@ -353,8 +362,8 @@ def p_solicitudDatosTeclado(p):
     p[0] = input()
 
 def p_funciones(p):
-    '''funciones : DEF VARIABLE PARENTESIS_IZ PARENTESIS_DER END
-                 | DEF VARIABLE PARENTESIS_IZ argumentos PARENTESIS_DER END'''   
+    '''funciones : DEF VARIABLE PARENTESIS_IZ PARENTESIS_DER declaracion END
+                 | DEF VARIABLE PARENTESIS_IZ argumentos PARENTESIS_DER declaracion END'''   
 
 def p_funcionesArray(p):
     '''funcionesArray : SORT
@@ -384,6 +393,7 @@ def p_funcionesEstructuras(p):
                     error=f"Error semántico: Variable {p[1]} no es un entero"
                     errores_semanticos.append(error)
                     print(error)
+                    print(errores_semanticos)
 
 
 def p_argumentos(p):
@@ -414,7 +424,9 @@ def p_declaracion(p):
                     | solicitudDatosTeclado
                     | hashes
                     | estructura_if
-                     '''
+                    | asignacion_clase
+                    | sentencia_while
+                    | estructura_ifUnaLinea'''
 
 
 
@@ -442,7 +454,9 @@ def p_hashes(p):
 
 def p_claveValor(p):
     '''claveValor : VARIABLE ASIGNA_HASH valorNumerico
-                  | VARIABLE ASIGNA_HASH CADENA'''
+                  | VARIABLE ASIGNA_HASH CADENA
+                  | CADENA ASIGNA_HASH valorNumerico
+                  | CADENA ASIGNA_HASH CADENA'''
     
 def p_elemento_hash(p):
     '''elemento_hash : claveValor
@@ -457,7 +471,19 @@ def p_each_args_hash(p):
                  | VARIABLE BARRA'''
 
 def p_definicion_clase(p):
-    '''definicion_clase : CLASS ID_CLASE DEF INITIALIZE PARENTESIS_IZ argumentos PARENTESIS_DER'''
+    '''definicion_clase : CLASS ID_CLASE NEWLINE cuerpoVariables NEWLINE DEF INITIALIZE PARENTESIS_IZ argumentos PARENTESIS_DER cuerpoClase END'''
+
+def p_cuerpoVariables(p):
+    '''cuerpoVariables : asignacion_clase                
+                | asignacion
+                | asignacion_clase NEWLINE cuerpoVariables
+                | asignacion NEWLINE cuerpoVariables'''
+
+def p_cuerpoClase(p):
+    '''cuerpoClase : cuerpoVariables
+                | declaracion
+                | funciones'''
+
 
 # def p_error(p):
 #     if p:
@@ -473,14 +499,15 @@ def p_definicion_clase(p):
 def p_error(p):
   if p:
     errors.append(p)
-    print("Error de sintaxis en token:", p.type)
-    #sintactico.errok()
+    print("Error de sintaxis en token:", p.type, "En : " , p.value)
+    sintactico.errok()
   else:
     errors.append(p)
     print("Syntax error at EOF")
 # Build the parser
 sintactico = yacc.yacc()
 
+'''
 while True:
     try:
         s = input('ruby > ')
@@ -489,7 +516,7 @@ while True:
     if not s: continue
     result = sintactico.parse(s)
     if result != None: print(result)
-
+'''
 '''
 #por terminar
 def pruebas(algoritmo_file,log_prefix):
@@ -511,7 +538,7 @@ def pruebas(algoritmo_file,log_prefix):
 
     with open(ruta_archivo, "a+") as log_file:
         for error in errors:
-            log_file.write(error.type+" "+error.value + "\n")
+            log_file.write("Error de sintaxis en token:", p.type, "En : " , p.value + "\n")
             print (error)
 
     print(f"Resultado guardado en {ruta_archivo}")
@@ -521,31 +548,26 @@ def pruebas(algoritmo_file,log_prefix):
 pruebas("algoritmo_picon.txt", "sintactico-piconDaniel")
 '''
 
-# #corregir esta funcion :)
-# def pruebasSemantico(algoritmo_file,log_prefix):
-#     parser = yacc.yacc()
-#     archivo = f"{ruta_algoritmos}/{algoritmo_file}"
-#     result=''
+def pruebasSemantico(algoritmo_file,log_prefix):
+    parser = yacc.yacc()
+    archivo = f"{ruta_algoritmos}/{algoritmo_file}"
 
-#     with open(archivo, "r") as file:
-#         data = file.read()
+    with open(archivo, "r") as file:
+        data = file.read().strip()
     
-#     parser.errors = errors
-#     parser.parse(data)
+    parser.parse(data)
     
+    ahora = datetime.datetime.now()
+    fecha_hora = ahora.strftime("%Y%m%d-%H%M%S") 
+    nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"
 
-#     ahora = datetime.datetime.now()
-#     fecha_hora = ahora.strftime("%Y%m%d-%H%M%S") 
-#     nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"
+    ruta_archivo = f"{ruta_carpeta}/{nombre_archivo}"
+    with open(ruta_archivo, "a+") as log_file:
+        for error in errores_semanticos:
+            log_file.write(error + "\n")
+            print (error)
 
-#     ruta_archivo = f"{ruta_carpeta}/{nombre_archivo}"
-
-#     with open(ruta_archivo, "a+") as log_file:
-#         for error in errores_semanticos:
-#             log_file.write(error + "\n")
-#             print (error)
-
-#     print(f"Resultado guardado en {ruta_archivo}")
+    print(f"Resultado guardado en {ruta_archivo}")
 
 
-# pruebasSemantico("algoritmo_loor.txt","semantico-LoorPaulina")
+pruebasSemantico("algoritmo_loor.txt","semantico-LoorPaulina")

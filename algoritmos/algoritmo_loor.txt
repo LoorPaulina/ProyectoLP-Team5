@@ -1,9 +1,6 @@
-# Variables globales 
 $global_var = "Soy una variable global" 
-
-$test = "este es un test"
-$test.to_f
- 
+a="hola"
+a.to_f
 # Clase Persona 
 class Persona 
   # Variable de clase 
@@ -43,7 +40,7 @@ instancia
   # Sobreescribe el método presentarse 
   def presentarse 
     super() 
-    puts "Estoy en el grado #{@grado}." 
+    puts "Estoy en el grado @grado" 
   end 
 end 
  
@@ -91,7 +88,7 @@ test = "este es un test"
  
 # Iterar sobre el array con `each` 
 numeros.each do |num| 
-  puts "Número: #{num}" 
+  puts "Numero: num" 
 end 
  
 # Operaciones aritméticas 
@@ -125,5 +122,4 @@ if booleano1 && !booleano2
 es falso" 
 end 
  
-puts "Total de personas: 
-#{Persona.total_personas}"
+puts "Total de personas: total_personas"
