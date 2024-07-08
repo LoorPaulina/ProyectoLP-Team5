@@ -554,7 +554,10 @@ def p_declaracion(p):
 def p_sentencia_while(p):
     '''sentencia_while : WHILE expresiones_booleanas DO sentencia_while END
                       | WHILE expresiones_booleanas DO declaracion END '''
-
+    if not isinstance(p[2], bool):
+        print(f"Error: La condición del bucle while debe ser booleana, pero se encontró {type(p[2])}")
+    else:
+        pass
 
 def p_sentencia_case(p):
     '''sentencia_case : CASE declaracion sentencia_when END'''
