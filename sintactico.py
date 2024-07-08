@@ -421,8 +421,14 @@ def p_expresiones_booleanas(p):
                         errores_semanticos.append(error)
                         print(error)
                         return
+                    
                 elif (isinstance(valor_var1,int) and not isinstance(valor_var2,int)) or (isinstance(valor2,int) and not isinstance(valor1,int)): 
                     error = f"Error semántico: ambas variables deben ser de tipo int"
+                    errores_semanticos.append(error)
+                    print(error)
+                    return
+                elif (isinstance(valor_var1,str) or isinstance(valor_var2,str)) : 
+                    error = f"Error semántico: uno de los elementos es string"
                     errores_semanticos.append(error)
                     print(error)
                     return
