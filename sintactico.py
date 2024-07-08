@@ -426,6 +426,12 @@ def p_expresiones_booleanas(p):
                     errores_semanticos.append(error)
                     print(error)
                     return
+                else:
+                    error = f"Error semántico: ambas variables son invalidas"
+                    errores_semanticos.append(error)
+                    print(error)
+                    return
+
 
 
     # #Loor Paulina
