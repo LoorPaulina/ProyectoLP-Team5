@@ -175,10 +175,12 @@ def p_entero_a_flotante(p):
         if isinstance(value, int):
             p[0] = float(value)
         else:
-            print(f"Error: '{p[1]}' no es un entero")
+            print(f"Error semántico: '{p[1]}' no es un entero")
+            errores_semanticos.append(f"Error semántico: '{p[1]}' no es un entero")
             p[0] = value
     else:
-        print(f"Error: Variable '{p[1]}' no definida")
+        print(f"Error semántico: Variable '{p[1]}' no definida")
+        errores_semanticos.append(f"Error semántico: Variable '{p[1]}' no definida")
         p[0] = 0
 
 
@@ -233,10 +235,6 @@ def p_valores(p):
     """valores : valor
                | valor COMA valores
                | valor estructura_ifUnaLinea"""
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = p[1] + p[3]
 
 def p_booleanos(p):
     """booleanos : TRUE
@@ -271,12 +269,6 @@ def p_valor(p):
 
 def p_impresion(p):
     """impresion : valor_print valores"""
-    if (p[2] in tabla_variables):
-        p[0] = tabla_variables[p[2]]
-    else:
-        p[0] = p[2]
-    print(p[0])
-
 
 def p_asignacion_clase(p):
     '''asignacion_clase : VARIABLECLASE IGUAL CADENA
@@ -455,8 +447,6 @@ def p_expresiones_booleanas(p):
 def p_solicitudDatosTeclado(p):
     '''solicitudDatosTeclado : GETS 
                             | GETS PUNTO funcionesFormatoImpresion '''
-    p[0] = input()
-
 
 def p_funciones(p):
     '''funciones : DEF VARIABLE PARENTESIS_IZ PARENTESIS_DER declaracion END
@@ -665,9 +655,13 @@ def pruebasSemantico(algoritmo_file, log_prefix):
     archivo = f"{ruta_algoritmos}/{algoritmo_file}"
 
     with open(archivo, "r") as file:
-        data = file.read().strip()
+        for linea in file:
+            if linea.strip():
+                sintactico.parse(linea)
+    file.close()
 
-    sintactico.parse(data)
+
+    #sintactico.parse(data)
     
     ahora = datetime.datetime.now()
     fecha_hora = ahora.strftime("%Y%m%d-%H%M%S")

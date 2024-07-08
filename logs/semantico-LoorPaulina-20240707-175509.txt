@@ -1,0 +1,1 @@
+Error semántico, variable presentarse no ha sido inicializada
