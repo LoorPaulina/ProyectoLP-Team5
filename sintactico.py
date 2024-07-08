@@ -715,7 +715,7 @@ def p_cuerpoClase(p):
 # # Build the parser
 sintactico = yacc.yacc()
 
-
+'''
 while True:
     try:
         s = input('ruby > ')
@@ -724,7 +724,7 @@ while True:
     if not s: continue
     result = sintactico.parse(s)
     if result != None: print(result)
-
+'''
 '''
 #por terminar
 def pruebas(algoritmo_file,log_prefix):
@@ -757,30 +757,30 @@ pruebas("algoritmo_picon.txt", "sintactico-piconDaniel")
 '''
 
 
-# def pruebasSemantico(algoritmo_file, log_prefix):
-#     archivo = f"{ruta_algoritmos}/{algoritmo_file}"
+def pruebasSemantico(algoritmo_file, log_prefix):
+    archivo = f"{ruta_algoritmos}/{algoritmo_file}"
 
-#     with open(archivo, "r") as file:
-#         for linea in file:
-#             if linea.strip():
-#                 sintactico.parse(linea)
-#     file.close()
+    with open(archivo, "r") as file:
+        for linea in file:
+            if linea.strip():
+                sintactico.parse(linea)
+    file.close()
 
 
-#     #sintactico.parse(data)
+    #sintactico.parse(data)
     
-#     ahora = datetime.datetime.now()
-#     fecha_hora = ahora.strftime("%Y%m%d-%H%M%S")
-#     nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"
+    ahora = datetime.datetime.now()
+    fecha_hora = ahora.strftime("%Y%m%d-%H%M%S")
+    nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"
 
-#     ruta_archivo = f"{ruta_carpeta}/{nombre_archivo}"
-#     with open(ruta_archivo, "a+") as log_file:
-#         for error in errores_semanticos:
-#             log_file.write(error + "\n")
-#             print(error)
+    ruta_archivo = f"{ruta_carpeta}/{nombre_archivo}"
+    with open(ruta_archivo, "a+") as log_file:
+        for error in errores_semanticos:
+            log_file.write(error + "\n")
+            print(error)
 
-#     print(f"Resultado guardado en {ruta_archivo}")
+    print(f"Resultado guardado en {ruta_archivo}")
 
 
-# pruebasSemantico("algoritmo_loor.txt","semantico-LoorPaulina")
-#pruebasSemantico("algoritmo_ruiz.txt","semantico-taizRuiz")
+#pruebasSemantico("algoritmo_loor.txt","semantico-LoorPaulina")
+pruebasSemantico("algoritmo_ruiz.txt","semantico-taizRuiz")
