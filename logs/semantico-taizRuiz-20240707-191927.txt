@@ -1,0 +1,9 @@
+Error semántico: 'a' no es un entero
+Error semántico, variable mensaje no ha sido inicializada
+Error semántico: Variable edad no declarada
+Error semántico: 'test' no es un entero
+Error semántico, variable @velocidad no ha sido inicializada
+Error semántico: Variable @velocidad no declarada
+Error semántico, variable marca no ha sido inicializada
+Error semántico, variable contador no es de tipo string
+Error semántico: Variable n no declarada

@@ -1,0 +1,3 @@
+Error semántico, variable @velocidad no ha sido inicializada
+Error semántico, variable marca no ha sido inicializada
+Error semántico, variable contador no es de tipo string
