@@ -408,67 +408,49 @@ def p_expresiones_booleanas(p):
                              | VARIABLE operadoresComparacion valorNumerico
                              | valorNumerico operadoresComparacion VARIABLE''' 
 
-#Loor Paulina y Dafne Ruiz :)
+    #Dafne Ruiz y Loor Paulina
     if p.slice[1].type == 'VARIABLE' and p.slice[3].type == 'VARIABLE':
-        if ((isinstance(p[1], str) and (p[1] not in tabla_variables)) and (
-                isinstance(p[3], str) and (p[3] not in tabla_variables))):
-            error = f"Error semántico: Variable {p[1]} no declarada.\nError semántico: Variable {p[3]} no declarada"
+        valor1=p[1]
+        valor2=p[3]
+        if valor1 not in tabla_variables and valor2 not in tabla_variables:
+            error = f"Error semántico: Variable {valor1} no declarada.\nError semántico: Variable {valor2} no declarada"
             errores_semanticos.append(error)
             print(error)
             return
-        elif isinstance(p[3], str) and (p[3] not in tabla_variables):
-            error = f"Error semántico: Variable {p[3]} no declarada"
+        elif valor1 not in tabla_variables:
+            error = f"Error semántico: Variable {valor1} no declarada."
             errores_semanticos.append(error)
             print(error)
             return
-        elif isinstance(p[1], str) and (p[1] not in tabla_variables):
-            error = f"Error semántico: Variable {p[1]} no declarada"
+        elif valor2 not in tabla_variables:
+            error = f"Error semántico: Variable {valor2} no declarada"
             errores_semanticos.append(error)
             print(error)
+            return
+        
+        #estan en la tabla me aseguro que sean valores permitidos 
         else:
-            for i in tabla_variables:
-                if i[0] == p[1] or i[0] == p[3]:
-                    if isinstance(tabla_variables[p[1]], str) and isinstance(tabla_variables[p[3]], str):
-                        if  (tabla_variables[p[1]].startswith(":") and tabla_variables[p[3]].startswith(":")):
-                            pass
-                        elif  tabla_variables[p[1]].startswith(":") and not tabla_variables[p[3]].startswith(":"):
-                            error = f"Error semántico: ambas variables deben ser de tipo simbolo"
-                            errores_semanticos.append(error)
-                            print(error)
-                            return
-                        elif  not tabla_variables[p[1]].startswith(":") and tabla_variables[p[3]].startswith(":"):
-                            error = f"Error semántico: ambas variables deben ser de tipo simbolo"
-                            errores_semanticos.append(error)
-                            print(error)
-                            return
-                    else:
-                        if not isinstance(tabla_variables[p[1]], int) and not isinstance(tabla_variables[p[1]], float):
-                            error = f"Error semántico: Variable {p[1]} no es un valor numérico o está intentando comparar simbolos"
-                            errores_semanticos.append(error)
-                            print(error)
-                            return
-                        elif not isinstance(tabla_variables[p[3]], int) and not isinstance(tabla_variables[p[3]], float):
-                            error = f"Error semántico: Variable {p[3]} no es un valor numérico o está intentando comparar simbolos"
-                            errores_semanticos.append(error)
-                            print(error)
-                            return
-                        else:
-                            pass
-    elif p.slice[1].type == 'VARIABLE':
-        if isinstance(p[1], str) and (p[1] not in tabla_variables):
-            error = f"Error semántico: Variable {p[1]} no declarada"
-            errores_semanticos.append(error)
-            print(error)
-        else:
-            for i in tabla_variables:
-                if i[0] == p[1]:
-                    if not isinstance(tabla_variables[p[1]], int) and not isinstance(tabla_variables[p[1]], float):
-                        error = f"Error semántico: Variable {p[1]} no es un valor numérico"
+            valor_var1=tabla_variables[valor1]
+            valor_var2=tabla_variables[valor2]
+            #dos simbolos
+            if  (isinstance(valor_var1,str) and isinstance(valor_var2,str)) :
+                if  (valor_var1.startswith(":") and valor_var2.startswith(":")) :
+                    pass
+                else: 
+                    error = f"Error semántico: variables no validas para comparacion "
+                    errores_semanticos.append(error)
+                    print(error)
+                    return
+            elif (isinstance(valor_var1,int) and isinstance(valor_var2,int)) or (isinstance(valor_var1,float) and isinstance(valor_var2,float)):
+                pass
+            else:
+                if  (isinstance(valor_var1,str) and isinstance(valor_var2,str)) :
+                    if (valor_var1.startswith(":") and not valor_var2.startswith(":")) or (valor_var2.startswith(":") and not valor_var1.startswith(":")): 
+                        error = f"Error semántico: ambas variables deben ser de tipo simbolo"
                         errores_semanticos.append(error)
                         print(error)
                         return
-<<<<<<< HEAD
-                    
+
                 elif (isinstance(valor_var1,int) and not isinstance(valor_var2,int)) or (isinstance(valor2,int) and not isinstance(valor1,int)): 
                     error = f"Error semántico: ambas variables deben ser de tipo int"
                     errores_semanticos.append(error)
@@ -484,89 +466,7 @@ def p_expresiones_booleanas(p):
                     errores_semanticos.append(error)
                     print(error)
                     return
-=======
-                    else:
-                        pass
-    elif p.slice[3].type == 'VARIABLE':
-        if isinstance(p[3], str) and (p[3] not in tabla_variables):
-            error = f"Error semántico: Variable {p[1]} no declarada"
-            errores_semanticos.append(error)
-            print(error)
-        else:
-            for i in tabla_variables:
-                if i[0] == p[3]:
-                    if not isinstance(tabla_variables[p[3]], int) and not isinstance(tabla_variables[p[3]], float):
-                        error = f"Error semántico: Variable {p[1]} no es un valor numérico"
-                        errores_semanticos.append(error)
-                        print(error)
-                        return
-                    else:
-                        pass
->>>>>>> 65214ac1aa263916c799d56692b3db935589c39e
 
-
-    # #Loor Paulina
-    # if p.slice[1].type == 'VARIABLE' and p.slice[3].type == 'VARIABLE':
-    #     if ((isinstance(p[1], str) and (p[1] not in tabla_variables)) and (
-    #             isinstance(p[3], str) and (p[3] not in tabla_variables))):
-    #         error = f"Error semántico: Variable {p[1]} no declarada.\nError semántico: Variable {p[3]} no declarada"
-    #         errores_semanticos.append(error)
-    #         print(error)
-    #         return
-    #     elif isinstance(p[3], str) and (p[3] not in tabla_variables):
-    #         error = f"Error semántico: Variable {p[3]} no declarada"
-    #         errores_semanticos.append(error)
-    #         print(error)
-    #         return
-    #     elif isinstance(p[1], str) and (p[1] not in tabla_variables):
-    #         error = f"Error semántico: Variable {p[1]} no declarada"
-    #         errores_semanticos.append(error)
-    #         print(error)
-    #     else:
-    #         for i in tabla_variables:
-    #             if i[0] == p[1] or i[0] == p[3]:
-    #                 if not isinstance(tabla_variables[p[1]], int) and not isinstance(tabla_variables[p[1]], float) :
-    #                     error = f"Error semántico: Variable {p[1]} no es un valor valido"
-    #                     errores_semanticos.append(error)
-    #                     print(error)
-    #                     return
-    #                 elif not isinstance(tabla_variables[p[3]], int) and not isinstance(tabla_variables[p[3]], float) :
-    #                     error = f"Error semántico: Variable {p[3]} no es un valor valido"
-    #                     errores_semanticos.append(error)
-    #                     print(error)
-    #                     return
-    #                 else:
-    #                     pass
-    # elif p.slice[1].type == 'VARIABLE':
-    #     if isinstance(p[1], str) and (p[1] not in tabla_variables):
-    #         error = f"Error semántico: Variable {p[1]} no declarada"
-    #         errores_semanticos.append(error)
-    #         print(error)
-    #     else:
-    #         for i in tabla_variables:
-    #             if i[0] == p[1]:
-    #                 if not isinstance(tabla_variables[p[1]], int) and not isinstance(tabla_variables[p[1]], float) :
-    #                     error = f"Error semántico: Variable {p[1]} no es un valor valido"
-    #                     errores_semanticos.append(error)
-    #                     print(error)
-    #                     return
-    #                 else:
-    #                     pass
-    # elif p.slice[3].type == 'VARIABLE':
-    #     if isinstance(p[3], str) and (p[3] not in tabla_variables):
-    #         error = f"Error semántico: Variable {p[1]} no declarada"
-    #         errores_semanticos.append(error)
-    #         print(error)
-    #     else:
-    #         for i in tabla_variables:
-    #             if i[0] == p[3]:
-    #                 if not isinstance(tabla_variables[p[3]], int) and not isinstance(tabla_variables[p[3]], float) :
-    #                     error = f"Error semántico: Variable {p[1]} no es un valor valido"
-    #                     errores_semanticos.append(error)
-    #                     print(error)
-    #                     return
-    #                 else:
-    #                     pass
 
 
 def p_solicitudDatosTeclado(p):
@@ -734,16 +634,16 @@ def p_cuerpoClase(p):
 # # Build the parser
 sintactico = yacc.yacc()
 
-'''
-while True:
-    try:
-        s = input('ruby > ')
-    except EOFError:
-        break
-    if not s: continue
-    result = sintactico.parse(s)
-    if result != None: print(result)
-'''
+
+# while True:
+#     try:
+#         s = input('ruby > ')
+#     except EOFError:
+#         break
+#     if not s: continue
+#     result = sintactico.parse(s)
+#     if result != None: print(result)
+
 '''
 #por terminar
 def pruebas(algoritmo_file,log_prefix):

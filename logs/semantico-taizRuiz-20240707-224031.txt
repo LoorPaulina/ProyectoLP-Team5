@@ -1,0 +1,8 @@
+Error semántico: Variable no inicializada 'marca'
+Error semántico: Variable no inicializada 'modelo'
+Error semántico: Variable no inicializada 'velocidad'
+Error semántico, variable @velocidad no es de tipo string
+Error semántico, variable marca no ha sido inicializada
+Error semántico, variable contador no es de tipo string
+Error semántico: Variable no inicializada 'n'
+Error semántico: Variable no inicializada 'n'
