@@ -584,9 +584,12 @@ def p_each_args_hash(p):
     '''each_args_hash : VARIABLE COMA VARIABLE BARRA
                       | VARIABLE BARRA'''
 
+def p_encabezadoClase(p):
+    '''encabezadoClase : CLASS ID_CLASE
+                    | CLASS ID_CLASE MENOR_QUE ID_CLASE'''
 
 def p_definicion_clase(p):
-    '''definicion_clase : CLASS ID_CLASE NEWLINE cuerpoVariables NEWLINE DEF INITIALIZE PARENTESIS_IZ argumentos PARENTESIS_DER cuerpoClase END'''
+    '''definicion_clase : encabezadoClase NEWLINE cuerpoVariables NEWLINE DEF INITIALIZE PARENTESIS_IZ argumentos PARENTESIS_DER cuerpoClase END'''
 
 
 def p_cuerpoVariables(p):
@@ -601,16 +604,6 @@ def p_cuerpoClase(p):
                 | declaracion
                 | funciones'''
 
-
-# def p_error(p):
-#     if p:
-#         message="Error de sintaxis en token:", p.type
-#         errors.append(message)
-#         #yacc.errok()
-#     else:
-#         print("Syntax error at EOF")
-#         errors.append(message)
-
 #Dafne Ruiz
 # Error rule for syntax errors
 # def p_error(p):
@@ -624,7 +617,7 @@ def p_cuerpoClase(p):
 
 
 # # Build the parser
-# sintactico = yacc.yacc()
+sintactico = yacc.yacc()
 
 '''
 while True:
@@ -669,15 +662,13 @@ pruebas("algoritmo_picon.txt", "sintactico-piconDaniel")
 
 
 def pruebasSemantico(algoritmo_file, log_prefix):
-    parser = yacc.yacc()
     archivo = f"{ruta_algoritmos}/{algoritmo_file}"
 
     with open(archivo, "r") as file:
         data = file.read().strip()
-        print(data)
 
-    parser.parse(data)
-
+    sintactico.parse(data)
+    
     ahora = datetime.datetime.now()
     fecha_hora = ahora.strftime("%Y%m%d-%H%M%S")
     nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"

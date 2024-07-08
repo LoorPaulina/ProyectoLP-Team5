@@ -1,6 +1,6 @@
-$global_var = "Soy una variable global" 
 a="hola"
 a.to_f
+$global_var = "Soy una variable global"
 # Clase Persona 
 class Persona 
   # Variable de clase 
@@ -8,18 +8,14 @@ class Persona
  
   # Constructor 
   def initialize(nombre, edad) 
-    @nombre = nombre      # Variable de 
-instancia 
-    @edad = edad          # Variable de 
-instancia 
-    @@total_personas += 1 # Incrementa el 
-contador de personas 
+    @nombre = nombre      # Variable deinstancia 
+    @edad = edad          # Variable de instancia 
+    @@total_personas += 1 # Incrementa el contador de personas 
   end 
  
   # Método de instancia 
   def presentarse 
-    puts "Hola, mi nombre es #{@nombre} y 
-tengo #{@edad} años." 
+    puts "Hola, mi nombre es #{@nombre} y tengo #{@edad} años." 
   end 
  
   # Método de clase 
@@ -31,10 +27,8 @@ end
 # Clase Estudiante que hereda de Persona 
 class Estudiante < Persona 
   def initialize(nombre, edad, grado) 
-    super(nombre, edad)   # Llama al 
-constructor de la clase base 
-    @grado = grado        # Variable de 
-instancia 
+    super(nombre, edad)   # Llama al constructor de la clase base 
+    @grado = grado        # Variable de instancia 
   end 
  
   # Sobreescribe el método presentarse 
@@ -54,20 +48,16 @@ end
 puts $global_var 
  
 # Pedir nombre y edad 
-nombre = pedir_datos("Por favor, ingresa tu 
-nombre: ") 
-edad = pedir_datos("Por favor, ingresa tu 
-edad: ").to_i 
+nombre = pedir_datos("Por favor, ingresa tu nombre: ") 
+edad = pedir_datos("Por favor, ingresa tu edad: ").to_i 
  
 # Crear instancia de Persona 
 persona = Persona.new(nombre, edad) 
 persona.presentarse 
  
 # Pedir grado y crear instancia de Estudiante 
-grado = pedir_datos("Por favor, ingresa tu 
-grado: ") 
-estudiante = Estudiante.new(nombre, edad, 
-grado) 
+grado = pedir_datos("Por favor, ingresa tu grado: ") 
+estudiante = Estudiante.new(nombre, edad, grado) 
 estudiante.presentarse 
  
 # Comparaciones lógicas 
@@ -99,8 +89,7 @@ puts "Suma: #{@suma}, Promedio: #{@promedio}"
 test.to_f 
  
 # Caso `case` 
-valor = pedir_datos("Ingresa un número del 1 
-al 3: ").to_i 
+valor = pedir_datos("Ingresa un número del 1 al 3: ").to_i 
  
 case valor 
 when 1 
@@ -118,8 +107,7 @@ booleano1 = true
 booleano2 = false 
  
 if booleano1 && !booleano2 
-  puts "Booleano1 es verdadero y Booleano2 
-es falso" 
+  puts "Booleano1 es verdadero y Booleano2 es falso" 
 end 
  
 puts "Total de personas: total_personas"
