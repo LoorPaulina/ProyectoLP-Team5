@@ -404,14 +404,18 @@ def p_expresiones_booleanas(p):
             valor_var1=tabla_variables[valor1]
             valor_var2=tabla_variables[valor2]
             #dos simbolos
-            if  (valor_var1.startswith(":") and valor_var2.startswith(":")) or (isinstance(valor_var1,int) and isinstance(valor_var2,int)) or (isinstance(valor_var1,float) and isinstance(valor_var2,float)):
+            if  (isinstance(valor_var1,str) and isinstance(valor_var2,str)) :
+                if  (valor_var1.startswith(":") and valor_var2.startswith(":")) :
+                    pass
+            elif (isinstance(valor_var1,int) and isinstance(valor_var2,int)) or (isinstance(valor_var1,float) and isinstance(valor_var2,float)):
                 pass
             else:
-                if (valor_var1.startswith(":") and not valor_var2.startswith(":")) or (valor_var2.startswith(":") and not valor_var1.startswith(":")): 
-                    error = f"Error semántico: ambas variables deben ser de tipo simbolo"
-                    errores_semanticos.append(error)
-                    print(error)
-                    return
+                if  (isinstance(valor_var1,str) and isinstance(valor_var2,str)) :
+                    if (valor_var1.startswith(":") and not valor_var2.startswith(":")) or (valor_var2.startswith(":") and not valor_var1.startswith(":")): 
+                        error = f"Error semántico: ambas variables deben ser de tipo simbolo"
+                        errores_semanticos.append(error)
+                        print(error)
+                        return
                 elif (isinstance(valor_var1,int) and not isinstance(valor_var2,int)) or (isinstance(valor2,int) and not isinstance(valor1,int)): 
                     error = f"Error semántico: ambas variables deben ser de tipo int"
                     errores_semanticos.append(error)
@@ -654,14 +658,14 @@ def p_cuerpoClase(p):
 sintactico = yacc.yacc()
 
 
-# while True:
-#     try:
-#         s = input('ruby > ')
-#     except EOFError:
-#         break
-#     if not s: continue
-#     result = sintactico.parse(s)
-#     if result != None: print(result)
+while True:
+    try:
+        s = input('ruby > ')
+    except EOFError:
+        break
+    if not s: continue
+    result = sintactico.parse(s)
+    if result != None: print(result)
 
 '''
 #por terminar
@@ -695,30 +699,30 @@ pruebas("algoritmo_picon.txt", "sintactico-piconDaniel")
 '''
 
 
-def pruebasSemantico(algoritmo_file, log_prefix):
-    archivo = f"{ruta_algoritmos}/{algoritmo_file}"
+# def pruebasSemantico(algoritmo_file, log_prefix):
+#     archivo = f"{ruta_algoritmos}/{algoritmo_file}"
 
-    with open(archivo, "r") as file:
-        for linea in file:
-            if linea.strip():
-                sintactico.parse(linea)
-    file.close()
+#     with open(archivo, "r") as file:
+#         for linea in file:
+#             if linea.strip():
+#                 sintactico.parse(linea)
+#     file.close()
 
 
-    #sintactico.parse(data)
+#     #sintactico.parse(data)
     
-    ahora = datetime.datetime.now()
-    fecha_hora = ahora.strftime("%Y%m%d-%H%M%S")
-    nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"
+#     ahora = datetime.datetime.now()
+#     fecha_hora = ahora.strftime("%Y%m%d-%H%M%S")
+#     nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"
 
-    ruta_archivo = f"{ruta_carpeta}/{nombre_archivo}"
-    with open(ruta_archivo, "a+") as log_file:
-        for error in errores_semanticos:
-            log_file.write(error + "\n")
-            print(error)
+#     ruta_archivo = f"{ruta_carpeta}/{nombre_archivo}"
+#     with open(ruta_archivo, "a+") as log_file:
+#         for error in errores_semanticos:
+#             log_file.write(error + "\n")
+#             print(error)
 
-    print(f"Resultado guardado en {ruta_archivo}")
+#     print(f"Resultado guardado en {ruta_archivo}")
 
 
 # pruebasSemantico("algoritmo_loor.txt","semantico-LoorPaulina")
-pruebasSemantico("algoritmo_ruiz.txt","semantico-taizRuiz")
+#pruebasSemantico("algoritmo_ruiz.txt","semantico-taizRuiz")
