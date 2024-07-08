@@ -407,6 +407,11 @@ def p_expresiones_booleanas(p):
             if  (isinstance(valor_var1,str) and isinstance(valor_var2,str)) :
                 if  (valor_var1.startswith(":") and valor_var2.startswith(":")) :
                     pass
+                else: 
+                    error = f"Error semántico: variables no validas para comparacion "
+                    errores_semanticos.append(error)
+                    print(error)
+                    return
             elif (isinstance(valor_var1,int) and isinstance(valor_var2,int)) or (isinstance(valor_var1,float) and isinstance(valor_var2,float)):
                 pass
             else:
@@ -426,12 +431,6 @@ def p_expresiones_booleanas(p):
                     errores_semanticos.append(error)
                     print(error)
                     return
-                else:
-                    error = f"Error semántico: ambas variables son invalidas"
-                    errores_semanticos.append(error)
-                    print(error)
-                    return
-
 
 
     # #Loor Paulina
