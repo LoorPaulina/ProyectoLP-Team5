@@ -109,6 +109,8 @@ def p_valorCadena(p):
             # Tiene que ser de tipo string
             if isinstance(tabla_variables[valor], str):
                 p[0] = tabla_variables[valor]
+            elif isinstance(tabla_variables[valor], float):
+                p[0] = tabla_variables[valor]
             else:
                 error = f"Error semántico, variable {valor} no es de tipo string"
                 errores_semanticos.append(error)
@@ -196,14 +198,39 @@ def p_operadores(p):
 def p_expresionNumerica(p):
     """expresionNumerica : valorNumerico
                          | operacionAritmetica
-                         | PARENTESIS_IZ operacionAritmetica PARENTESIS_DER"""
+                         | PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+                         | VARIABLE"""
 
+    #Paulina Loor
     if p.slice[1].type == 'valorNumerico':
         p[0] = p[1]
+    elif p.slice[1].type == 'VARIABLE':
+        if p[1] not in tabla_variables:
+            print(f"Error semántico: Variable '{p[1]}' no definida")
+            errores_semanticos.append(f"Error semántico: Variable no inicializada '{p[1]}'")
+        else:
+            p[0] = p[1]
 
 
 def p_operacionAritmetica(p):
     """operacionAritmetica : expresionNumerica operadores expresionNumerica"""
+    #Paulina Loor
+    if isinstance(p[1],str) or isinstance(p[3], str):
+        for i in tabla_variables:
+            if i[0] == p[1]:
+                if not isinstance(tabla_variables[p[1]], float) and not isinstance(tabla_variables[p[1]], int): 
+                    print(f"Error semántico: '{p[1]}' no es un valor numérico")
+                    errores_semanticos.append(f"Error semántico: '{p[1]}' no es un valor numérico")
+                else:
+                    pass
+            elif i[0] == p[3]:
+                if not isinstance(tabla_variables[p[3]], float) and not isinstance(tabla_variables[p[3]], int): 
+                    print(f"Error semántico: '{p[3]}' no es un valor numérico")
+                    errores_semanticos.append(f"Error semántico: '{p[3]}' no es un valor numérico")
+                else:
+                    pass
+            else:
+                pass
 
     # if p[2] == '+':
     #     p[0] = p[1] + p[3]
@@ -235,6 +262,7 @@ def p_valores(p):
                | valor COMA valores
                | valor estructura_ifUnaLinea"""
 
+#Dafne Ruiz
 def p_booleanos(p):
     """booleanos : TRUE
                 | FALSE"""
