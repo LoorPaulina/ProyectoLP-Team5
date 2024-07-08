@@ -109,6 +109,8 @@ def p_valorCadena(p):
             # Tiene que ser de tipo string
             if isinstance(tabla_variables[valor], str):
                 p[0] = tabla_variables[valor]
+            elif isinstance(tabla_variables[valor], float):
+                p[0] = tabla_variables[valor]
             else:
                 error = f"Error semántico, variable {valor} no es de tipo string"
                 errores_semanticos.append(error)
@@ -196,14 +198,39 @@ def p_operadores(p):
 def p_expresionNumerica(p):
     """expresionNumerica : valorNumerico
                          | operacionAritmetica
-                         | PARENTESIS_IZ operacionAritmetica PARENTESIS_DER"""
+                         | PARENTESIS_IZ operacionAritmetica PARENTESIS_DER
+                         | VARIABLE"""
 
+    #Paulina Loor
     if p.slice[1].type == 'valorNumerico':
         p[0] = p[1]
+    elif p.slice[1].type == 'VARIABLE':
+        if p[1] not in tabla_variables:
+            print(f"Error semántico: Variable '{p[1]}' no definida")
+            errores_semanticos.append(f"Error semántico: Variable no inicializada '{p[1]}'")
+        else:
+            p[0] = p[1]
 
 
 def p_operacionAritmetica(p):
     """operacionAritmetica : expresionNumerica operadores expresionNumerica"""
+    #Paulina Loor
+    if isinstance(p[1],str) or isinstance(p[3], str):
+        for i in tabla_variables:
+            if i[0] == p[1]:
+                if not isinstance(tabla_variables[p[1]], float) and not isinstance(tabla_variables[p[1]], int): 
+                    print(f"Error semántico: '{p[1]}' no es un valor numérico")
+                    errores_semanticos.append(f"Error semántico: '{p[1]}' no es un valor numérico")
+                else:
+                    pass
+            elif i[0] == p[3]:
+                if not isinstance(tabla_variables[p[3]], float) and not isinstance(tabla_variables[p[3]], int): 
+                    print(f"Error semántico: '{p[3]}' no es un valor numérico")
+                    errores_semanticos.append(f"Error semántico: '{p[3]}' no es un valor numérico")
+                else:
+                    pass
+            else:
+                pass
 
     # if p[2] == '+':
     #     p[0] = p[1] + p[3]
@@ -235,6 +262,7 @@ def p_valores(p):
                | valor COMA valores
                | valor estructura_ifUnaLinea"""
 
+#Dafne Ruiz
 def p_booleanos(p):
     """booleanos : TRUE
                 | FALSE"""
@@ -379,48 +407,67 @@ def p_expresiones_booleanas(p):
                              | VARIABLE operadoresComparacion VARIABLE
                              | VARIABLE operadoresComparacion valorNumerico
                              | valorNumerico operadoresComparacion VARIABLE''' 
-    #Dafne Ruiz
+
+#Loor Paulina y Dafne Ruiz :)
     if p.slice[1].type == 'VARIABLE' and p.slice[3].type == 'VARIABLE':
-        valor1=p[1]
-        valor2=p[3]
-        if valor1 not in tabla_variables and valor2 not in tabla_variables:
-            error = f"Error semántico: Variable {valor1} no declarada.\nError semántico: Variable {valor2} no declarada"
+        if ((isinstance(p[1], str) and (p[1] not in tabla_variables)) and (
+                isinstance(p[3], str) and (p[3] not in tabla_variables))):
+            error = f"Error semántico: Variable {p[1]} no declarada.\nError semántico: Variable {p[3]} no declarada"
             errores_semanticos.append(error)
             print(error)
             return
-        elif valor1 not in tabla_variables:
-            error = f"Error semántico: Variable {valor1} no declarada."
+        elif isinstance(p[3], str) and (p[3] not in tabla_variables):
+            error = f"Error semántico: Variable {p[3]} no declarada"
             errores_semanticos.append(error)
             print(error)
             return
-        elif valor2 not in tabla_variables:
-            error = f"Error semántico: Variable {valor2} no declarada"
+        elif isinstance(p[1], str) and (p[1] not in tabla_variables):
+            error = f"Error semántico: Variable {p[1]} no declarada"
             errores_semanticos.append(error)
             print(error)
-            return
-        
-        #estan en la tabla me aseguro que sean valores permitidos 
         else:
-            valor_var1=tabla_variables[valor1]
-            valor_var2=tabla_variables[valor2]
-            #dos simbolos
-            if  (isinstance(valor_var1,str) and isinstance(valor_var2,str)) :
-                if  (valor_var1.startswith(":") and valor_var2.startswith(":")) :
-                    pass
-                else: 
-                    error = f"Error semántico: variables no validas para comparacion "
-                    errores_semanticos.append(error)
-                    print(error)
-                    return
-            elif (isinstance(valor_var1,int) and isinstance(valor_var2,int)) or (isinstance(valor_var1,float) and isinstance(valor_var2,float)):
-                pass
-            else:
-                if  (isinstance(valor_var1,str) and isinstance(valor_var2,str)) :
-                    if (valor_var1.startswith(":") and not valor_var2.startswith(":")) or (valor_var2.startswith(":") and not valor_var1.startswith(":")): 
-                        error = f"Error semántico: ambas variables deben ser de tipo simbolo"
+            for i in tabla_variables:
+                if i[0] == p[1] or i[0] == p[3]:
+                    if isinstance(tabla_variables[p[1]], str) and isinstance(tabla_variables[p[3]], str):
+                        if  (tabla_variables[p[1]].startswith(":") and tabla_variables[p[3]].startswith(":")):
+                            pass
+                        elif  tabla_variables[p[1]].startswith(":") and not tabla_variables[p[3]].startswith(":"):
+                            error = f"Error semántico: ambas variables deben ser de tipo simbolo"
+                            errores_semanticos.append(error)
+                            print(error)
+                            return
+                        elif  not tabla_variables[p[1]].startswith(":") and tabla_variables[p[3]].startswith(":"):
+                            error = f"Error semántico: ambas variables deben ser de tipo simbolo"
+                            errores_semanticos.append(error)
+                            print(error)
+                            return
+                    else:
+                        if not isinstance(tabla_variables[p[1]], int) and not isinstance(tabla_variables[p[1]], float):
+                            error = f"Error semántico: Variable {p[1]} no es un valor numérico o está intentando comparar simbolos"
+                            errores_semanticos.append(error)
+                            print(error)
+                            return
+                        elif not isinstance(tabla_variables[p[3]], int) and not isinstance(tabla_variables[p[3]], float):
+                            error = f"Error semántico: Variable {p[3]} no es un valor numérico o está intentando comparar simbolos"
+                            errores_semanticos.append(error)
+                            print(error)
+                            return
+                        else:
+                            pass
+    elif p.slice[1].type == 'VARIABLE':
+        if isinstance(p[1], str) and (p[1] not in tabla_variables):
+            error = f"Error semántico: Variable {p[1]} no declarada"
+            errores_semanticos.append(error)
+            print(error)
+        else:
+            for i in tabla_variables:
+                if i[0] == p[1]:
+                    if not isinstance(tabla_variables[p[1]], int) and not isinstance(tabla_variables[p[1]], float):
+                        error = f"Error semántico: Variable {p[1]} no es un valor numérico"
                         errores_semanticos.append(error)
                         print(error)
                         return
+<<<<<<< HEAD
                     
                 elif (isinstance(valor_var1,int) and not isinstance(valor_var2,int)) or (isinstance(valor2,int) and not isinstance(valor1,int)): 
                     error = f"Error semántico: ambas variables deben ser de tipo int"
@@ -437,6 +484,25 @@ def p_expresiones_booleanas(p):
                     errores_semanticos.append(error)
                     print(error)
                     return
+=======
+                    else:
+                        pass
+    elif p.slice[3].type == 'VARIABLE':
+        if isinstance(p[3], str) and (p[3] not in tabla_variables):
+            error = f"Error semántico: Variable {p[1]} no declarada"
+            errores_semanticos.append(error)
+            print(error)
+        else:
+            for i in tabla_variables:
+                if i[0] == p[3]:
+                    if not isinstance(tabla_variables[p[3]], int) and not isinstance(tabla_variables[p[3]], float):
+                        error = f"Error semántico: Variable {p[1]} no es un valor numérico"
+                        errores_semanticos.append(error)
+                        print(error)
+                        return
+                    else:
+                        pass
+>>>>>>> 65214ac1aa263916c799d56692b3db935589c39e
 
 
     # #Loor Paulina
@@ -668,7 +734,7 @@ def p_cuerpoClase(p):
 # # Build the parser
 sintactico = yacc.yacc()
 
-
+'''
 while True:
     try:
         s = input('ruby > ')
@@ -677,7 +743,7 @@ while True:
     if not s: continue
     result = sintactico.parse(s)
     if result != None: print(result)
-
+'''
 '''
 #por terminar
 def pruebas(algoritmo_file,log_prefix):
@@ -710,30 +776,30 @@ pruebas("algoritmo_picon.txt", "sintactico-piconDaniel")
 '''
 
 
-# def pruebasSemantico(algoritmo_file, log_prefix):
-#     archivo = f"{ruta_algoritmos}/{algoritmo_file}"
+def pruebasSemantico(algoritmo_file, log_prefix):
+    archivo = f"{ruta_algoritmos}/{algoritmo_file}"
 
-#     with open(archivo, "r") as file:
-#         for linea in file:
-#             if linea.strip():
-#                 sintactico.parse(linea)
-#     file.close()
+    with open(archivo, "r") as file:
+        for linea in file:
+            if linea.strip():
+                sintactico.parse(linea)
+    file.close()
 
 
-#     #sintactico.parse(data)
+    #sintactico.parse(data)
     
-#     ahora = datetime.datetime.now()
-#     fecha_hora = ahora.strftime("%Y%m%d-%H%M%S")
-#     nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"
+    ahora = datetime.datetime.now()
+    fecha_hora = ahora.strftime("%Y%m%d-%H%M%S")
+    nombre_archivo = f"{log_prefix}-{fecha_hora}.txt"
 
-#     ruta_archivo = f"{ruta_carpeta}/{nombre_archivo}"
-#     with open(ruta_archivo, "a+") as log_file:
-#         for error in errores_semanticos:
-#             log_file.write(error + "\n")
-#             print(error)
+    ruta_archivo = f"{ruta_carpeta}/{nombre_archivo}"
+    with open(ruta_archivo, "a+") as log_file:
+        for error in errores_semanticos:
+            log_file.write(error + "\n")
+            print(error)
 
-#     print(f"Resultado guardado en {ruta_archivo}")
+    print(f"Resultado guardado en {ruta_archivo}")
 
 
-# pruebasSemantico("algoritmo_loor.txt","semantico-LoorPaulina")
-#pruebasSemantico("algoritmo_ruiz.txt","semantico-taizRuiz")
+#pruebasSemantico("algoritmo_loor.txt","semantico-LoorPaulina")
+pruebasSemantico("algoritmo_ruiz.txt","semantico-taizRuiz")
