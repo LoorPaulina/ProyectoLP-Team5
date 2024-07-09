@@ -1,6 +1,1 @@
-class Persona if
-a=9
-b=8
-a>b
-b="hola"
-a>b
+a= 1@

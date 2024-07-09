@@ -626,12 +626,12 @@ def p_cuerpoClase(p):
 # Error rule for syntax errors
 def p_error(p):
     if p:
-        errors.append(p)
-        print("Error de sintaxis en token:", p.type, "En : ", p.value)
+        errors.append(f"Syntax error at line {p.lineno}: Unexpected token '{p.value}'")
+        print(f"Syntax error at line {p.lineno}: Unexpected token '{p.value}'")
         sintactico.errok()
     else:
-        errors.append(p)
-        print("Syntax error at EOF")
+        errors.append(f"Syntax error at EOF")
+        print(f"Syntax error at EOF")
 
 
 # # Build the parser
@@ -712,12 +712,16 @@ def pruebasSemanticoInterfaz(archivo):
     
     nombre_archivo = "code_validation.txt"
 
+    #vaciar txt de validacion al volver a presionar validar para q no se manden errores anteriores:)
+    #agregar tokens no reconocidos a partir del analisis lexico, ejemplo si se prueba a=1@ sale Illegal character '@', eso se lo muestra en el cuadro de la validacion
+
     with open(nombre_archivo, "w") as log_file:
         for error in errores_semanticos:
             log_file.write(error + "\n")
             print(error)
+    with open(nombre_archivo, "a+") as log_file:
         for error in errors:
-            log_file.write(f"Error de sintaxis en token: {error} \n")
+            log_file.write(f"{error} \n")
             print (error)
 
 

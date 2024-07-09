@@ -3,6 +3,7 @@ import ply.lex as lex
 import datetime
 ruta_carpeta="logs"
 ruta_algoritmos="algoritmos"
+noReconocidos=[]
 #palabras reservadas
 reserved = {
     #Dafne Ruiz
