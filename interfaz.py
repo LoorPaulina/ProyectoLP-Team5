@@ -1,12 +1,32 @@
 import tkinter as tk
+import sintactico as s
 from PIL import Image,ImageTk
 def validar():
-    # Función para validar
+    save_to_file()
+    s.pruebasSemanticoInterfaz("code_output.txt")
+    load_from_file()
     pass
 
+def load_from_file():
+    try:
+        with open("code_validation.txt", "r") as file:
+            file_content = file.read()
+        text_code1.delete("1.0", tk.END)
+        text_code1.insert(tk.END, file_content)
+    except FileNotFoundError:
+        text_code1.delete("1.0", tk.END)
+        text_code1.insert(tk.END, "No se encontró el archivo 'code_validation.txt'.")
+
+
 def clean():
-    # Función para limpiar
+    text_code.delete("1.0", tk.END)
+    text_code1.delete("1.0", tk.END)
     pass
+
+def save_to_file():
+    code_content = text_code.get("1.0", tk.END)
+    with open("code_output.txt", "w") as file:
+        file.write(code_content)
 
 # Crear la ventana principal
 root = tk.Tk()

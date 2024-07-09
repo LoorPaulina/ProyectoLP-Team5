@@ -1,0 +1,9 @@
+Error semántico, variable d no es de tipo string
+Error semántico: ambas variables deben ser de tipo int
+Error semántico: ambas variables deben ser de tipo int
+Error de sintaxis en token: LexToken(IF,'if',1,14) 
+Error de sintaxis en token: None 
+Error de sintaxis en token: LexToken(IF,'if',2,14) 
+Error de sintaxis en token: None 
+Error de sintaxis en token: LexToken(IF,'if',7,14) 
+Error de sintaxis en token: None 

@@ -624,14 +624,14 @@ def p_cuerpoClase(p):
 
 #Dafne Ruiz
 # Error rule for syntax errors
-# def p_error(p):
-#     if p:
-#         errors.append(p)
-#         print("Error de sintaxis en token:", p.type, "En : ", p.value)
-#         sintactico.errok()
-#     else:
-#         errors.append(p)
-#         print("Syntax error at EOF")
+def p_error(p):
+    if p:
+        errors.append(p)
+        print("Error de sintaxis en token:", p.type, "En : ", p.value)
+        sintactico.errok()
+    else:
+        errors.append(p)
+        print("Syntax error at EOF")
 
 
 # # Build the parser
@@ -647,8 +647,7 @@ sintactico = yacc.yacc()
 #     result = sintactico.parse(s)
 #     if result != None: print(result)
 
-'''
-#por terminar
+
 def pruebas(algoritmo_file,log_prefix):
     parser = yacc.yacc()
     archivo = f"{ruta_algoritmos}/{algoritmo_file}"
@@ -675,8 +674,8 @@ def pruebas(algoritmo_file,log_prefix):
     
 #pruebas("algoritmo_ruiz.txt","sintactico-taizRuiz")
 #pruebas("algoritmo_loor.txt","sintactico-LoorPaulina")
-pruebas("algoritmo_picon.txt", "sintactico-piconDaniel")
-'''
+#pruebas("algoritmo_picon.txt", "sintactico-piconDaniel")
+
 
 
 def pruebasSemantico(algoritmo_file, log_prefix):
@@ -687,9 +686,6 @@ def pruebasSemantico(algoritmo_file, log_prefix):
             if linea.strip():
                 sintactico.parse(linea)
     file.close()
-
-
-    #sintactico.parse(data)
     
     ahora = datetime.datetime.now()
     fecha_hora = ahora.strftime("%Y%m%d-%H%M%S")
@@ -704,5 +700,28 @@ def pruebasSemantico(algoritmo_file, log_prefix):
     print(f"Resultado guardado en {ruta_archivo}")
 
 
+def pruebasSemanticoInterfaz(archivo):
+    sintactico.errors = errors
+    with open(archivo, "r") as file:
+
+        for linea in file:
+            if linea.strip():
+                sintactico.parse(linea)
+    file.close()
+    
+    
+    nombre_archivo = "code_validation.txt"
+
+    with open(nombre_archivo, "w") as log_file:
+        for error in errores_semanticos:
+            log_file.write(error + "\n")
+            print(error)
+        for error in errors:
+            log_file.write(f"Error de sintaxis en token: {error} \n")
+            print (error)
+
+
+
+
 #pruebasSemantico("algoritmo_loor.txt","semantico-LoorPaulina")
-pruebasSemantico("algoritmo_ruiz.txt","semantico-taizRuiz")
+#pruebasSemantico("algoritmo_ruiz.txt","semantico-taizRuiz")
