@@ -519,18 +519,18 @@ def p_condicionIf(p):
 
 
 def p_estructura_if(p):
-    '''estructura_if : IF condicionIf declaracion ELSE declaracion END
-                    | IF condicionIf declaracion estructura_secundaria_if'''
+    '''estructura_if : IF condicionIf declaraciones ELSE declaraciones END
+                    | IF condicionIf declaraciones estructura_secundaria_if'''
 
 
 def p_estructura_ifUnaLinea(p):
-    '''estructura_ifUnaLinea : IF condicionIf declaracion END'''
+    '''estructura_ifUnaLinea : IF condicionIf declaraciones END'''
 
 
 
 def p_estructura_secundaria_if(p):
-    '''estructura_secundaria_if : ELSEIF condicionIf declaracion ELSE declaracion END
-                                | ELSEIF condicionIf declaracion estructura_secundaria_if'''
+    '''estructura_secundaria_if : ELSEIF condicionIf declaraciones ELSE declaraciones END
+                                | ELSEIF condicionIf declaraciones estructura_secundaria_if'''
 
 
 def p_declaracion(p):
@@ -545,6 +545,10 @@ def p_declaracion(p):
                     | asignacion_clase
                     | sentencia_while
                     | estructura_ifUnaLinea'''
+
+def p_declaraciones(p):
+    '''declaraciones : declaracion 
+                    | declaracion declaraciones'''
 
 
 def p_sentencia_while(p):
@@ -653,7 +657,8 @@ def pruebas(algoritmo_file,log_prefix):
         data = file.read()
 
     parser.errors = errors
-    parser.parse(data)
+    cod= parser.parse(data)
+    print(cod)
 
     ahora = datetime.datetime.now()
     fecha_hora = ahora.strftime("%Y%m%d-%H%M%S") 
