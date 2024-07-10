@@ -1,1 +1,3 @@
-Error semántico: Variable b no declarada
+Syntax error at line 1: Unexpected token 'a' 
+Syntax error at line 1: Unexpected token '=' 
+Syntax error at line 1: Unexpected token '9' 

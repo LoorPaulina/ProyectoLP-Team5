@@ -18,6 +18,7 @@ def p_cuerpo(p):
               | expresiones_booleanas
               | solicitudDatosTeclado
               | hashes
+              | estructura_ifUnaLinea
               | estructura_if
               | funciones
               | funcionesEstructuras
@@ -529,7 +530,7 @@ def p_estructura_if(p):
 
 
 def p_estructura_ifUnaLinea(p):
-    '''estructura_ifUnaLinea : IF condicionIf'''
+    '''estructura_ifUnaLinea : IF condicionIf declaracion END'''
 
 
 def p_estructura_secundaria_if(p):
@@ -699,33 +700,28 @@ def pruebasSemantico(algoritmo_file, log_prefix):
 
     print(f"Resultado guardado en {ruta_archivo}")
 
-def pruebasSemanticoInterfaz(archivo):
+def pruebasSemanticoInterfaz(codeAnalisis):
     tabla_variables.clear()
     errores_semanticos.clear()
     errors.clear()
-    
-    with open(archivo, "r") as file:
-
-        for linea in file:
-            if linea.strip():
-                sintactico.parse(linea)
-    file.close()
-    
-    
+    sintactico.parse(codeAnalisis)
     nombre_archivo = "code_validation.txt"
 
     #vaciar txt de validacion al volver a presionar validar para q no se manden errores anteriores:)
     #agregar tokens no reconocidos a partir del analisis lexico, ejemplo si se prueba a=1@ sale Illegal character '@', eso se lo muestra en el cuadro de la validacion
-    print(len(errores_semanticos))
-    print(len(errors))
-    with open(nombre_archivo, "w") as log_file:
-        for error in errores_semanticos:
-            log_file.write(error + "\n")
-            print(error)
-    with open(nombre_archivo, "a+") as log_file:
-        for error in errors:
-            log_file.write(f"{error} \n")
-            print (error)
+    if len(errors)==0 and len(errores_semanticos)==0:
+        with open(nombre_archivo, "w") as log_file:
+            log_file.write("Código correcto :)" + "\n")
+    else:
+        with open(nombre_archivo, "w") as log_file:
+            for error in errores_semanticos:
+                log_file.write(error + "\n")
+                print(error)
+        with open(nombre_archivo, "a+") as log_file:
+            for error in errors:
+                log_file.write(f"{error} \n")
+                print (error)
+
 
     
 

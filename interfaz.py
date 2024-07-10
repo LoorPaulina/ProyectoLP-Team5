@@ -8,7 +8,6 @@ def validar():
     save_to_file()
     # text_code1.delete("1.0", tk.END)
     # #manda output al parser
-    s.pruebasSemanticoInterfaz("code_output.txt")
     # #parser guarda en validation y lo carga en la pantalla 
     load_from_file()
         
@@ -16,6 +15,12 @@ def validar():
 
 
 def load_from_file():
+    stringAnalisis=""
+    codigo=open("code_output.txt","r")
+    for linea in codigo.readlines():
+        stringAnalisis = stringAnalisis + " "+ linea.strip()
+    s.pruebasSemanticoInterfaz(stringAnalisis)
+
     try:
         with open("code_validation.txt", "r") as file:
             file_content = file.read()

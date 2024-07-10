@@ -1,2 +1,4 @@
-a=5
-a==b
+if 3>2
+puts 3
+end
+a=9
