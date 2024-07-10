@@ -1,2 +1,1 @@
- if 5>3 puts 4 end
- a=1@
+ a <=> b

@@ -15,23 +15,11 @@ reserved = {
     "class":"CLASS",
     "module":"MODULE",
     "return":"RETURN",
-    "nil":"NIL",
-    "super":"SUPER",
     "self":"SELF",
     "begin":"BEGIN",
-    "rescue":"RESCUE",
-    "ensure":"ENSURE",
-    "retry":"RETRY",
-    "raise":"RAISE",
     "and":"AND",
     "or":"OR",
     "not":"NOT",
-    "break":"BREAK",
-    "next":"NEXT",
-    "redo":"REDO",
-    "alias":"ALIAS",
-    "defined?":"DEFINED_QUESTION",
-    "yield":"YIELD",
     #Loor Paulina
     "elseif": "ELSEIF",
     "until":"UNTIL",
@@ -81,6 +69,7 @@ tokens=[
     'COMA',
     'O_SIGNO',
     'Y_SIGNO',
+    'NAVE',
     'MAYOR_QUE',
     'MENOR_QUE',
     'MAYOR_IGUAL_QUE',
@@ -116,6 +105,7 @@ tokens=[
 #Paulina Loor
 t_TRES_PUNTOS =r'\.\.\.'
 t_PUNTO =r'\.'
+t_NAVE =r'<=>'
 
 #flotantes 
 def t_FLOTANTE(t):

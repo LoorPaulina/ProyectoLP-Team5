@@ -1,1 +1,2 @@
-Illegal character '@'
+Error semántico: Variable a no declarada.
+Error semántico: Variable b no declarada

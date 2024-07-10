@@ -26,7 +26,6 @@ def p_cuerpo(p):
               | funcionesEstructuras
               | array
               | each_array
-              | comentarios
               | each_hash
               | sentencia_while
               | sentencia_case
@@ -371,16 +370,6 @@ def p_vacio(p):
 
 
 #Paulina Loor
-#corregir espacios
-def p_rangos(p):
-    '''rangos : PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER'''
-    # p[0] = (p[2], p[4])
-
-
-def p_comentarios(p):
-    '''comentarios : COMENTARIO 
-                    | COMENTARIO_MULTI'''
-
 
 def p_impresion_vacia(p):
     '''impresion_vacia : PRINT PARENTESIS_IZ PARENTESIS_DER
@@ -391,6 +380,7 @@ def p_impresion_vacia(p):
 
 def p_operadoresComparacion(p):
     '''operadoresComparacion : IGUAL_DOBLEP
+                             | NAVE
                              | DIFERENTE
                              | MAYOR_QUE
                              | MENOR_QUE
@@ -399,17 +389,16 @@ def p_operadoresComparacion(p):
 
 
 def p_funcionesComparacion(p):
-    '''funcionesComparacion : AND
-                            | OR'''
+    '''funcionesComparacion : Y_SIGNO
+                            | O_SIGNO'''
 
 
 def p_expresiones_booleanas(p):
     '''expresiones_booleanas : valorSimbolo operadoresComparacion valorSimbolo 
                              | valorNumerico operadoresComparacion valorNumerico
-                             | rangos TRIPLE_IGUAL ENTERO
                              | VARIABLE operadoresComparacion VARIABLE
                              | VARIABLE operadoresComparacion valorNumerico
-                             | valorNumerico operadoresComparacion VARIABLE''' 
+                             | valorNumerico operadoresComparacion VARIABLE  ''' 
 
     #Dafne Ruiz y Loor Paulina
     if p.slice[1].type == 'VARIABLE' and p.slice[3].type == 'VARIABLE':
@@ -523,7 +512,9 @@ def p_argumentos(p):
 #Estructuras de Control
 def p_condicionIf(p):
     '''condicionIf : expresiones_booleanas
-                | expresiones_booleanas funcionesComparacion expresiones_booleanas'''
+                | EXCLAMACION_BAJO PARENTESIS_IZ expresiones_booleanas PARENTESIS_DER funcionesComparacion condicionIf
+                | expresiones_booleanas funcionesComparacion condicionIf
+                | EXCLAMACION_BAJO PARENTESIS_IZ expresiones_booleanas PARENTESIS_DER'''
 
 
 def p_estructura_if(p):
@@ -531,12 +522,9 @@ def p_estructura_if(p):
                     | IF condicionIf declaracion estructura_secundaria_if'''
 
 
-def p_estructura_ifUnaLinea(p, value=True):
+def p_estructura_ifUnaLinea(p):
     '''estructura_ifUnaLinea : IF condicionIf declaracion END'''
 
-    globalFound=True
-    print(globalFound)
-    print(value)
 
 
 def p_estructura_secundaria_if(p):
@@ -707,7 +695,7 @@ def pruebasSemantico(algoritmo_file, log_prefix):
     print(f"Resultado guardado en {ruta_archivo}")
 
 def pruebasSemanticoInterfaz(codeAnalisis):
-    tabla_variables.clear()
+    #tabla_variables.clear()
     errores_semanticos.clear()
     errors.clear()
     sintactico.parse(codeAnalisis)

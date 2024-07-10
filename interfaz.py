@@ -37,6 +37,7 @@ def show_help():
 
 def load_from_file():
     l.noReconocidos.clear()
+    s.tabla_variables.clear()
     stringAnalisis=""
     codigo=open("code_output.txt","r")
     for linea in codigo.readlines():
