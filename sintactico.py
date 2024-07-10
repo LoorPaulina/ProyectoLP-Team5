@@ -1,5 +1,6 @@
 import ply.yacc as yacc
 from lexico import tokens
+import lexico as l
 import datetime
 
 tabla_variables = {}
@@ -7,6 +8,7 @@ errors = []
 errores_semanticos = []
 ruta_carpeta = "logs"
 ruta_algoritmos = "algoritmos"
+globalFound=False
 
 
 def p_cuerpo(p):
@@ -529,8 +531,12 @@ def p_estructura_if(p):
                     | IF condicionIf declaracion estructura_secundaria_if'''
 
 
-def p_estructura_ifUnaLinea(p):
+def p_estructura_ifUnaLinea(p, value=True):
     '''estructura_ifUnaLinea : IF condicionIf declaracion END'''
+
+    globalFound=True
+    print(globalFound)
+    print(value)
 
 
 def p_estructura_secundaria_if(p):
@@ -709,11 +715,15 @@ def pruebasSemanticoInterfaz(codeAnalisis):
 
     #vaciar txt de validacion al volver a presionar validar para q no se manden errores anteriores:)
     #agregar tokens no reconocidos a partir del analisis lexico, ejemplo si se prueba a=1@ sale Illegal character '@', eso se lo muestra en el cuadro de la validacion
-    if len(errors)==0 and len(errores_semanticos)==0:
+    if len(errors)==0 and len(errores_semanticos)==0 and len(l.noReconocidos)==0:
         with open(nombre_archivo, "w") as log_file:
             log_file.write("Código correcto :)" + "\n")
     else:
         with open(nombre_archivo, "w") as log_file:
+            for error in l.noReconocidos:
+                log_file.write(error + "\n")
+                print(error)
+        with open(nombre_archivo, "a+") as log_file:
             for error in errores_semanticos:
                 log_file.write(error + "\n")
                 print(error)

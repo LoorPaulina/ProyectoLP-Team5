@@ -217,19 +217,21 @@ def t_newline(t):
 # Manejar errores
 def t_error(t):
     print(f"Illegal character '{t.value[0]}'")
+    noReconocidos.append(f"Illegal character '{t.value[0]}'")
     t.lexer.skip(1)
 
 lexer = lex.lex()
 
-lexer.input('''$global_var = "Soy una variable global" ''')
+#lexer.input('''$global_var = "Soy una variable global" ''')
 
-
+'''
 # Tokenize
 while True:
     tok = lexer.token()
     if not tok:
         break  # No more input
     print(tok)
+'''
 
 def log_function(lexer_instance, algoritmo_file, log_prefix):
     string = ""
