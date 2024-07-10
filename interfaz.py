@@ -1,7 +1,7 @@
 import tkinter as tk
 import sintactico as s
-import lexico as l
 from lexico import lexer
+import lexico as l
 from PIL import Image,ImageTk
 
 def validar():
@@ -36,8 +36,10 @@ def show_help():
     help_label_2 = tk.Label(help_window, text="Ejemplo: \n a=3 \n\n if a>3 \n puts 5 \n end", padx=20, pady=20)
 
 def load_from_file():
-    l.noReconocidos.clear()
     s.tabla_variables.clear()
+    s.errores_semanticos.clear()
+    l.noReconocidos.clear()
+    s.errors.clear()
     stringAnalisis=""
     codigo=open("code_output.txt","r")
     for linea in codigo.readlines():
@@ -51,7 +53,6 @@ def load_from_file():
     
     file=open("code_output.txt","r")
     for linea in file.readlines():
-        print(linea)
         lexer.input(linea)
         s.pruebasSemanticoInterfaz(linea)
 

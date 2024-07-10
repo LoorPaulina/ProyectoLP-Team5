@@ -374,7 +374,8 @@ def p_vacio(p):
 def p_impresion_vacia(p):
     '''impresion_vacia : PRINT PARENTESIS_IZ PARENTESIS_DER
                         | PUTS PARENTESIS_IZ PARENTESIS_DER
-                        | PUTS'''
+                        | PUTS
+                        | PRINTF PARENTESIS_IZ PARENTESIS_DER'''
     print("")
 
 
@@ -696,8 +697,6 @@ def pruebasSemantico(algoritmo_file, log_prefix):
 
 def pruebasSemanticoInterfaz(codeAnalisis):
     #tabla_variables.clear()
-    errores_semanticos.clear()
-    errors.clear()
     sintactico.parse(codeAnalisis)
     nombre_archivo = "code_validation.txt"
 

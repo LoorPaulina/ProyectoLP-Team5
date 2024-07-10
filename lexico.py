@@ -21,7 +21,7 @@ reserved = {
     "or":"OR",
     "not":"NOT",
     #Loor Paulina
-    "elseif": "ELSEIF",
+    "elsif": "ELSEIF",
     "until":"UNTIL",
     "for": "FOR",
     "in": "IN",
