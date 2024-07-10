@@ -1,5 +1,7 @@
 import tkinter as tk
 import sintactico as s
+import lexico as l
+from lexico import lexer
 from PIL import Image,ImageTk
 
 def validar():
@@ -8,14 +10,51 @@ def validar():
     save_to_file()
     # text_code1.delete("1.0", tk.END)
     # #manda output al parser
-    s.pruebasSemanticoInterfaz("code_output.txt")
     # #parser guarda en validation y lo carga en la pantalla 
     load_from_file()
         
     pass
 
+def show_help():
+    help_window = tk.Toplevel(root)
+    help_window.title("Help")
+    help_window.geometry("700x600")
+    help_label = tk.Label(help_window, text="Para validar, separar las declaraciones con saltos de línea.", padx=20, pady=20)
+    help_label.pack()
+    help_label_3 = tk.Label(help_window, text="Ejemplo", padx=20, pady=20)
+    help_label_3.pack()
+
+    #ayuda
+    imageHelp=Image.open("help.PNG")
+    imageHelp=imageHelp.resize((700,400),Image.Resampling.LANCZOS)
+    photoHelp = ImageTk.PhotoImage(imageHelp)
+
+
+    label_help=tk.Label(help_window,image=photoHelp,bg="#1A1A1A")
+    label_help.pack(side=tk.LEFT, padx=10, pady=10)
+    help_label_2.pack()
+    help_label_2 = tk.Label(help_window, text="Ejemplo: \n a=3 \n\n if a>3 \n puts 5 \n end", padx=20, pady=20)
 
 def load_from_file():
+    l.noReconocidos.clear()
+    s.tabla_variables.clear()
+    stringAnalisis=""
+    codigo=open("code_output.txt","r")
+    for linea in codigo.readlines():
+        if len(linea.strip()) == 0:
+            stringAnalisis = stringAnalisis + "\n"
+        else:
+            stringAnalisis = stringAnalisis + " "+ linea.strip()
+          
+    with open("code_output.txt", "w") as file:
+        file.write(stringAnalisis)
+    
+    file=open("code_output.txt","r")
+    for linea in file.readlines():
+        print(linea)
+        lexer.input(linea)
+        s.pruebasSemanticoInterfaz(linea)
+
     try:
         with open("code_validation.txt", "r") as file:
             file_content = file.read()
@@ -26,7 +65,6 @@ def load_from_file():
     except FileNotFoundError:
         text_code1.delete("1.0", tk.END)
         text_code1.insert(tk.END, "No se encontró el archivo 'code_validation.txt'.")
-
 
 def clean():
     text_code.delete("1.0", tk.END)
@@ -52,9 +90,9 @@ image=Image.open("logo.png")
 image=image.resize((60,60),Image.Resampling.LANCZOS)
 photo = ImageTk.PhotoImage(image)
 
+
 label_img=tk.Label(navbar,image=photo,bg="#1A1A1A")
 label_img.pack(side=tk.LEFT, padx=10, pady=10)
-
 
 # Etiqueta en la barra de navegación
 label_navbar = tk.Label(navbar, text="RubyAnalyzer", fg="white", font=("Arial", 18, "bold"),bg="#1A1A1A") 
@@ -100,12 +138,24 @@ button.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
 container = tk.Frame(button, bg="#1A1B26")
 container.pack(expand=True)
 
-
 # Crear los botones en la barra de botones
 btn_validar = tk.Button(container, text="Validate", command=validar, bg="#C630FB", fg="white", width=20,height=2 )
 btn_validar.pack(side=tk.LEFT, padx=10, pady=5)
 
 btn_clean = tk.Button(container, text="Clean", command=clean, bg="#C630FB", fg="white", width=20, height=2)
 btn_clean.pack(side=tk.LEFT, padx=10, pady=5)
+
+recuadro3 = tk.Frame(frame_recuadros, bg="#1A1B26", padx=10, pady=10, width=40, height=200)
+recuadro3.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
+
+title3 = tk.LabelFrame(recuadro3, text="Instructions", bg="#C630FB", fg="white", padx=10, pady=10, width=250, height=40)
+title3.pack(fill=tk.BOTH, expand=True)
+
+instruction_label = tk.Label(title3, text="Para validar, separar las declaraciones con saltos de línea.", bg="#1A1B26", fg="white", font=("Arial", 14))
+instruction_label.pack(fill=tk.BOTH, expand=True)
+
+btn_help = tk.Button(navbar, text="Help", command=show_help, bg="#C630FB", fg="white", width=10, height=2)
+btn_help.pack(side=tk.RIGHT, padx=10, pady=5)
 # Ejecutar el bucle principal de la aplicación
 root.mainloop()
+

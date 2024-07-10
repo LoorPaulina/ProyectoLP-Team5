@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 Error semántico: Variable no inicializada 'var'
+=======
+Error semántico: Variable a no declarada.
+Error semántico: Variable b no declarada
+>>>>>>> f376d593ce4fd6b5b275ad81cd134c978c4bae57

@@ -1,5 +1,6 @@
 import ply.yacc as yacc
 from lexico import tokens
+import lexico as l
 import datetime
 
 tabla_variables = {}
@@ -7,6 +8,7 @@ errors = []
 errores_semanticos = []
 ruta_carpeta = "logs"
 ruta_algoritmos = "algoritmos"
+globalFound=False
 
 
 def p_cuerpo(p):
@@ -18,12 +20,12 @@ def p_cuerpo(p):
               | expresiones_booleanas
               | solicitudDatosTeclado
               | hashes
+              | estructura_ifUnaLinea
               | estructura_if
               | funciones
               | funcionesEstructuras
               | array
               | each_array
-              | comentarios
               | each_hash
               | sentencia_while
               | sentencia_case
@@ -368,16 +370,6 @@ def p_vacio(p):
 
 
 #Paulina Loor
-#corregir espacios
-def p_rangos(p):
-    '''rangos : PARENTESIS_IZ soloEnteros TRES_PUNTOS soloEnteros PARENTESIS_DER'''
-    # p[0] = (p[2], p[4])
-
-
-def p_comentarios(p):
-    '''comentarios : COMENTARIO 
-                    | COMENTARIO_MULTI'''
-
 
 def p_impresion_vacia(p):
     '''impresion_vacia : PRINT PARENTESIS_IZ PARENTESIS_DER
@@ -388,6 +380,7 @@ def p_impresion_vacia(p):
 
 def p_operadoresComparacion(p):
     '''operadoresComparacion : IGUAL_DOBLEP
+                             | NAVE
                              | DIFERENTE
                              | MAYOR_QUE
                              | MENOR_QUE
@@ -396,17 +389,16 @@ def p_operadoresComparacion(p):
 
 
 def p_funcionesComparacion(p):
-    '''funcionesComparacion : AND
-                            | OR'''
+    '''funcionesComparacion : Y_SIGNO
+                            | O_SIGNO'''
 
 
 def p_expresiones_booleanas(p):
     '''expresiones_booleanas : valorSimbolo operadoresComparacion valorSimbolo 
                              | valorNumerico operadoresComparacion valorNumerico
-                             | rangos TRIPLE_IGUAL ENTERO
                              | VARIABLE operadoresComparacion VARIABLE
                              | VARIABLE operadoresComparacion valorNumerico
-                             | valorNumerico operadoresComparacion VARIABLE''' 
+                             | valorNumerico operadoresComparacion VARIABLE  ''' 
 
     #Dafne Ruiz y Loor Paulina
     if p.slice[1].type == 'VARIABLE' and p.slice[3].type == 'VARIABLE':
@@ -520,7 +512,9 @@ def p_argumentos(p):
 #Estructuras de Control
 def p_condicionIf(p):
     '''condicionIf : expresiones_booleanas
-                | expresiones_booleanas funcionesComparacion expresiones_booleanas'''
+                | EXCLAMACION_BAJO PARENTESIS_IZ expresiones_booleanas PARENTESIS_DER funcionesComparacion condicionIf
+                | expresiones_booleanas funcionesComparacion condicionIf
+                | EXCLAMACION_BAJO PARENTESIS_IZ expresiones_booleanas PARENTESIS_DER'''
 
 
 def p_estructura_if(p):
@@ -529,7 +523,8 @@ def p_estructura_if(p):
 
 
 def p_estructura_ifUnaLinea(p):
-    '''estructura_ifUnaLinea : IF condicionIf'''
+    '''estructura_ifUnaLinea : IF condicionIf declaracion END'''
+
 
 
 def p_estructura_secundaria_if(p):
@@ -699,33 +694,32 @@ def pruebasSemantico(algoritmo_file, log_prefix):
 
     print(f"Resultado guardado en {ruta_archivo}")
 
-def pruebasSemanticoInterfaz(archivo):
-    tabla_variables.clear()
+def pruebasSemanticoInterfaz(codeAnalisis):
+    #tabla_variables.clear()
     errores_semanticos.clear()
     errors.clear()
-    
-    with open(archivo, "r") as file:
-
-        for linea in file:
-            if linea.strip():
-                sintactico.parse(linea)
-    file.close()
-    
-    
+    sintactico.parse(codeAnalisis)
     nombre_archivo = "code_validation.txt"
 
     #vaciar txt de validacion al volver a presionar validar para q no se manden errores anteriores:)
     #agregar tokens no reconocidos a partir del analisis lexico, ejemplo si se prueba a=1@ sale Illegal character '@', eso se lo muestra en el cuadro de la validacion
-    print(len(errores_semanticos))
-    print(len(errors))
-    with open(nombre_archivo, "w") as log_file:
-        for error in errores_semanticos:
-            log_file.write(error + "\n")
-            print(error)
-    with open(nombre_archivo, "a+") as log_file:
-        for error in errors:
-            log_file.write(f"{error} \n")
-            print (error)
+    if len(errors)==0 and len(errores_semanticos)==0 and len(l.noReconocidos)==0:
+        with open(nombre_archivo, "w") as log_file:
+            log_file.write("Código correcto :)" + "\n")
+    else:
+        with open(nombre_archivo, "w") as log_file:
+            for error in l.noReconocidos:
+                log_file.write(error + "\n")
+                print(error)
+        with open(nombre_archivo, "a+") as log_file:
+            for error in errores_semanticos:
+                log_file.write(error + "\n")
+                print(error)
+        with open(nombre_archivo, "a+") as log_file:
+            for error in errors:
+                log_file.write(f"{error} \n")
+                print (error)
+
 
     
 

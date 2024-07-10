@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 var=var
+=======
+ a <=> b
+>>>>>>> f376d593ce4fd6b5b275ad81cd134c978c4bae57
