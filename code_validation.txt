@@ -1,0 +1,1 @@
+Error semántico: Variable b no declarada

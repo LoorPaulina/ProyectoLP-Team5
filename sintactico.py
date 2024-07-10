@@ -699,9 +699,11 @@ def pruebasSemantico(algoritmo_file, log_prefix):
 
     print(f"Resultado guardado en {ruta_archivo}")
 
-
 def pruebasSemanticoInterfaz(archivo):
-    sintactico.errors = errors
+    tabla_variables.clear()
+    errores_semanticos.clear()
+    errors.clear()
+    
     with open(archivo, "r") as file:
 
         for linea in file:
@@ -714,7 +716,8 @@ def pruebasSemanticoInterfaz(archivo):
 
     #vaciar txt de validacion al volver a presionar validar para q no se manden errores anteriores:)
     #agregar tokens no reconocidos a partir del analisis lexico, ejemplo si se prueba a=1@ sale Illegal character '@', eso se lo muestra en el cuadro de la validacion
-
+    print(len(errores_semanticos))
+    print(len(errors))
     with open(nombre_archivo, "w") as log_file:
         for error in errores_semanticos:
             log_file.write(error + "\n")
@@ -723,6 +726,8 @@ def pruebasSemanticoInterfaz(archivo):
         for error in errors:
             log_file.write(f"{error} \n")
             print (error)
+
+    
 
 
 

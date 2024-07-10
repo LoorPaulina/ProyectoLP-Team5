@@ -1,11 +1,19 @@
 import tkinter as tk
 import sintactico as s
 from PIL import Image,ImageTk
+
 def validar():
+    #tomar lo del la textbox 
+    #guarda en code_output
     save_to_file()
+    # text_code1.delete("1.0", tk.END)
+    # #manda output al parser
     s.pruebasSemanticoInterfaz("code_output.txt")
+    # #parser guarda en validation y lo carga en la pantalla 
     load_from_file()
+        
     pass
+
 
 def load_from_file():
     try:
@@ -13,6 +21,8 @@ def load_from_file():
             file_content = file.read()
         text_code1.delete("1.0", tk.END)
         text_code1.insert(tk.END, file_content)
+
+        
     except FileNotFoundError:
         text_code1.delete("1.0", tk.END)
         text_code1.insert(tk.END, "No se encontró el archivo 'code_validation.txt'.")
