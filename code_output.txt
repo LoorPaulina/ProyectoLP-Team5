@@ -1,1 +1,1 @@
- if 7>3 puts 5 else puts 6 end a=9 b=9 a<b
+ hash = {A => 1, B => 2}
