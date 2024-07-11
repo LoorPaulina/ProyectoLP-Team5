@@ -35,6 +35,7 @@ def p_cuerpo(p):
               | each_array
               | each_hash
               | sentencia_while
+              | sentencia_while_bool
               | sentencia_case
               | sentencias_when
               | sentencia_until
@@ -270,7 +271,8 @@ def p_valor_print(p):
 def p_valores(p):
     """valores : valor
                | valor COMA valores
-               | valor estructura_ifUnaLinea"""
+               | valor estructura_ifUnaLinea
+               | valor sentencia_while_bool"""
 
 #Dafne Ruiz
 def p_booleanos(p):
@@ -554,34 +556,44 @@ def p_declaracion(p):
                     | hashes
                     | estructura_if
                     | asignacion_clase
-                    | sentencia_while
                     | estructura_ifUnaLinea
-                    | funciones'''
+                    | sentencia_while
+                    | sentencia_while_bool'''
 
 def p_declaraciones(p):
     '''declaraciones : declaracion 
                     | declaracion declaraciones'''
 
-
-def p_sentencia_while(p):
-    '''sentencia_while : WHILE expresiones_booleanas DO sentencia_while END
-                      | WHILE expresiones_booleanas DO declaracion END '''
+def p_sentencia_while_bool(p):
+    '''sentencia_while_bool : WHILE declaracion declaraciones END
+                            | WHILE VARIABLE declaraciones END '''
     if not isinstance(p[2], bool):
         print(f"Error: La condición del bucle while debe ser booleana, pero se encontró {type(p[2])}")
     else:
         pass
 
-def p_sentencia_case(p):
-    '''sentencia_case : CASE declaraciones sentencia_when END'''
+def p_sentencia_while(p):
+    '''sentencia_while : WHILE expresiones_booleanas sentencia_while END
+                      | WHILE expresiones_booleanas declaracion END '''
 
+    if not isinstance(p[2], bool):
+        print(f"Error: La condición del bucle while debe ser booleana, pero se encontró {type(p[2])}")
+    else:
+        pass
+
+
+
+def p_sentencia_case(p):
+    '''sentencia_case : CASE VARIABLE sentencia_when END'''
+
+
+
+def p_sentencia_when(p):
+    '''sentencia_when : WHEN declaracion declaracion'''
 
 def p_sentencias_when(p):
     '''sentencias_when : sentencia_when
                     | sentencia_when sentencias_when'''
-
-
-def p_sentencia_when(p):
-    '''sentencia_when : WHEN declaracion IGUAL_DOBLEP declaracion'''
 
 
 def p_sentencia_until(p):
