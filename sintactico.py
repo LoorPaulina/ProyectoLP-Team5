@@ -39,7 +39,8 @@ def p_cuerpo(p):
               | sentencias_when
               | sentencia_until
               | definicion_clase
-              | entero_a_flotante'''
+              | entero_a_flotante
+              | declaracion'''
 
 
 #Operaciones
@@ -554,7 +555,8 @@ def p_declaracion(p):
                     | estructura_if
                     | asignacion_clase
                     | sentencia_while
-                    | estructura_ifUnaLinea'''
+                    | estructura_ifUnaLinea
+                    | funciones'''
 
 def p_declaraciones(p):
     '''declaraciones : declaracion 
@@ -617,8 +619,7 @@ def p_encabezadoClase(p):
                     | CLASS ID_CLASE MENOR_QUE ID_CLASE'''
 
 def p_definicion_clase(p):
-    '''definicion_clase : encabezadoClase cuerpoVariables DEF INITIALIZE PARENTESIS_IZ argumentos PARENTESIS_DER cuerpoClaseE END'''
-
+    '''definicion_clase : encabezadoClase declaraciones END'''
 
 def p_cuerpoVariables(p):
     '''cuerpoVariables : asignacion_clase                
