@@ -53,7 +53,6 @@ tokens=[
     #Dafne Ruiz
     'VARIABLE',
     'CADENA',
-    'NEWLINE',
     #Dafne Ruiz
     'FLOTANTE',
     'ENTERO',

@@ -316,7 +316,9 @@ def p_asignacion(p):
                   | VARIABLE IGUAL SIMBOLO
                   | VARIABLE IGUAL array
                   | VARIABLE IGUAL input_concatenacion
-                  | VARIABLE IGUAL booleanos"""
+                  | VARIABLE IGUAL booleanos
+                  | VARIABLE IGUAL solicitudDatosTeclado
+                  | VARIABLE IGUAL entero_a_flotante"""
 
     #Loor Paulina
     tabla_variables[p[1]] = p[3]
@@ -467,8 +469,9 @@ def p_solicitudDatosTeclado(p):
                             | GETS PUNTO funcionesFormatoImpresion '''
 
 def p_funciones(p):
-    '''funciones : DEF VARIABLE PARENTESIS_IZ PARENTESIS_DER declaracion END
-                 | DEF VARIABLE PARENTESIS_IZ argumentos PARENTESIS_DER declaracion END'''
+    '''funciones : DEF VARIABLE PARENTESIS_IZ PARENTESIS_DER declaraciones END
+                 | DEF VARIABLE PARENTESIS_IZ argumentos PARENTESIS_DER declaraciones END
+                 | DEF VARIABLE declaraciones END'''
 
 
 def p_funcionesArray(p):
@@ -560,7 +563,7 @@ def p_sentencia_while(p):
         pass
 
 def p_sentencia_case(p):
-    '''sentencia_case : CASE declaracion sentencia_when END'''
+    '''sentencia_case : CASE declaraciones sentencia_when END'''
 
 
 def p_sentencias_when(p):
@@ -591,7 +594,7 @@ def p_claveValor(p):
 
 def p_elemento_hash(p):
     '''elemento_hash : claveValor
-                     | claveValor COMA claveValor'''
+                     | claveValor COMA elemento_hash'''
 
 
 def p_each_hash(p):
@@ -607,20 +610,25 @@ def p_encabezadoClase(p):
                     | CLASS ID_CLASE MENOR_QUE ID_CLASE'''
 
 def p_definicion_clase(p):
-    '''definicion_clase : encabezadoClase NEWLINE cuerpoVariables NEWLINE DEF INITIALIZE PARENTESIS_IZ argumentos PARENTESIS_DER cuerpoClase END'''
+    '''definicion_clase : encabezadoClase cuerpoVariables DEF INITIALIZE PARENTESIS_IZ argumentos PARENTESIS_DER cuerpoClaseE END'''
 
 
 def p_cuerpoVariables(p):
     '''cuerpoVariables : asignacion_clase                
                 | asignacion
-                | asignacion_clase NEWLINE cuerpoVariables
-                | asignacion NEWLINE cuerpoVariables'''
+                | asignacion_clase cuerpoVariables
+                | asignacion cuerpoVariables'''
 
 
 def p_cuerpoClase(p):
     '''cuerpoClase : cuerpoVariables
                 | declaracion
-                | funciones'''
+                | funciones
+                '''
+
+def p_cuerpoClaseE(p):
+    '''cuerpoClaseE : cuerpoClase
+                | cuerpoClase cuerpoClaseE'''
 
 #Dafne Ruiz
 # Error rule for syntax errors
