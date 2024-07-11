@@ -43,10 +43,7 @@ def load_from_file():
     stringAnalisis=""
     codigo=open("code_output.txt","r")
     for linea in codigo.readlines():
-        if len(linea.strip()) == 0:
-            stringAnalisis = stringAnalisis + "\n"
-        else:
-            stringAnalisis = stringAnalisis + " "+ linea.strip()
+        stringAnalisis = stringAnalisis + " "+ linea.strip()
           
     with open("code_output.txt", "w") as file:
         file.write(stringAnalisis)

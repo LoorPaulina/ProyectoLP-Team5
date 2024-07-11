@@ -10,7 +10,14 @@ ruta_carpeta = "logs"
 ruta_algoritmos = "algoritmos"
 globalFound=False
 
+def p_instruccion(p):
+      '''instruccion : cuerpoInstruccion'''
 
+def p_cuerpoInstruccion(p):
+      '''
+        cuerpoInstruccion : cuerpo
+                        | cuerpo cuerpoInstruccion 
+      '''
 def p_cuerpo(p):
     '''cuerpo : operacionAritmetica
               | input_concatenacion
