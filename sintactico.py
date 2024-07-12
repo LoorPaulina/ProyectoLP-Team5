@@ -41,7 +41,8 @@ def p_cuerpo(p):
               | sentencia_until
               | definicion_clase
               | entero_a_flotante
-              | declaracion'''
+              | declaracion
+              | condicionIf'''
 
 
 #Operaciones
@@ -456,7 +457,7 @@ def p_expresiones_booleanas(p):
                         print(error)
                         return
 
-                elif (isinstance(valor_var1,int) and not isinstance(valor_var2,int)) or (isinstance(valor2,int) and not isinstance(valor1,int)): 
+                elif (isinstance(valor_var1,int) and (not isinstance(valor_var2,float) and not isinstance(valor_var2,int) )) or (isinstance(valor2,int) and (not isinstance(valor1,float) and not isinstance(valor1,int))): 
                     error = f"Error semántico: ambas variables deben ser de tipo int"
                     errores_semanticos.append(error)
                     print(error)
@@ -466,11 +467,40 @@ def p_expresiones_booleanas(p):
                     errores_semanticos.append(error)
                     print(error)
                     return
-                elif (isinstance(valor_var1,float) and not isinstance(valor_var2,float)) or (isinstance(valor2,float) and not isinstance(valor1,float)): 
-                    error = f"Error semántico: ambas variables deben ser de tipo float"
+                elif (isinstance(valor_var1,float) and (not isinstance(valor_var2,float) and not isinstance(valor_var2,int) )) or (isinstance(valor2,float) and (not isinstance(valor1,float) and not isinstance(valor1,int))): 
+                    error = f"Error semántico: ambas variables deben ser de tipo numéricas"
                     errores_semanticos.append(error)
                     print(error)
                     return
+                
+    elif p.slice[1].type == 'VARIABLE' and not p.slice[3].type == 'VARIABLE':
+        valor1=p[1]
+        valor2=p[3]
+        if valor1 not in tabla_variables:
+            error = f"Error semántico: Variable {valor1} no declarada."
+            errores_semanticos.append(error)
+            print(error)
+            return
+        elif not isinstance(tabla_variables[valor1], int) and not isinstance(tabla_variables[valor1], float):
+            error = f"Error semántico: Variable {valor1} no es de valor numérico."
+            errores_semanticos.append(error)
+            print(error)
+            return
+        
+    elif not p.slice[1].type == 'VARIABLE' and p.slice[3].type == 'VARIABLE':
+        valor1=p[1]
+        valor2=p[3]
+        if valor2 not in tabla_variables:
+            error = f"Error semántico: Variable {valor2} no declarada."
+            errores_semanticos.append(error)
+            print(error)
+            return
+        elif not isinstance(tabla_variables[valor2], int) and not isinstance(tabla_variables[valor2], float):
+            error = f"Error semántico: Variable {valor2} no es de valor numérico."
+            errores_semanticos.append(error)
+            print(error)
+            return
+
 
 
 

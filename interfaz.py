@@ -12,6 +12,7 @@ def validar():
     # #manda output al parser
     # #parser guarda en validation y lo carga en la pantalla 
     load_from_file()
+    print(s.tabla_variables)
         
     pass
 
