@@ -566,8 +566,21 @@ def p_declaraciones(p):
 def p_sentencia_while_bool(p):
     '''sentencia_while_bool : WHILE declaracion declaraciones END
                             | WHILE VARIABLE declaraciones END '''
-    if not isinstance(p[2], bool):
-        print(f"Error: La condición del bucle while debe ser booleana, pero se encontró {type(p[2])}")
+    if p.slice[2].type == 'VARIABLE':
+        valor1 = p[2]
+        if valor1 not in tabla_variables:
+            error = f"Error semántico: Variable {valor1} no declarada."
+            errores_semanticos.append(error)
+            print(error)
+            return
+
+        elif p[2] in tabla_variables:
+            value = tabla_variables[p[2]]
+            if not isinstance(value, bool):
+                error = f"Error semántico: Variable {value} no es booleano."
+                errores_semanticos.append(error)
+                print(error)
+                return
     else:
         pass
 

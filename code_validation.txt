@@ -1,1 +1,1 @@
-Código correcto :)
+Error semántico: Variable "hola" no es booleano.
