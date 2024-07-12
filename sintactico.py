@@ -185,11 +185,11 @@ def p_entero_a_flotante(p):
 
     if p[1] in tabla_variables:
         value = tabla_variables[p[1]]
-        if isinstance(value, int):
+        if isinstance(value, int) or isinstance(value, float) :
             p[0] = float(value)
         else:
-            print(f"Error semántico: '{p[1]}' no es un entero")
-            errores_semanticos.append(f"Error semántico: '{p[1]}' no es un entero")
+            print(f"Error semántico: '{p[1]}' no es un valor numérico")
+            errores_semanticos.append(f"Error semántico: '{p[1]}' no es un valor numérico")
             p[0] = value
     else:
         print(f"Error semántico: Variable '{p[1]}' no definida")

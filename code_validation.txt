@@ -1,1 +1,1 @@
-Código correcto :)
+Error semántico: 'a' no es un valor numérico

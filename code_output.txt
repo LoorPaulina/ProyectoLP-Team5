@@ -1,1 +1,1 @@
- a=9 b=9 if a>b if 5>6 puts 5 end else 4>5 end
+ a="hola" a.to_f
