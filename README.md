@@ -4,3 +4,6 @@ Paralelo 1
 - Ruiz Dafne
 - Loor Paulina
 - Picón Daniel
+
+Dependencias
+pip install pillow
