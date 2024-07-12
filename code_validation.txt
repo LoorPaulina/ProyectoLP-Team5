@@ -1,1 +1,1 @@
-Error semántico: Variable "hola" no es booleano.
+Error semántico: 'a' no es un valor numérico

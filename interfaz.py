@@ -12,6 +12,7 @@ def validar():
     # #manda output al parser
     # #parser guarda en validation y lo carga en la pantalla 
     load_from_file()
+    print(s.tabla_variables)
         
     pass
 
@@ -19,8 +20,6 @@ def show_help():
     help_window = tk.Toplevel(root)
     help_window.title("Help")
     help_window.geometry("700x600")
-    help_label = tk.Label(help_window, text="Para validar, separar las declaraciones con saltos de línea.", padx=20, pady=20)
-    help_label.pack()
     help_label_3 = tk.Label(help_window, text="Ejemplo", padx=20, pady=20)
     help_label_3.pack()
 
@@ -149,7 +148,7 @@ recuadro3.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
 title3 = tk.LabelFrame(recuadro3, text="Instructions", bg="#C630FB", fg="white", padx=10, pady=10, width=250, height=40)
 title3.pack(fill=tk.BOTH, expand=True)
 
-instruction_label = tk.Label(title3, text="Para validar, separar las declaraciones con saltos de línea.", bg="#1A1B26", fg="white", font=("Arial", 14))
+instruction_label = tk.Label(title3, text="Para validar, escribir el código dentro del recuadro Code.", bg="#1A1B26", fg="white", font=("Arial", 14))
 instruction_label.pack(fill=tk.BOTH, expand=True)
 
 btn_help = tk.Button(navbar, text="Help", command=show_help, bg="#C630FB", fg="white", width=10, height=2)

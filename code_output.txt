@@ -1,1 +1,1 @@
- i = "hola" while i puts 3 end
+ a="hola" a.to_f
